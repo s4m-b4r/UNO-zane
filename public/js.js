@@ -569,6 +569,7 @@ function playCard() {
                 discardPile.push(playersHands[turn].splice(cardNumber, 1)[0])
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
+                socket.emit("playCard", { discardedCard: [discardPile.length - 1][1] })
             }
 
             else if (playersHands[turn][cardNumber][1] == discardPile[discardPile.length - 1][1]) {
@@ -775,3 +776,6 @@ function CheckPlayerWin() {
 //     }
 // }
 
+socket.on("playCard", (data) => {
+    console.log("card played", data)
+})
