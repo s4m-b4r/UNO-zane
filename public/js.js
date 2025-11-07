@@ -576,7 +576,7 @@ function playCard() {
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
-            socket.emit("playCard", { discardedCard: [discardPile.length - 1][1] })
+            socket.emit("playCard", { discardedCard: discardPile([discardPile.length - 1][1]) })
         }
     }
 
