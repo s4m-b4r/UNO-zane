@@ -16,6 +16,9 @@ const games = {}; // { roomName: { players: [], started: false, data: {} } }
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
+  socket.on("playCard", (data) => {
+    socket.emit("playCard", data)
+  })
 
   // Disconnect cleanup
   socket.on('disconnect', () => {
