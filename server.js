@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
   socket.on("playCard", (data) => {
-    socket.emit("playCard", data)
+    io.emit("playCard", data)
   })
 
   // Disconnect cleanup
