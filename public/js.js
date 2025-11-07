@@ -31,7 +31,7 @@ let discardPile = []
 let cardNumber;
 let drawCardP = 0;
 let turn = 0;
-let playernum = 2
+let playernum = 4
 let ChangeColourMode = false
 let turnClockWise = true
 let EndGame = false
