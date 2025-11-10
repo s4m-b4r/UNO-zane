@@ -64,7 +64,7 @@ socket.on("discardPile", discardPile1 =>{
     discardPile = discardPile1
 })
     
-    sortHand()
+    
 
 function sortHand() {
 
@@ -109,7 +109,7 @@ function sortHand() {
 
 }
 
-if(deck.length != 0){
+
 function preload() {
     uno = loadImage('Uno - Standard Deck.png')
 }
@@ -117,6 +117,7 @@ function preload() {
 function draw() {
     background("white")
     PlayerManager()
+    sortHand()
     if (EndGame == false) {
         v3 = createVector(mouseX, mouseY)
         currentpos = v3.sub(v1)
@@ -766,4 +767,3 @@ function CheckPlayerWin() {
 socket.on("playCard", (data) => {
     console.log("card played", data)
 })
-}
