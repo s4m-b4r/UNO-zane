@@ -44,6 +44,14 @@ function setup() {
     v1 = createVector(width / 2, height)
     angleMode(RADIANS)
     
+    socket.emit("createRoom")
+    socket.on("roomjoin", room => {
+        room_ID = room
+    })
+
+    socket.on("playernum", playernum =>{
+        playernum = playernum
+    })
 socket.on("deckArranged", deck=>{
     deck = deck
 })
@@ -54,17 +62,11 @@ socket.on("discardPile", discardPile =>{
     discardPile = discardPile
 })
     
-
     sortHand()
 
 
-    socket.emit("createRoom")
-    socket.on("roomjoin", room => {
-        room_ID = room
-    })
-    socket.on("playernum", playernum =>{
-        playernum = playernum
-    })
+    
+    
 }
 
 function preload() {
