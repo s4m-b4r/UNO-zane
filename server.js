@@ -49,7 +49,6 @@ io.on('connection', (socket) => {
 // Disconnect cleanup
   
   socket.on('disconnect', () => {
-    socket.leave(room)
     console.log('Player disconnected:', socket.id);
   });
 });
