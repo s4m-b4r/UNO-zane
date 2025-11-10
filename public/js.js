@@ -134,7 +134,7 @@ function draw() {
 
         if (mouseY >= (height - (250 + 53))) {
             if (startv.angleBetween(currentpos) < 1.4 && startv.angleBetween(currentpos) >= 0) {
-                cardNumber = Math.round(startv.angleBetween(currentpos) / (1.4 / playersHands[turn].length)) - 1
+                cardNumber = Math.round(startv.angleBetween(currentpos) / (1.4 / playersHands[playernum].length)) - 1
                 if (cardNumber < 0) {
                     cardNumber = -2
                 }
@@ -163,7 +163,6 @@ function draw() {
         translate(width / 2, height)
 
         for (i = 0; i < playersHands[playernum].length; i++) {
-            console.log("game has started")
             push()
             rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)
             rotate(rotateFrom)
@@ -364,9 +363,6 @@ function draw() {
     }
 }
 }
-
-
-
 
 
 
@@ -744,38 +740,17 @@ function CheckPlayerWin() {
         else if (turnClockWise == false) {
             turn += 1
         }
+        let playerwinstat = {
+            turn1 : turn,
+            gameStatus : EndGame,
+            room : room_ID
+        }
+        socket.emit("playerWon", playerwinstat)
     }
 }
 
-// function DrawPowerCard() {
-//     console.log("checking if the player needs to draw a card")
-//     for (i = 0; i < playersHands[turn].length; i++) {
-//         console.log(playersHands[turn][i])
 
-//         if (playersHands[turn][i][1] != 10 || !(playersHands[turn][i][0] == 4 && playersHands[turn][i][1] == 5)) {
-//             console.log(i)
-//             console.log(playersHands[turn].length - 1)
-//             if (i == playersHands[turn].length - 1) {
-
-//                 console.log("player " + turn + " will be drawing " + drawCardP + " cards")
-//                 for (j = 0; j < drawCardP; j++) {
-//                     console.log(deck[deck.length - 1])
-//                     playersHands[turn].push(deck.pop())
-//                 }
-//                 sortHand()
-//                 drawCardP = 0
-//                 turn += 1
-//                 break
-
-//             }
-//         }
-//         else if (playersHands[turn][i][1] == 10 || ((playersHands[turn][i][0] == 4 && playersHands[turn][i][1] == 5))) {
-//             console.log("player doesnt draw cards")
-//             break
-//         }
-//     }
-// }
-
-socket.on("playCard", (data) => {
-    console.log("card played", data)
+socket.on("playerWon", (data) => {
+    EndGame = data.gameStatus
+    turn = data.turn1
 })

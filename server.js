@@ -16,6 +16,7 @@ counter = 1
 playercount = 0
 player_num = 0
 // Handle connections
+
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
@@ -48,6 +49,12 @@ io.on('connection', (socket) => {
   }
 )
   
+socket.on("playerWon", (data) =>{
+  let Room = data.room
+  socket.broadcast.to(Room).emit("playerWon", data)
+})
+
+
 // Disconnect cleanup
   
   socket.on('disconnect', () => {
