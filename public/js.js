@@ -66,6 +66,49 @@ socket.on("discardPile", discardPile =>{
 
 }
 
+function sortHand() {
+
+    for (j = 0; j < maxplayer; j++) {
+        for (i = 0; i < playersHands[j].length; i++) {
+            if (playersHands[j][i][0] == 4) {
+                playersHands[j][i][0] = -1
+            }
+            else if (playersHands[j][i][1] == 9) {
+                playersHands[j][i][1] = -1
+            }
+        }
+    }
+
+    for (i = 0; i < maxplayer; i++) {
+        for (let p of playersHands) {
+            p.sort((a, b) => {
+                if (a[0] < b[0]) {
+                    return -1
+                } else if (a[0] > b[0]) {
+                    return 1
+                } else if (a[1] < b[1]) {
+                    return -1
+                } else if (a[1] > b[1]) {
+                    return 1
+                } else return 0
+
+            })
+        }
+    }
+
+    for (j = 0; j < maxplayer; j++) {
+        for (i = 0; i < playersHands[j].length; i++) {
+            if (playersHands[j][i][0] == -1) {
+                playersHands[j][i][0] = 4
+            }
+            else if (playersHands[j][i][1] == -1) {
+                playersHands[j][i][1] = 9
+            }
+        }
+    }
+
+}
+
 if(deck.length != 0){
 function preload() {
     uno = loadImage('Uno - Standard Deck.png')
@@ -312,51 +355,6 @@ function draw() {
 }
 
 
-
-
-
-function sortHand() {
-
-    for (j = 0; j < maxplayer; j++) {
-        for (i = 0; i < playersHands[j].length; i++) {
-            if (playersHands[j][i][0] == 4) {
-                playersHands[j][i][0] = -1
-            }
-            else if (playersHands[j][i][1] == 9) {
-                playersHands[j][i][1] = -1
-            }
-        }
-    }
-
-    for (i = 0; i < maxplayer; i++) {
-        for (let p of playersHands) {
-            p.sort((a, b) => {
-                if (a[0] < b[0]) {
-                    return -1
-                } else if (a[0] > b[0]) {
-                    return 1
-                } else if (a[1] < b[1]) {
-                    return -1
-                } else if (a[1] > b[1]) {
-                    return 1
-                } else return 0
-
-            })
-        }
-    }
-
-    for (j = 0; j < maxplayer; j++) {
-        for (i = 0; i < playersHands[j].length; i++) {
-            if (playersHands[j][i][0] == -1) {
-                playersHands[j][i][0] = 4
-            }
-            else if (playersHands[j][i][1] == -1) {
-                playersHands[j][i][1] = 9
-            }
-        }
-    }
-
-}
 
 
 
