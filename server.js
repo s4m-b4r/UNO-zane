@@ -28,9 +28,11 @@ io.on('connection', (socket) => {
     console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
     player_num++
     playercount++
-    
     if(playercount == 4){
       startgame(room)
+    }
+    }
+    else if(playercount == 4){
       
       counter ++
       playercount = 0
@@ -44,7 +46,7 @@ io.on('connection', (socket) => {
     playercount++
     }
   }
-})
+)
   
 // Disconnect cleanup
   
