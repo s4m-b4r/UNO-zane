@@ -31,7 +31,8 @@ let discardPile = []
 let cardNumber;
 let drawCardP = 0;
 let turn = 0;
-let playernum = 4
+let playernum;
+let maxplayer = 4;
 let ChangeColourMode = false
 let turnClockWise = true
 let EndGame = false
@@ -42,43 +43,27 @@ function setup() {
     v2 = createVector((width / 2) - 100 * Math.sin(0.6), (height) - 100 * Math.cos(0.6))
     v1 = createVector(width / 2, height)
     angleMode(RADIANS)
-    for (i = 0; i <= 3; i++) {
-        for (j = 0; j <= 12; j++) {
-
-            card = [i, j]
-            deck.push(card)
-            card = [i, j]
-            deck.push(card)
-
-        }
-    }
-    for (i = 0; i <= 3; i++) {
-        deck.push([4, 0])
-        deck.push([4, 5])
-    }
-    deck = shuffle(deck)
-
-    for (i = 0; i < playernum; i++) {
-        for (j = 0; j < numberOfCards; j++) {
-            playersHands[i].push(deck.pop())
-        }
-    }
+    
+socket.on("deckArranged", deck=>{
+    deck = deck
+})
+socket.on("playersHands", playersHands=>{
+    playersHands = playersHands
+})
+socket.on("discardPile", discardPile =>{
+    discardPile = discardPile
+})
+    
 
     sortHand()
 
-    let count = 1
-    let bool = true
-    while (bool == true) {
-        if (deck[deck.length - count][0] != 4) {
-            discardPile.push((deck.splice(deck.length - count)[0]))
-            bool = false
-        }
-        count += 1
-    }
 
     socket.emit("createRoom")
     socket.on("roomjoin", room => {
         room_ID = room
+    })
+    socket.on("playernum", playernum =>{
+        playernum = playernum
     })
 }
 
@@ -125,34 +110,34 @@ function draw() {
         imageMode(CENTER)
         translate(width / 2, height)
 
-        for (i = 0; i < playersHands[turn].length; i++) {
+        for (i = 0; i < playersHands[playernum].length; i++) {
             push()
-            rotateFrom = map(i, 0, playersHands[turn].length, -0.6, 0.8)
+            rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)
             rotate(rotateFrom)
 
 
             if (i == cardNumber) {
-                image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[turn][i][1] * (cwidth + cxoffset), beginsheety + playersHands[turn][i][0] * (cheight + cyoffset), cwidth, cheight)
+                image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
             }
 
             else if (i == cardNumber - 1) {
-                rotate(-(1.4 / playersHands[turn].length) * 0.8)
-                image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[turn][i][1] * (cwidth + cxoffset), beginsheety + playersHands[turn][i][0] * (cheight + cyoffset), cwidth, cheight)
+                rotate(-(1.4 / playersHands[playernum].length) * 0.8)
+                image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
             }
 
             else if (i == cardNumber + 1) {
-                rotate((1.4 / playersHands[turn].length) * 0.8)
-                image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[turn][i][1] * (cwidth + cxoffset), beginsheety + playersHands[turn][i][0] * (cheight + cyoffset), cwidth, cheight)
+                rotate((1.4 / playersHands[playernum].length) * 0.8)
+                image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
             }
 
             else {
                 if (i > cardNumber + 1 && cardNumber != -2) {
-                    rotate(1.4 / playersHands[turn].length)
+                    rotate(1.4 / playersHands[playernum].length)
                 }
-                image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[turn][i][1] * (cwidth + cxoffset), beginsheety + playersHands[turn][i][0] * (cheight + cyoffset), cwidth, cheight)
+                image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
             }
 
@@ -167,153 +152,153 @@ function draw() {
         image(uno, 0, 0, cwidth, cheight, beginsheetx + discardPile[discardPile.length - 1][1] * (cwidth + cxoffset), beginsheety + discardPile[discardPile.length - 1][0] * (cheight + cyoffset), cwidth, cheight)
         pop()
 
-        text("player " + turn, width / 2, height - 50)
+        text("player " + playernum, width / 2, height - 50)
 
         push()
         imageMode(CENTER)
 
-        if (playernum == 2) {
-            turn += 1
-            if (turn == 2) {
-                turn = 0
+        if (maxplayer == 2) {
+            playernum += 1
+            if (playernum == 2) {
+                playernum = 0
             }
             push()
             translate(width / 2, (height / 8) - 50)
-            for (i = 0; i < playersHands[turn].length; i++) {
+            for (i = 0; i < playersHands[playernum].length; i++) {
                 push()
-                rotateFrom = map(i, 0, playersHands[turn].length, 2.3, 4)
+                rotateFrom = map(i, 0, playersHands[playernum].length, 2.3, 4)
                 rotate(rotateFrom)
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
-            text("player " + turn, -25, 0)
+            text("player " + playernum, -25, 0)
             pop()
-            if (turn == 0) {
-                turn = 1
+            if (playernum == 0) {
+                playernum = 1
             }
-            else if (turn == 1) {
-                turn = 0
+            else if (playernum == 1) {
+                playernum = 0
             }
         }
 
-        else if (playernum == 3) {
-            turn += 1
-            if (turn == 3) {
-                turn = 0
+        else if (maxplayer == 3) {
+            playernum += 1
+            if (playernum == 3) {
+                playernum = 0
             }
 
             push()
             translate(width / 4, height / 4)
-            for (i = 0; i < playersHands[turn].length; i++) {
+            for (i = 0; i < playersHands[playernum].length; i++) {
                 push()
-                rotateFrom = map(i, 0, playersHands[turn].length, 1.5, 3.2)
+                rotateFrom = map(i, 0, playersHands[playernum].length, 1.5, 3.2)
                 rotate(rotateFrom)
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
-            text("player " + turn, -25, 0)
+            text("player " + playernum, -25, 0)
             pop()
 
-            if (turn == 0) {
-                turn = 2
+            if (playernum == 0) {
+                playernum = 2
             }
-            else if (turn != 0) {
-                turn -= 1
+            else if (playernum != 0) {
+                playernum -= 1
             }
 
-            turn += 2
+            playernum += 2
 
-            if (turn > 2) {
-                turn -= 3
+            if (playernum > 2) {
+                playernum -= 3
             }
 
             push()
             translate(width * (3 / 4), height / 4)
-            for (i = 0; i < playersHands[turn].length; i++) {
+            for (i = 0; i < playersHands[playernum].length; i++) {
                 push()
-                rotateFrom = map(i, 0, playersHands[turn].length, 3.2, 4.9)
+                rotateFrom = map(i, 0, playersHands[playernum].length, 3.2, 4.9)
                 rotate(rotateFrom)
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
-            text("player " + turn, -25, 0)
+            text("player " + playernum, -25, 0)
             pop()
 
-            if (turn < 2) {
-                turn += 1
+            if (playernum < 2) {
+                playernum += 1
             }
-            else if (turn == 2) {
-                turn = 0
+            else if (playernum == 2) {
+                playernum = 0
             }
         }
 
-        else if (playernum == 4) {
-            turn += 1
-            if (turn == 4) {
-                turn = 0
+        else if (maxplayer == 4) {
+            playernum += 1
+            if (playernum == 4) {
+                playernum = 0
             }
             push()
             translate(width / 6, height / 2)
-            for (i = 0; i < playersHands[turn].length; i++) {
+            for (i = 0; i < playersHands[playernum].length; i++) {
                 push()
-                rotateFrom = map(i, 0, playersHands[turn].length, 1, 2.7)
+                rotateFrom = map(i, 0, playersHands[playernum].length, 1, 2.7)
                 rotate(rotateFrom)
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
-            text("player " + turn, -25, 0)
+            text("player " + playernum, -25, 0)
             pop()
-            if (turn == 0) {
-                turn = 3
+            if (playernum == 0) {
+                playernum = 3
             }
-            else if (turn != 0) {
-                turn -= 1
+            else if (playernum != 0) {
+                playernum -= 1
             }
 
-            turn += 2
-            if (turn > 3) {
-                turn -= 4
+           playernum += 2
+            if (playernum > 3) {
+                playernum -= 4
             }
 
             push()
             translate(width / 2, (height / 8) - 50)
-            for (i = 0; i < playersHands[turn].length; i++) {
+            for (i = 0; i < playersHands[playernum].length; i++) {
                 push()
-                rotateFrom = map(i, 0, playersHands[turn].length, 2.3, 4)
+                rotateFrom = map(i, 0, playersHands[playernum].length, 2.3, 4)
                 rotate(rotateFrom)
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
-            text("player " + turn, -25, 0)
+            text("player " + playernum, -25, 0)
             pop()
-            if (turn < 2) {
-                turn += 2
+            if (playernum < 2) {
+                playernum += 2
             }
-            else if (turn >= 2) {
-                turn -= 2
+            else if (playernum >= 2) {
+                playernum -= 2
             }
 
-            turn += 3
-            if (turn != 3) {
-                turn -= 4
+            playernum += 3
+            if (playernum != 3) {
+                playernum -= 4
             }
             push()
             translate(width * (3 / 4), height / 2)
-            for (i = 0; i < playersHands[turn].length; i++) {
+            for (i = 0; i < playersHands[playernum].length; i++) {
                 push()
-                rotateFrom = map(i, 0, playersHands[turn].length, 3.8, 5.5)
+                rotateFrom = map(i, 0, playersHands[playernum].length, 3.8, 5.5)
                 rotate(rotateFrom)
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
-            text("player " + turn, -25, 0)
+            text("player " + playernum, -25, 0)
             pop()
 
-            if (turn != 3) {
-                turn += 1
+            if (playernum != 3) {
+                playernum += 1
             }
-            else if (turn == 3) {
-                turn -= 3
+            else if (playernum == 3) {
+                playernum -= 3
             }
         }
     }
@@ -332,7 +317,7 @@ function draw() {
 
 function sortHand() {
 
-    for (j = 0; j < playernum; j++) {
+    for (j = 0; j < maxplayer; j++) {
         for (i = 0; i < playersHands[j].length; i++) {
             if (playersHands[j][i][0] == 4) {
                 playersHands[j][i][0] = -1
@@ -343,7 +328,7 @@ function sortHand() {
         }
     }
 
-    for (i = 0; i < playernum; i++) {
+    for (i = 0; i < maxplayer; i++) {
         for (let p of playersHands) {
             p.sort((a, b) => {
                 if (a[0] < b[0]) {
@@ -360,7 +345,7 @@ function sortHand() {
         }
     }
 
-    for (j = 0; j < playernum; j++) {
+    for (j = 0; j < maxplayer; j++) {
         for (i = 0; i < playersHands[j].length; i++) {
             if (playersHands[j][i][0] == -1) {
                 playersHands[j][i][0] = 4
@@ -563,20 +548,20 @@ function mouseClicked() {
 function playCard() {
     if (drawCardP == 0) {
         if (cardNumber != -2) {
-            if (playersHands[turn][cardNumber][0] == 4) {
-                discardPile.push(playersHands[turn].splice(cardNumber, 1)[0])
+            if (playersHands[playernum][cardNumber][0] == 4) {
+                discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
 
-            else if (playersHands[turn][cardNumber][0] == discardPile[discardPile.length - 1][0] || (discardPile[discardPile.length - 1][0] == 4 && (discardPile[discardPile.length - 1][1] - 1 == playersHands[turn][cardNumber][0] || discardPile[discardPile.length - 1][1] - 6 == playersHands[turn][cardNumber][0]))) {
-                discardPile.push(playersHands[turn].splice(cardNumber, 1)[0])
+            else if (playersHands[playernum][cardNumber][0] == discardPile[discardPile.length - 1][0] || (discardPile[discardPile.length - 1][0] == 4 && (discardPile[discardPile.length - 1][1] - 1 == playersHands[turn][cardNumber][0] || discardPile[discardPile.length - 1][1] - 6 == playersHands[turn][cardNumber][0]))) {
+                discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
 
-            else if (playersHands[turn][cardNumber][1] == discardPile[discardPile.length - 1][1]) {
-                discardPile.push(playersHands[turn].splice(cardNumber, 1)[0])
+            else if (playersHands[playernum][cardNumber][1] == discardPile[discardPile.length - 1][1]) {
+                discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
@@ -586,15 +571,15 @@ function playCard() {
 
     else if (drawCardP != 0) {
         if (cardNumber != -2) {
-            if (playersHands[turn][cardNumber][0] == 4 && playersHands[turn][cardNumber][1] == 5) {
+            if (playersHands[playernum][cardNumber][0] == 4 && playersHands[playernum][cardNumber][1] == 5) {
                 console.log("attempting to discard during draw phase")
-                discardPile.push(playersHands[turn].splice(cardNumber, 1)[0])
+                discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
-            else if (playersHands[turn][cardNumber][1] == 10) {
+            else if (playersHands[playernum][cardNumber][1] == 10) {
                 console.log("attempting to discard during draw phase")
-                discardPile.push(playersHands[turn].splice(cardNumber, 1)[0])
+                discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
@@ -639,7 +624,7 @@ function cardEffect(effect) {
         if (effect != 11) {
             turn += 1
         }
-        else if (effect == 11 && playernum != 2) {
+        else if (effect == 11 && maxplayer != 2) {
             turn -= 1
         }
 
@@ -651,7 +636,7 @@ function cardEffect(effect) {
         if (effect != 11) {
             turn -= 1
         }
-        else if (effect == 11 && playernum != 2) {
+        else if (effect == 11 && maxplayer != 2) {
             turn -= 1
         }
 
@@ -686,7 +671,7 @@ function ChangeColour() {
 
 function drawCard() {
     if (mouseX > (width / 2 - (cwidth + 10 + cwidth / 2)) && mouseX < (width / 2 - (cwidth + 10 - cwidth / 2)) && mouseY > (height / 2 - cheight / 2) && mouseY < (height / 2 + cheight / 2)) {
-        playersHands[turn].push(deck.pop())
+        playersHands[playernum].push(deck.pop())
         sortHand()
         if (turnClockWise == true) {
             turn += 1
@@ -699,28 +684,28 @@ function drawCard() {
 
 function PlayerManager() {
     if (turn < 0) {
-        turn += playernum
+        turn += maxplayer
     }
-    else if (turn > playernum - 1) {
-        turn -= playernum
+    else if (turn > maxplayer - 1) {
+        turn -= maxplayer
     }
 }
 
 function DrawPowerCard() {
     PlayerManager()
     console.log(turn)
-    for (i = 0; i < playersHands[turn].length; i++) {
-        console.log(playersHands[turn][i])
-        if (playersHands[turn][i][1] == 10 || ((playersHands[turn][i][0] == 4 && playersHands[turn][i][1] == 5))) {
+    for (i = 0; i < playersHands[playernum].length; i++) {
+        console.log(playersHands[playernum][i])
+        if (playersHands[playernum][i][1] == 10 || ((playersHands[playernum][i][0] == 4 && playersHands[playernum][i][1] == 5))) {
             break
         }
-        else if (playersHands[turn][i][1] != 10 || !(playersHands[turn][i][0] == 4 && playersHands[turn][i][1] == 5)) {
+        else if (playersHands[playernum][i][1] != 10 || !(playersHands[playernum][i][0] == 4 && playersHands[playernum][i][1] == 5)) {
 
-            if (i == playersHands[turn].length - 1) {
+            if (i == playersHands[playernum].length - 1) {
 
                 for (j = 0; j < drawCardP; j++) {
                     console.log(deck[deck.length - 1])
-                    playersHands[turn].push(deck.pop())
+                    playersHands[playernum].push(deck.pop())
                 }
                 sortHand()
                 drawCardP = 0
@@ -740,7 +725,7 @@ function DrawPowerCard() {
 }
 
 function CheckPlayerWin() {
-    if (playersHands[turn].length == 0) {
+    if (playersHands[playernum].length == 0) {
         EndGame = true
         if (turnClockWise == true) {
             turn -= 1

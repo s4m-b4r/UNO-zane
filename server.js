@@ -31,7 +31,8 @@ io.on('connection', (socket) => {
     }
     
     else{
-      io.to(room).emit("gamestart")
+      startgame(room)
+      
       counter ++
       playercount = 0
       playernum = 0
@@ -41,21 +42,58 @@ io.on('connection', (socket) => {
     console.log("player " + socket.id + " has joined room " + room + " and is player " + playernum)
     playercount++
     }
-    console.log(room)
 })
-
-
-  
-
   
 // Disconnect cleanup
   
   socket.on('disconnect', () => {
+    socket.leave(room)
     console.log('Player disconnected:', socket.id);
   });
 });
 
+function startgame(room){
+  deck = []
+  maxplayer = 4
+  numberOfCards = 7
+  playersHands = [[], [], [], []]
+discardPile = []
 
+  for (i = 0; i <= 3; i++) {
+        for (j = 0; j <= 12; j++) {
+
+            card = [i, j]
+            deck.push(card)
+            card = [i, j]
+            deck.push(card)
+
+        }
+    }
+    for (i = 0; i <= 3; i++) {
+        deck.push([4, 0])
+        deck.push([4, 5])
+    }
+    deck = shuffle(deck)
+
+    for (i = 0; i < maxplayer; i++) {
+        for (j = 0; j < numberOfCards; j++) {
+            playersHands[i].push(deck.pop())
+        }
+    }
+    let countCard = 1
+    let bool = true
+    while (bool == true) {
+        if (deck[deck.length - countCard][0] != 4) {
+            discardPile.push((deck.splice(deck.length - countCard)[0]))
+            bool = false
+        }
+        countCard += 1
+    }
+
+    io.to(room).emit("deckArranged", deck)
+    io.to(room).emit("playersHands", playersHands)
+    io.to(room).emit("discardPile", discardPile)
+}
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(` Server running on port ${PORT}`));
