@@ -39,6 +39,7 @@ io.on('connection', (socket) => {
       room = "game "+ counter
     socket.emit("roomjoin", room)
     socket.join(room)
+    socket.emit("playernum", playernum)
     console.log("player " + socket.id + " has joined room " + room + " and is player " + playernum)
     playercount++
     }
@@ -73,7 +74,7 @@ discardPile = []
         deck.push([4, 0])
         deck.push([4, 5])
     }
-    deck = shuffle(deck)
+    shuffle(deck)
 
     for (i = 0; i < maxplayer; i++) {
         for (j = 0; j < numberOfCards; j++) {
@@ -95,5 +96,12 @@ discardPile = []
     io.to(room).emit("discardPile", discardPile)
 }
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(` Server running on port ${PORT}`));
