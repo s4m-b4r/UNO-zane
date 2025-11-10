@@ -372,9 +372,10 @@ function mouseClicked() {
     if (EndGame == false) {
         if (drawCardP == 0) {
             if (ChangeColourMode == false) {
+                if(turn == playernum){
                 playCard()
                 drawCard()
-            }
+            }}
 
             else if (ChangeColourMode == true) {
                 red = collidePointArc(mouseX, mouseY, width / 2, height / 2, 150, 0, Math.PI / 2)
