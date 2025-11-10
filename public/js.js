@@ -49,7 +49,9 @@ function setup() {
         room_ID = room
     })
 
-    socket.on("playernum", playernum =>{
+}
+
+socket.on("playernum", playernum =>{
         playernum = playernum
     })
 socket.on("deckArranged", deck=>{
@@ -63,9 +65,7 @@ socket.on("discardPile", discardPile =>{
 })
     
     sortHand()
-
-}
-
+    
 function sortHand() {
 
     for (j = 0; j < maxplayer; j++) {
