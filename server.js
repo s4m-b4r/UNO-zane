@@ -22,17 +22,19 @@ io.on('connection', (socket) => {
     counter++
     socket.emit("roomjoin", room)
     socket.join(room)
+    console.log("player " + socket.id + " has joined room " + room )
 })
-  })
+
+
   
-console.log("player " + socket.id + " has joined room " + roomID )
+
   
 // Disconnect cleanup
   
   socket.on('disconnect', () => {
     console.log('Player disconnected:', socket.id);
   });
-;
+})
 
 
 
