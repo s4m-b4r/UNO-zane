@@ -35,6 +35,7 @@ let playernum = 4
 let ChangeColourMode = false
 let turnClockWise = true
 let EndGame = false
+let room_ID;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -76,7 +77,9 @@ function setup() {
     }
 
     socket.emit("createRoom")
-
+    socket.on("roomjoin", room => {
+        room_ID = room
+    })
 }
 
 function preload() {
