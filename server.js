@@ -18,7 +18,8 @@ io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
   socket.on("createRoom", () => {
-roomID = counter + 1
+const roomID = counter + 1
+counter += 1
 room[roomID] = {
   roomID : roomID,
   playersHands : [[], [], [], []],
