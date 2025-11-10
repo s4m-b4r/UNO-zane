@@ -75,6 +75,7 @@ function setup() {
         count += 1
     }
 
+    socket.emit("createRoom")
 
 }
 
