@@ -12,12 +12,19 @@ app.use(express.static('public')); // serve your HTML/JS/CSS
 // Store all game rooms
 const games = {}; // { roomName: { players: [], started: false, data: {} } }
 
+counter = 1
 // Handle connections
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
-  socket.on("playCard", (data) => {
-    io.emit("playCard", data)
+  socket.on("createRoom", () => {
+roomID = counter + 1
+room[roomID] = {
+  roomID : roomID,
+  playersHands : [[], [], [], []],
+  deck : [],
+  discardPile : []
+}
   })
 
   // Disconnect cleanup
