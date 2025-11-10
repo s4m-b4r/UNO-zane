@@ -154,6 +154,7 @@ function draw() {
         image(uno, 0, 0, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
         pop()
 
+        text("turn " + turn,width / 2 + (cwidth + 10), height / 2 )
         if (ChangeColourMode == true) {
             ChangeColour()
         }
