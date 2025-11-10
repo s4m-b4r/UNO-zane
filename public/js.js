@@ -51,21 +51,21 @@ function setup() {
 
 }
 
-socket.on("playernum", playernum =>{
-        playernum = playernum
+socket.on("playernum", player_num =>{
+        playernum = player_num
     })
-socket.on("deckArranged", deck=>{
-    deck = deck
+socket.on("deckArranged", deck1=>{
+    deck = deck1
 })
-socket.on("playersHands", playersHands=>{
-    playersHands = playersHands
+socket.on("playersHands", playersHands1=>{
+    playersHands = playersHands1
 })
-socket.on("discardPile", discardPile =>{
-    discardPile = discardPile
+socket.on("discardPile", discardPile1 =>{
+    discardPile = discardPile1
 })
     
     sortHand()
-    
+
 function sortHand() {
 
     for (j = 0; j < maxplayer; j++) {

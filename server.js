@@ -14,7 +14,7 @@ const games = {}; // { roomName: { players: [], started: false, data: {} } }
 
 counter = 1
 playercount = 0
-playernum = 0
+player_num = 0
 // Handle connections
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
@@ -24,9 +24,9 @@ io.on('connection', (socket) => {
     room = "game "+ counter
     socket.emit("roomjoin", room)
     socket.join(room)
-    socket.emit("playernum", playernum)
-    console.log("player " + socket.id + " has joined room " + room + " and is player " + playernum)
-    playernum++
+    socket.emit("playernum", player_num)
+    console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
+    player_num++
     playercount++
     }
     else if(playercount == 4){
@@ -34,13 +34,13 @@ io.on('connection', (socket) => {
       
       counter ++
       playercount = 0
-      playernum = 0
+      player_num = 0
       room = "game "+ counter
     socket.emit("roomjoin", room)
     socket.join(room)
-    socket.emit("playernum", playernum)
-    console.log("player " + socket.id + " has joined room " + room + " and is player " + playernum)
-    playernum++
+    socket.emit("playernum", player_num)
+    console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
+    player_num++
     playercount++
     }
     
@@ -54,46 +54,46 @@ io.on('connection', (socket) => {
 });
 
 function startgame(room){
-  deck = []
+  deck1 = []
   maxplayer = 4
   numberOfCards = 7
-  playersHands = [[], [], [], []]
-discardPile = []
+  playersHands1 = [[], [], [], []]
+discardPile1 = []
 
   for (i = 0; i <= 3; i++) {
         for (j = 0; j <= 12; j++) {
 
             card = [i, j]
-            deck.push(card)
+            deck1.push(card)
             card = [i, j]
-            deck.push(card)
+            deck1.push(card)
 
         }
     }
     for (i = 0; i <= 3; i++) {
-        deck.push([4, 0])
-        deck.push([4, 5])
+        deck1.push([4, 0])
+        deck1.push([4, 5])
     }
-    shuffle(deck)
+    shuffle(deck1)
 
     for (i = 0; i < maxplayer; i++) {
         for (j = 0; j < numberOfCards; j++) {
-            playersHands[i].push(deck.pop())
+            playersHands1[i].push(deck1.pop())
         }
     }
     let countCard = 1
     let bool = true
     while (bool == true) {
-        if (deck[deck.length - countCard][0] != 4) {
-            discardPile.push((deck.splice(deck.length - countCard)[0]))
+        if (deck1[deck1.length - countCard][0] != 4) {
+            discardPile1.push((deck1.splice(deck1.length - countCard)[0]))
             bool = false
         }
         countCard += 1
     }
 
-    io.to(room).emit("deckArranged", deck)
-    io.to(room).emit("playersHands", playersHands)
-    io.to(room).emit("discardPile", discardPile)
+    io.to(room).emit("deckArranged", deck1)
+    io.to(room).emit("playersHands", playersHands1)
+    io.to(room).emit("discardPile", discardPile1)
 }
 
 function shuffle(array) {
