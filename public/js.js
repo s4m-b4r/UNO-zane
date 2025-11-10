@@ -66,7 +66,7 @@ socket.on("discardPile", discardPile =>{
 
 }
 
-if(deck.length == 0){
+if(deck.length != 0){
 function preload() {
     uno = loadImage('Uno - Standard Deck.png')
 }
