@@ -64,11 +64,9 @@ socket.on("discardPile", discardPile =>{
     
     sortHand()
 
-
-    
-    
 }
 
+if(deck.length == 0){
 function preload() {
     uno = loadImage('Uno - Standard Deck.png')
 }
@@ -770,3 +768,4 @@ function CheckPlayerWin() {
 socket.on("playCard", (data) => {
     console.log("card played", data)
 })
+}
