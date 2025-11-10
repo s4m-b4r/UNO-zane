@@ -29,7 +29,9 @@ io.on('connection', (socket) => {
     playernum++
     playercount++
     }
+    
     else{
+      io.to(room).emit("gamestart")
       counter ++
       playercount = 0
       playernum = 0
@@ -39,6 +41,7 @@ io.on('connection', (socket) => {
     console.log("player " + socket.id + " has joined room " + room + " and is player " + playernum)
     playercount++
     }
+    console.log(room)
 })
 
 
@@ -50,7 +53,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Player disconnected:', socket.id);
   });
-})
+});
 
 
 
