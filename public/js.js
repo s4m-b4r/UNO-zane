@@ -155,6 +155,7 @@ function draw() {
         translate(width / 2, height)
 
         for (i = 0; i < playersHands[playernum].length; i++) {
+            console.log("game has started")
             push()
             rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)
             rotate(rotateFrom)
