@@ -154,7 +154,10 @@ function draw() {
         image(uno, 0, 0, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
         pop()
 
-        text("turn " + turn,width / 2 + (cwidth + 10), height / 2 )
+push()
+fill("black")
+       text("turn " + turn,width / 2 + (cwidth + 10), height / 2 )
+pop()
         if (ChangeColourMode == true) {
             ChangeColour()
         }
@@ -205,8 +208,11 @@ function draw() {
         image(uno, 0, 0, cwidth, cheight, beginsheetx + discardPile[discardPile.length - 1][1] * (cwidth + cxoffset), beginsheety + discardPile[discardPile.length - 1][0] * (cheight + cyoffset), cwidth, cheight)
         pop()
 
-        text("player " + playernum, width / 2, height - 50)
-
+        
+push()
+fill("black")
+       text("player " + playernum, width / 2, height - 50)
+pop()
         push()
         imageMode(CENTER)
 
@@ -224,6 +230,7 @@ function draw() {
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
+            fill("black")
             text("player " + tempplayernum, -25, 0)
             pop()
             if (tempplayernum == 0) {
@@ -767,5 +774,5 @@ socket.on("playCard", (data) =>{
         break
     }
     }
-    
+
 })
