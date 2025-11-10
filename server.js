@@ -25,17 +25,18 @@ io.on('connection', (socket) => {
     socket.emit("roomjoin", room)
     socket.join(room)
     socket.emit("playernum", playernum)
-    console.log("player " + socket.id + " has joined room " + room + "and is player " + playernum)
+    console.log("player " + socket.id + " has joined room " + room + " and is player " + playernum)
     playernum++
     playercount++
     }
     else{
       counter ++
       playercount = 0
+      playernum = 0
       room = "game "+ counter
     socket.emit("roomjoin", room)
     socket.join(room)
-    console.log("player " + socket.id + " has joined room " + room )
+    console.log("player " + socket.id + " has joined room " + room + " and is player " + playernum)
     playercount++
     }
 })
