@@ -230,9 +230,14 @@ pop()
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
+            pop()
+            
+            push()
+            translate(width / 2, (height / 8) - 50)
             fill("black")
             text("player " + tempplayernum, -25, 0)
             pop()
+
             if (tempplayernum == 0) {
                 tempplayernum = 1
             }
@@ -256,6 +261,11 @@ pop()
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
+            pop()
+
+            push()
+            translate(width / 4, height / 4)
+            fill("black")
             text("player " + tempplayernum, -25, 0)
             pop()
 
@@ -281,6 +291,11 @@ pop()
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
+            pop()
+
+            push()
+            translate(width * (3 / 4), height / 4)
+            fill("black")
             text("player " + tempplayernum, -25, 0)
             pop()
 
@@ -306,8 +321,14 @@ pop()
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
+            pop()
+
+            push()
+            translate(width / 6, height / 2)
+            fill("black")
             text("player " + tempplayernum, -25, 0)
             pop()
+
             if (tempplayernum == 0) {
                 tempplayernum = 3
             }
@@ -329,8 +350,14 @@ pop()
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
+            pop()
+            
+            push()
+            translate(width / 2, (height / 8) - 50)
+            fill("black")
             text("player " + tempplayernum, -25, 0)
             pop()
+
             if (tempplayernum < 2) {
                 tempplayernum += 2
             }
@@ -351,6 +378,11 @@ pop()
                 image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                 pop()
             }
+            pop()
+            
+            push()
+            translate(width * (3 / 4), height / 2)
+            fill("black")
             text("player " + tempplayernum, -25, 0)
             pop()
 
@@ -402,6 +434,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                         drawCardP += 4
                         DrawPowerCard()
                     }
@@ -414,6 +447,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                         drawCardP += 4
                         DrawPowerCard()
                     }
@@ -426,6 +460,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                         drawCardP += 4
                         DrawPowerCard()
                     }
@@ -439,6 +474,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                         drawCardP += 4
                         DrawPowerCard()
                     }
@@ -455,6 +491,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                     }
                     else if (yellow == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 4
@@ -465,6 +502,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                     }
                     else if (green == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 2
@@ -475,6 +513,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                     }
                     else if (blue == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 3
@@ -486,7 +525,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
-
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                     }
                 }
             }
@@ -507,11 +546,11 @@ function mouseClicked() {
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
-
                         }
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                         drawCardP += 4
                         DrawPowerCard()
                     }
@@ -524,6 +563,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                         drawCardP += 4
                         DrawPowerCard()
                     }
@@ -536,6 +576,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                         drawCardP += 4
                         DrawPowerCard()
                     }
@@ -549,6 +590,7 @@ function mouseClicked() {
                         else if (turnClockWise == false) {
                             turn -= 1
                         }
+                        socket.emit("turn change", {Turn: turn, room: room_ID})
                         drawCardP += 4
                         DrawPowerCard()
                     }
@@ -636,6 +678,7 @@ function cardEffect(effect) {
         else if (turnClockWise == false) {
             turn -= 1
         }
+        socket.emit("turn change", {Turn: turn, room: room_ID})
     }
 
     if (turnClockWise == true && ChangeColourMode == false) {
@@ -645,6 +688,7 @@ function cardEffect(effect) {
         else if (effect == 11 && maxplayer != 2) {
             turn -= 1
         }
+        socket.emit("turn change", {Turn: turn, room: room_ID})
 
         if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
             DrawPowerCard()
@@ -657,6 +701,7 @@ function cardEffect(effect) {
         else if (effect == 11 && maxplayer != 2) {
             turn -= 1
         }
+        socket.emit("turn change", {Turn: turn, room: room_ID})
 
         if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
             DrawPowerCard()
@@ -697,15 +742,18 @@ function drawCard() {
         else if (turnClockWise == false) {
             turn -= 1
         }
+        socket.emit("turn change", {Turn: turn, room: room_ID})
     }
 }
 
 function PlayerManager() {
     if (turn < 0) {
         turn += maxplayer
+        socket.emit("turn change", {Turn: turn, room: room_ID})
     }
     else if (turn > maxplayer - 1) {
         turn -= maxplayer
+        socket.emit("turn change", {Turn: turn, room: room_ID})
     }
 }
 
@@ -730,11 +778,13 @@ function DrawPowerCard() {
 
                 if (turnClockWise == true) {
                     turn += 1
+                    socket.emit("turn change", {Turn: turn, room: room_ID})
                     break
                 }
 
                 else if (turnClockWise == false) {
                     turn -= 1
+                    socket.emit("turn change", {Turn: turn, room: room_ID})
                     break
                 }
             }
@@ -774,5 +824,8 @@ socket.on("playCard", (data) =>{
         break
     }
     }
+})
 
+socket.on("turn change", (data) =>{
+    turn = data.Turn
 })
