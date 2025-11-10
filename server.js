@@ -18,22 +18,21 @@ io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
   socket.on("createRoom", () => {
-const roomID = counter + 1
-counter += 1
-room[roomID] = {
-  roomID : roomID,
-  playersHands : [[], [], [], []],
-  deck : [],
-  discardPile : []
-}
+    room = "game "+ counter
+    counter++
+    socket.emit("roomjoin", room)
+    socket.join(room)
+})
   })
-  socket.join(roomID)
+  
 console.log("player " + socket.id + " has joined room " + roomID )
-  // Disconnect cleanup
+  
+// Disconnect cleanup
+  
   socket.on('disconnect', () => {
     console.log('Player disconnected:', socket.id);
   });
-});
+;
 
 
 
