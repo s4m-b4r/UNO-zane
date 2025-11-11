@@ -737,6 +737,7 @@ function ChangeColour() {
 function drawCard() {
     if (mouseX > (width / 2 - (cwidth + 10 + cwidth / 2)) && mouseX < (width / 2 - (cwidth + 10 - cwidth / 2)) && mouseY > (height / 2 - cheight / 2) && mouseY < (height / 2 + cheight / 2)) {
         playersHands[playernum].push(deck.pop())
+        socket.emit("draw card", {cardremoved: playersHands[playernum][playersHands[playernum].length - 1], player: playernum, room: room_ID})
         sortHand()
         if (turnClockWise == true) {
             turn += 1
@@ -837,4 +838,9 @@ socket.on("turn change", (data) =>{
 
 socket.on("turn order", (data) =>{
     turnClockWise = data.turnOrder
+})
+
+socket.on("draw card", (data) =>{
+    playersHands[playernum].push(deck.pop())
+    sortHand()
 })

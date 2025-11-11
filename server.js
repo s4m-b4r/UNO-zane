@@ -68,6 +68,11 @@ socket.on("turn order", (data) =>{
   let Room = data.room
   socket.broadcast.to(Room).emit("turn order", data)
 })
+
+socket.on("draw card", (data) =>{
+  let Room = data.room
+  socket.broadcast.to(Room).emit("draw card", data)
+})
 // Disconnect cleanup
   
   socket.on('disconnect', () => {
