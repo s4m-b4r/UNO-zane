@@ -820,8 +820,10 @@ socket.on("playerWon", (data) => {
 
 socket.on("playCard", (data) =>{
     discardPile.push(data.discardedCard)
+    console.log(data.discardedCard)
     for (i = 0; i < playersHands[data.player].length; i++){
-    if(playersHands[data.player][i] == data.discardedCard){
+    console.log("player card is " + playersHands[data.player][i])
+        if(playersHands[data.player][i] == data.discardedCard){
         playersHands[data.player].splice(i, 1)
         break
     }
