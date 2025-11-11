@@ -63,6 +63,11 @@ socket.on("turn change", (data) => {
 let Room = data.room
 socket.broadcast.to(Room).emit("turn change", data)
 })
+
+socket.on("turn order", (data) =>{
+  let Room = data.room
+  socket.broadcast.to(Room).emit("turn order", data)
+})
 // Disconnect cleanup
   
   socket.on('disconnect', () => {

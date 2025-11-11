@@ -665,9 +665,11 @@ function cardEffect(effect) {
     else if (effect == 11) {
         if (turnClockWise == true) {
             turnClockWise = false
+            socket.emit("turn order", {turnOrder: turnClockWise, room: room_ID})
         }
         else {
             turnClockWise = true
+            socket.emit("turn order", {turnOrder: turnClockWise, room: room_ID})
         }
     }
 
@@ -828,4 +830,8 @@ socket.on("playCard", (data) =>{
 
 socket.on("turn change", (data) =>{
     turn = data.Turn
+})
+
+socket.on("turn order", (data) =>{
+    turnClockWise = data.turnOrder
 })
