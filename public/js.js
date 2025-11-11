@@ -787,6 +787,7 @@ function DrawPowerCard() {
                 for (j = 0; j < drawCardP; j++) {
                     console.log(deck[deck.length - 1])
                     playersHands[playernum].push(deck.pop())
+                    socket.emit("draw card", {cardremoved: playersHands[playernum][playersHands[playernum].length - 1], player: playernum, room: room_ID})
                 }
                 sortHand()
                 drawCardP = 0
@@ -837,9 +838,7 @@ socket.on("playCard", (data) =>{
     discardPile.push(data.discardedCard)
     console.log(data.discardedCard)
     for (i = 0; i < playersHands[data.player].length; i++){
-    console.log("player card is " + playersHands[data.player][i])
         if(playersHands[data.player][i][0] == data.discardedCard[0] && playersHands[data.player][i][1] == data.discardedCard[1]){
-        console.log("removing card" + playersHands[data.player][i])
             playersHands[data.player].splice(i, 1)
         break
     }
