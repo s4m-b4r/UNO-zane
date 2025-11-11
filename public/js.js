@@ -824,7 +824,8 @@ socket.on("playCard", (data) =>{
     for (i = 0; i < playersHands[data.player].length; i++){
     console.log("player card is " + playersHands[data.player][i])
         if(playersHands[data.player][i] == data.discardedCard){
-        playersHands[data.player].splice(i, 1)
+        console.log("removing card" + playersHands[data.player][i])
+            playersHands[data.player].splice(i, 1)
         break
     }
     }
