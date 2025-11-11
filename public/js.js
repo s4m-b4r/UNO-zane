@@ -426,6 +426,7 @@ function mouseClicked() {
                 if (discardPile[discardPile.length - 1][1] == 5) {
                     if (red == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 1
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -440,6 +441,7 @@ function mouseClicked() {
                     }
                     else if (yellow == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 4
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -453,6 +455,7 @@ function mouseClicked() {
                     }
                     else if (green == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 2
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -484,6 +487,7 @@ function mouseClicked() {
                 else if (discardPile[discardPile.length - 1][1] == 0) {
                     if (red == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 1
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -495,6 +499,7 @@ function mouseClicked() {
                     }
                     else if (yellow == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 4
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -506,6 +511,7 @@ function mouseClicked() {
                     }
                     else if (green == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 2
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -517,6 +523,7 @@ function mouseClicked() {
                     }
                     else if (blue == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 3
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
 
                         if (turnClockWise == true) {
@@ -543,6 +550,7 @@ function mouseClicked() {
                 if (discardPile[discardPile.length - 1][1] == 5) {
                     if (red == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 1
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -556,6 +564,7 @@ function mouseClicked() {
                     }
                     else if (yellow == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 4
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -569,6 +578,7 @@ function mouseClicked() {
                     }
                     else if (green == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 2
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
                         if (turnClockWise == true) {
                             turn += 1
@@ -582,6 +592,7 @@ function mouseClicked() {
                     }
                     else if (blue == true && white == false) {
                         discardPile[discardPile.length - 1][1] += 3
+                        socket.emit("colour change", {colourChanged: discardPile[discardPile.length - 1][1], room: room_ID})
                         ChangeColourMode = false
 
                         if (turnClockWise == true) {
@@ -843,4 +854,8 @@ socket.on("turn order", (data) =>{
 socket.on("draw card", (data) =>{
     playersHands[data.player].push(deck.pop())
     sortHand()
+})
+
+socket.on("colour change", (data) =>{
+    discardPile[discardPile.length - 1][1] = data.colourChanged
 })

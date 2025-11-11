@@ -73,6 +73,11 @@ socket.on("draw card", (data) =>{
   let Room = data.room
   socket.broadcast.to(Room).emit("draw card", data)
 })
+
+socket.on("colour change", (data) =>{
+  let Room = data.room
+  socket.broadcast.to(Room).emit("colour change", data)
+})
 // Disconnect cleanup
   
   socket.on('disconnect', () => {
