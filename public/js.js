@@ -719,7 +719,7 @@ function cardEffect(effect) {
         socket.emit("turn change", {Turn: turn, room: room_ID})
 
         if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
-            DrawPowerCard()
+            socket.emit("draw power card", {room: room_ID, drawpower: drawCardP})
         }
     }
 }
