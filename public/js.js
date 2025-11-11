@@ -841,6 +841,6 @@ socket.on("turn order", (data) =>{
 })
 
 socket.on("draw card", (data) =>{
-    playersHands[playernum].push(deck.pop())
+    playersHands[data.player].push(deck.pop())
     sortHand()
 })
