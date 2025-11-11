@@ -92,7 +92,7 @@ socket.on("draw power card", (data) =>{
 
 function startgame(room){
   deck1 = []
-  maxplayer = 4
+  maxplayer = 2
   numberOfCards = 7
   playersHands1 = [[], [], [], []]
 discardPile1 = []
