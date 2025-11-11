@@ -643,14 +643,12 @@ function playCard() {
     else if (drawCardP != 0) {
         if (cardNumber != -2) {
             if (playersHands[playernum][cardNumber][0] == 4 && playersHands[playernum][cardNumber][1] == 5) {
-                console.log("attempting to discard during draw phase")
                 discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
                 socket.emit("playCard", { discardedCard: discardPile[discardPile.length - 1], room : room_ID, player: playernum })
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
             else if (playersHands[playernum][cardNumber][1] == 10) {
-                console.log("attempting to discard during draw phase")
                 discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
                 socket.emit("playCard", { discardedCard: discardPile[discardPile.length - 1], room : room_ID, player: playernum })
                 CheckPlayerWin()
