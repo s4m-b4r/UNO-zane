@@ -78,6 +78,11 @@ socket.on("colour change", (data) =>{
   let Room = data.room
   socket.broadcast.to(Room).emit("colour change", data)
 })
+
+socket.on("draw power card", (data) =>{
+  let Room = data.room
+  socket.broadcast.to(Room).emit("draw power card", data)
+})
 // Disconnect cleanup
   
   socket.on('disconnect', () => {
