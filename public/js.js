@@ -822,7 +822,7 @@ socket.on("playCard", (data) =>{
     discardPile.push(data.discardedCard)
     for (i = 0; i < playersHands[data.player].length; i++){
     if(playersHands[data.player][i] == data.discardedCard){
-        playersHands[playernum].splice(i, 1)
+        playersHands[data.player].splice(i, 1)
         break
     }
     }
