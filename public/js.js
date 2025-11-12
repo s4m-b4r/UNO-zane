@@ -225,6 +225,8 @@ function draw() {
                     pop()
                 }
             }
+            pop()
+
             push()
             imageMode(CENTER)
             translate(width / 2, height / 2)
