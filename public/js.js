@@ -133,15 +133,25 @@ function draw() {
 
 
             if (mouseY >= (height - (250 + 53))) {
-                if (startv.angleBetween(currentpos) < 1.4 && startv.angleBetween(currentpos) >= 0) {
-                    cardNumber = Math.round(startv.angleBetween(currentpos) / (1.4 / playersHands[playernum].length)) - 1
-                    if (cardNumber < 0) {
-                        cardNumber = -2
+                if (playersHands[playernum].length >= 4) {
+                    if (startv.angleBetween(currentpos) < 1.4 && startv.angleBetween(currentpos) >= 0) {
+                        cardNumber = Math.round(startv.angleBetween(currentpos) / (1.4 / playersHands[playernum].length)) - 1
+                        if (cardNumber < 0) {
+                            cardNumber = -2
+                        }
                     }
 
                     // console.log("the card i am on is " + cardNumber)
                     // console.log("the angle to rotate from is" + 1.4 / numberOfCards)
                     // console.log("the angle i am on is" + startv.angleBetween(currentpos))
+                }
+                else if (playersHands[playernum].length <= 3) {
+                    if (startv.angleBetween(currentpos) < 0.7 && startv.angleBetween(currentpos) >= 0) {
+                        cardNumber = Math.round(startv.angleBetween(currentpos) / (0.7 / playersHands[playernum].length)) - 1
+                        if (cardNumber < 0) {
+                            cardNumber = -2
+                        }
+                    }
                 }
             }
             else {
