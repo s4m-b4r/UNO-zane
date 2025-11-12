@@ -32,7 +32,7 @@ let cardNumber;
 let drawCardP = 0;
 let turn = 0;
 let playernum;
-let maxplayer = 2;
+let maxplayer = 3;
 let ChangeColourMode = false
 let turnClockWise = true
 let EndGame = false
