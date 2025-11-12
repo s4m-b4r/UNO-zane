@@ -207,8 +207,6 @@ function draw() {
                         image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
                     }
-
-
                     pop()
                 }
                 else if (playersHands[playernum].length <= 3) {
@@ -861,7 +859,7 @@ function CheckPlayerWin() {
             turn += 1
         }
         let playerwinstat = {
-            turn1: turn,
+            turn1: playernum,
             gameStatus: EndGame,
             room: room_ID
         }
@@ -872,7 +870,7 @@ function CheckPlayerWin() {
 
 socket.on("playerWon", (data) => {
     EndGame = data.gameStatus
-    turn = data.turn1
+    turn = data.playernum
 })
 
 socket.on("playCard", (data) => {

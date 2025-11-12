@@ -21,116 +21,116 @@ io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
   socket.on("createRoom", () => {
-    if(playercount <=1){
-    room = "game "+ counter
-    socket.emit("roomjoin", room)
-    socket.join(room)
-    socket.emit("playernum", player_num)
-    console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
-    player_num++
-    playercount++
-    if(playercount == 2){
-      startgame(room)
+    if (playercount <= 2) {
+      room = "game " + counter
+      socket.emit("roomjoin", room)
+      socket.join(room)
+      socket.emit("playernum", player_num)
+      console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
+      player_num++
+      playercount++
+      if (playercount == 2) {
+        startgame(room)
+      }
     }
-    }
-    else if(playercount == 2){
-      
-      counter ++
+    else if (playercount == 3) {
+
+      counter++
       playercount = 0
       player_num = 0
-      room = "game "+ counter
-    socket.emit("roomjoin", room)
-    socket.join(room)
-    socket.emit("playernum", player_num)
-    console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
-    player_num++
-    playercount++
+      room = "game " + counter
+      socket.emit("roomjoin", room)
+      socket.join(room)
+      socket.emit("playernum", player_num)
+      console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
+      player_num++
+      playercount++
     }
   }
-)
-  
-socket.on("playerWon", (data) =>{
-  let Room = data.room
-  socket.broadcast.to(Room).emit("playerWon", data)
-})
+  )
 
-socket.on("playCard", (data) =>{
-  let Room = data.room
-  socket.broadcast.to(Room).emit("playCard", data)
-})
+  socket.on("playerWon", (data) => {
+    let Room = data.room
+    socket.broadcast.to(Room).emit("playerWon", data)
+  })
 
-socket.on("turn change", (data) => {
-let Room = data.room
-socket.broadcast.to(Room).emit("turn change", data)
-})
+  socket.on("playCard", (data) => {
+    let Room = data.room
+    socket.broadcast.to(Room).emit("playCard", data)
+  })
 
-socket.on("turn order", (data) =>{
-  let Room = data.room
-  socket.broadcast.to(Room).emit("turn order", data)
-})
+  socket.on("turn change", (data) => {
+    let Room = data.room
+    socket.broadcast.to(Room).emit("turn change", data)
+  })
 
-socket.on("draw card", (data) =>{
-  let Room = data.room
-  socket.broadcast.to(Room).emit("draw card", data)
-})
+  socket.on("turn order", (data) => {
+    let Room = data.room
+    socket.broadcast.to(Room).emit("turn order", data)
+  })
 
-socket.on("colour change", (data) =>{
-  let Room = data.room
-  socket.broadcast.to(Room).emit("colour change", data)
-})
+  socket.on("draw card", (data) => {
+    let Room = data.room
+    socket.broadcast.to(Room).emit("draw card", data)
+  })
 
-socket.on("draw power card", (data) =>{
-  let Room = data.room
-  socket.broadcast.to(Room).emit("draw power card", data)
-})
-// Disconnect cleanup
-  
+  socket.on("colour change", (data) => {
+    let Room = data.room
+    socket.broadcast.to(Room).emit("colour change", data)
+  })
+
+  socket.on("draw power card", (data) => {
+    let Room = data.room
+    socket.broadcast.to(Room).emit("draw power card", data)
+  })
+  // Disconnect cleanup
+
   socket.on('disconnect', () => {
     console.log('Player disconnected:', socket.id);
   });
 });
 
-function startgame(room){
+function startgame(room) {
   deck1 = []
-  maxplayer = 2
+  maxplayer = 3
   numberOfCards = 7
   playersHands1 = [[], [], [], []]
-discardPile1 = []
+  discardPile1 = []
 
   for (i = 0; i <= 3; i++) {
-        for (j = 0; j <= 12; j++) {
+    for (j = 0; j <= 12; j++) {
 
-            card = [i, j]
-            deck1.push(card)
-            card = [i, j]
-            deck1.push(card)
+      card = [i, j]
+      deck1.push(card)
+      card = [i, j]
+      deck1.push(card)
 
-        }
     }
-    for (i = 0; i <= 3; i++) {
-        deck1.push([4, 0])
-        deck1.push([4, 5])
-    }
-    shuffle(deck1)
+  }
+  for (i = 0; i <= 3; i++) {
+    deck1.push([4, 0])
+    deck1.push([4, 5])
+  }
+  shuffle(deck1)
 
-    for (i = 0; i < maxplayer; i++) {
-        for (j = 0; j < numberOfCards; j++) {
-            playersHands1[i].push(deck1.pop())
-        }
+  for (i = 0; i < maxplayer; i++) {
+    for (j = 0; j < numberOfCards; j++) {
+      playersHands1[i].push(deck1.pop())
     }
-    let countCard = 1
-    let bool = true
-    while (bool == true) {
-        if (deck1[deck1.length - countCard][0] != 4) {
-            discardPile1.push((deck1.splice(deck1.length - countCard)[0]))
-            bool = false
-        }
-        countCard += 1
+  }
+  let countCard = 1
+  let bool = true
+  while (bool == true) {
+    if (deck1[deck1.length - countCard][0] != 4) {
+      discardPile1.push((deck1.splice(deck1.length - countCard)[0]))
+      bool = false
     }
+    countCard += 1
+  }
 
-    io.to(room).emit("deckArranged", deck1)
-    io.to(room).emit("playersHands", playersHands1)
-    io.to(room).emit("discardPile", discardPile1)
+  io.to(room).emit("deckArranged", deck1)
+  io.to(room).emit("playersHands", playersHands1)
+  io.to(room).emit("discardPile", discardPile1)
 }
 
 function shuffle(array) {
