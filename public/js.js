@@ -167,41 +167,65 @@ function draw() {
             translate(width / 2, height)
 
             for (i = 0; i < playersHands[playernum].length; i++) {
-                push()
-                rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)
-                rotate(rotateFrom)
+                if (playersHands[playernum].length >= 4) {
+                    push()
+                    rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)
+                    rotate(rotateFrom)
 
 
-                if (i == cardNumber) {
-                    image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                    if (i == cardNumber) {
+                        image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
-                }
-
-                else if (i == cardNumber - 1) {
-                    rotate(-(1.4 / playersHands[playernum].length) * 0.8)
-                    image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
-
-                }
-
-                else if (i == cardNumber + 1) {
-                    rotate((1.4 / playersHands[playernum].length) * 0.8)
-                    image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
-
-                }
-
-                else {
-                    if (i > cardNumber + 1 && cardNumber != -2) {
-                        rotate(1.4 / playersHands[playernum].length)
                     }
-                    image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
+                    else if (i == cardNumber - 1) {
+                        rotate(-(1.4 / playersHands[playernum].length) * 0.8)
+                        image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
+                    }
+
+                    else if (i == cardNumber + 1) {
+                        rotate((1.4 / playersHands[playernum].length) * 0.8)
+                        image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
+                    }
+
+                    else {
+                        if (i > cardNumber + 1 && cardNumber != -2) {
+                            rotate(1.4 / playersHands[playernum].length)
+                        }
+                        image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
+                    }
+
+
+                    pop()
                 }
+                else if (playersHands[playernum].length <= 3) {
+                    push()
+                    rotateFrom = map(i, 0, playersHands[playernum].length, -0.3, 0.4)
+                    rotate(rotateFrom)
 
+                    if (i == cardNumber) {
+                        image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                    }
+                    else if (i == cardNumber - 1) {
+                        image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
+                    }
+
+                    else if (i == cardNumber + 1) {
+                        image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
+                    }
+
+                    else {
+                        image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                    }
+                    pop()
+                }
                 pop()
             }
-            pop()
-
             push()
             imageMode(CENTER)
             translate(width / 2, height / 2)
@@ -213,6 +237,7 @@ function draw() {
             fill("black")
             text("player " + playernum, width / 2, height - 50)
             pop()
+
             push()
             imageMode(CENTER)
 
@@ -399,7 +424,10 @@ function draw() {
 
 
         else if (EndGame == true) {
+            push()
+            fill("black")
             text("player " + turn + " won the game", width / 2 - 100, height / 2 - 100, 200, 50)
+            pop()
             console.log("player " + turn + " won the game")
         }
     }
