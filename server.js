@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
       console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
       player_num++
       playercount++
-      if (playercount == 2) {
+      if (playercount == 3) {
         startgame(room)
       }
     }
