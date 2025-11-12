@@ -224,7 +224,6 @@ function draw() {
                     }
                     pop()
                 }
-                pop()
             }
             push()
             imageMode(CENTER)
