@@ -879,6 +879,7 @@ function CheckPlayerWin() {
 }
 
 function createRoom() {
+    button.hide()
     console.log("trying to create a game")
     socket.emit("createRoom")
     socket.on("createRoom", (data) => {
