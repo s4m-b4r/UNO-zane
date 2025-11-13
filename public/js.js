@@ -46,9 +46,6 @@ function setup() {
     v2 = createVector((width / 2) - 100 * Math.sin(0.6), (height) - 100 * Math.cos(0.6))
     v1 = createVector(width / 2, height)
     angleMode(RADIANS)
-    menuButtons = [
-        new button
-    ]
 }
 
 socket.on("playernum", player_num => {
@@ -128,6 +125,7 @@ function draw() {
 
         case ("gameMade"):
             push()
+            button = []
             background("black")
             fill("white")
             text("game not started", width / 2, height / 2)
