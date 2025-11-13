@@ -40,6 +40,7 @@ let room_ID;
 let gameStarted = false;
 let gameMode = "gameLoader"
 
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     v2 = createVector((width / 2) - 100 * Math.sin(0.6), (height) - 100 * Math.cos(0.6))
@@ -119,8 +120,7 @@ function draw() {
             background("white")
             button = createButton("create room")
             button.position(width / 2, height / 2)
-            button.mousePressed(socket.emit("createRoom"))
-            console.log("trying to make a game")
+            button.mousePressed(createRoom)
             pop()
             break
 
@@ -879,6 +879,7 @@ function CheckPlayerWin() {
 }
 
 function createRoom() {
+    console.log("trying to create a game")
     socket.emit("createRoom")
     socket.on("createRoom", room => {
         room_ID = data.room
