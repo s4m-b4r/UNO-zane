@@ -46,6 +46,14 @@ function setup() {
     v2 = createVector((width / 2) - 100 * Math.sin(0.6), (height) - 100 * Math.cos(0.6))
     v1 = createVector(width / 2, height)
     angleMode(RADIANS)
+    if (gameMode == "Menu") {
+        push()
+        background("white")
+        button = createButton("create room")
+        button.position(width / 2, height / 2)
+        button.mousePressed(createRoom)
+        pop()
+    }
 }
 
 socket.on("playernum", player_num => {
@@ -114,14 +122,6 @@ function preload() {
 
 function draw() {
     switch (gameMode) {
-        case ("Menu"):
-            push()
-            background("white")
-            button = createButton("create room")
-            button.position(width / 2, height / 2)
-            button.mousePressed(createRoom)
-            pop()
-            break
 
         case ("gameMade"):
             push()
