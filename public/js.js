@@ -120,7 +120,7 @@ function draw() {
             button = createButton("create room")
             button.position(width / 2, height / 2)
             button.mousePressed(socket.emit("createRoom"))
-            console.log()
+            console.log("trying to make a game")
             pop()
             break
 
