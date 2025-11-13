@@ -38,17 +38,13 @@ let turnClockWise = true
 let EndGame = false
 let room_ID;
 let gameStarted = false;
+let gameMode = "gameLoader"
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
     v2 = createVector((width / 2) - 100 * Math.sin(0.6), (height) - 100 * Math.cos(0.6))
     v1 = createVector(width / 2, height)
     angleMode(RADIANS)
-
-    socket.emit("createRoom")
-    socket.on("roomjoin", room => {
-        room_ID = room
-    })
 
 }
 
@@ -64,7 +60,7 @@ socket.on("discardPile", discardPile1 => {
 socket.on("playersHands", playersHands1 => {
     playersHands = playersHands1
     sortHand()
-    gameStarted = true
+    gameMode = "gameStarted"
 })
 
 
@@ -117,330 +113,342 @@ function preload() {
 }
 
 function draw() {
-    if (gameStarted == false) {
-        background("black")
-        fill("white")
-        text("game not started", width / 2, height / 2)
-    }
+    switch (gameMode) {
+        case ("gameLoader"):
+            push()
+            background("white")
+            button = createButton("create room")
+            button.position(width / 2, height / 2)
+            button.mousePressed(socket.emit("createRoom"))
+            pop()
+            break
 
-    else if (gameStarted == true) {
-        background("white")
-        PlayerManager()
-        if (EndGame == false) {
-            v3 = createVector(mouseX, mouseY)
-            currentpos = v3.sub(v1)
-            startv = v2.sub(v1)
+        case ("gameMade"):
+            push()
+            background("black")
+            fill("white")
+            text("game not started", width / 2, height / 2)
+            text("room number " + room_ID, width / 2, height / 2 - 50)
+            pop()
+            break
+
+        case ("gameStarted"):
+            background("white")
+            PlayerManager()
+            if (EndGame == false) {
+                v3 = createVector(mouseX, mouseY)
+                currentpos = v3.sub(v1)
+                startv = v2.sub(v1)
 
 
-            if (mouseY >= (height - (250 + 53))) {
-                if (playersHands[playernum].length >= 4) {
-                    if (startv.angleBetween(currentpos) < 1.4 && startv.angleBetween(currentpos) >= 0) {
-                        cardNumber = Math.round(startv.angleBetween(currentpos) / (1.4 / playersHands[playernum].length)) - 1
-                        if (cardNumber < 0) {
-                            cardNumber = -2
+                if (mouseY >= (height - (250 + 53))) {
+                    if (playersHands[playernum].length >= 4) {
+                        if (startv.angleBetween(currentpos) < 1.4 && startv.angleBetween(currentpos) >= 0) {
+                            cardNumber = Math.round(startv.angleBetween(currentpos) / (1.4 / playersHands[playernum].length)) - 1
+                            if (cardNumber < 0) {
+                                cardNumber = -2
+                            }
+                        }
+
+                        // console.log("the card i am on is " + cardNumber)
+                        // console.log("the angle to rotate from is" + 1.4 / numberOfCards)
+                        // console.log("the angle i am on is" + startv.angleBetween(currentpos))
+                    }
+                    else if (playersHands[playernum].length <= 3) {
+                        if (startv.angleBetween(currentpos) < 0.7 && startv.angleBetween(currentpos) >= 0) {
+                            cardNumber = Math.round(startv.angleBetween(currentpos) / (0.7 / playersHands[playernum].length)) - 1
+                            if (cardNumber < 0) {
+                                cardNumber = -2
+                            }
                         }
                     }
-
-                    // console.log("the card i am on is " + cardNumber)
-                    // console.log("the angle to rotate from is" + 1.4 / numberOfCards)
-                    // console.log("the angle i am on is" + startv.angleBetween(currentpos))
                 }
-                else if (playersHands[playernum].length <= 3) {
-                    if (startv.angleBetween(currentpos) < 0.7 && startv.angleBetween(currentpos) >= 0) {
-                        cardNumber = Math.round(startv.angleBetween(currentpos) / (0.7 / playersHands[playernum].length)) - 1
-                        if (cardNumber < 0) {
-                            cardNumber = -2
+                else {
+                    cardNumber = -2
+                }
+
+                push()
+                imageMode(CENTER)
+                translate(width / 2 - (cwidth + 10), height / 2)
+                image(uno, 0, 0, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                pop()
+
+                push()
+                fill("black")
+                text("player " + turn + "'s turn", width / 2 + (cwidth + 10), height / 2)
+                pop()
+                if (ChangeColourMode == true) {
+                    ChangeColour()
+                }
+
+                push()
+                imageMode(CENTER)
+                translate(width / 2, height)
+
+                for (i = 0; i < playersHands[playernum].length; i++) {
+                    if (playersHands[playernum].length >= 4) {
+                        push()
+                        rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)
+                        rotate(rotateFrom)
+
+
+                        if (i == cardNumber) {
+                            image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
                         }
-                    }
-                }
-            }
-            else {
-                cardNumber = -2
-            }
 
-            push()
-            imageMode(CENTER)
-            translate(width / 2 - (cwidth + 10), height / 2)
-            image(uno, 0, 0, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
-            pop()
+                        else if (i == cardNumber - 1) {
+                            rotate(-(1.4 / playersHands[playernum].length) * 0.8)
+                            image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
-            push()
-            fill("black")
-            text("player " + turn + "'s turn", width / 2 + (cwidth + 10), height / 2)
-            pop()
-            if (ChangeColourMode == true) {
-                ChangeColour()
-            }
-
-            push()
-            imageMode(CENTER)
-            translate(width / 2, height)
-
-            for (i = 0; i < playersHands[playernum].length; i++) {
-                if (playersHands[playernum].length >= 4) {
-                    push()
-                    rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)
-                    rotate(rotateFrom)
-
-
-                    if (i == cardNumber) {
-                        image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
-
-                    }
-
-                    else if (i == cardNumber - 1) {
-                        rotate(-(1.4 / playersHands[playernum].length) * 0.8)
-                        image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
-
-                    }
-
-                    else if (i == cardNumber + 1) {
-                        rotate((1.4 / playersHands[playernum].length) * 0.8)
-                        image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
-
-                    }
-
-                    else {
-                        if (i > cardNumber + 1 && cardNumber != -2) {
-                            rotate(1.4 / playersHands[playernum].length)
                         }
-                        image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
 
+                        else if (i == cardNumber + 1) {
+                            rotate((1.4 / playersHands[playernum].length) * 0.8)
+                            image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
+                        }
+
+                        else {
+                            if (i > cardNumber + 1 && cardNumber != -2) {
+                                rotate(1.4 / playersHands[playernum].length)
+                            }
+                            image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
+                        }
+                        pop()
+                    }
+                    else if (playersHands[playernum].length <= 3) {
+                        push()
+                        rotateFrom = map(i, 0, playersHands[playernum].length, -0.3, 0.4)
+                        rotate(rotateFrom)
+
+                        if (i == cardNumber) {
+                            image(uno, 0, -275, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                        }
+                        else if (i == cardNumber - 1) {
+                            image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
+                        }
+
+                        else if (i == cardNumber + 1) {
+                            image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+
+                        }
+
+                        else {
+                            image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                        }
+                        pop()
+                    }
+                }
+                pop()
+
+                push()
+                imageMode(CENTER)
+                translate(width / 2, height / 2)
+                image(uno, 0, 0, cwidth, cheight, beginsheetx + discardPile[discardPile.length - 1][1] * (cwidth + cxoffset), beginsheety + discardPile[discardPile.length - 1][0] * (cheight + cyoffset), cwidth, cheight)
+                pop()
+
+
+                push()
+                fill("black")
+                text("player " + playernum, width / 2, height - 50)
+                pop()
+
+                push()
+                imageMode(CENTER)
+
+                if (maxplayer == 2) {
+                    tempplayernum = playernum + 1
+                    if (tempplayernum == 2) {
+                        tempplayernum = 0
+                    }
+                    push()
+                    translate(width / 2, (height / 8) - 50)
+                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                        push()
+                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 2.3, 4)
+                        rotate(rotateFrom)
+                        image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                        pop()
                     }
                     pop()
-                }
-                else if (playersHands[playernum].length <= 3) {
-                    push()
-                    rotateFrom = map(i, 0, playersHands[playernum].length, -0.3, 0.4)
-                    rotate(rotateFrom)
 
-                    if (i == cardNumber) {
-                        image(uno, 0, -275, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                    push()
+                    translate(width / 2, (height / 8) - 50)
+                    fill("black")
+                    text("player " + tempplayernum, -25, 0)
+                    pop()
+
+                    if (tempplayernum == 0) {
+                        tempplayernum = 1
                     }
-                    else if (i == cardNumber - 1) {
-                        image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                    else if (tempplayernum == 1) {
+                        tempplayernum = 0
+                    }
+                }
 
+                else if (maxplayer == 3) {
+                    tempplayernum = playernum + 1
+                    if (tempplayernum == 3) {
+                        tempplayernum = 0
                     }
 
-                    else if (i == cardNumber + 1) {
-                        image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                    push()
+                    translate(width / 4, height / 4)
+                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                        push()
+                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 1.5, 3.2)
+                        rotate(rotateFrom)
+                        image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                        pop()
+                    }
+                    pop()
 
+                    push()
+                    translate(width / 4, height / 4)
+                    fill("black")
+                    text("player " + tempplayernum, -25, 0)
+                    pop()
+
+                    if (tempplayernum == 0) {
+                        tempplayernum = 2
+                    }
+                    else if (tempplayernum != 0) {
+                        tempplayernum -= 1
                     }
 
-                    else {
-                        image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
-                    }
-                    pop()
-                }
-            }
-            pop()
-
-            push()
-            imageMode(CENTER)
-            translate(width / 2, height / 2)
-            image(uno, 0, 0, cwidth, cheight, beginsheetx + discardPile[discardPile.length - 1][1] * (cwidth + cxoffset), beginsheety + discardPile[discardPile.length - 1][0] * (cheight + cyoffset), cwidth, cheight)
-            pop()
-
-
-            push()
-            fill("black")
-            text("player " + playernum, width / 2, height - 50)
-            pop()
-
-            push()
-            imageMode(CENTER)
-
-            if (maxplayer == 2) {
-                tempplayernum = playernum + 1
-                if (tempplayernum == 2) {
-                    tempplayernum = 0
-                }
-                push()
-                translate(width / 2, (height / 8) - 50)
-                for (i = 0; i < playersHands[tempplayernum].length; i++) {
-                    push()
-                    rotateFrom = map(i, 0, playersHands[tempplayernum].length, 2.3, 4)
-                    rotate(rotateFrom)
-                    image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
-                    pop()
-                }
-                pop()
-
-                push()
-                translate(width / 2, (height / 8) - 50)
-                fill("black")
-                text("player " + tempplayernum, -25, 0)
-                pop()
-
-                if (tempplayernum == 0) {
-                    tempplayernum = 1
-                }
-                else if (tempplayernum == 1) {
-                    tempplayernum = 0
-                }
-            }
-
-            else if (maxplayer == 3) {
-                tempplayernum = playernum + 1
-                if (tempplayernum == 3) {
-                    tempplayernum = 0
-                }
-
-                push()
-                translate(width / 4, height / 4)
-                for (i = 0; i < playersHands[tempplayernum].length; i++) {
-                    push()
-                    rotateFrom = map(i, 0, playersHands[tempplayernum].length, 1.5, 3.2)
-                    rotate(rotateFrom)
-                    image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
-                    pop()
-                }
-                pop()
-
-                push()
-                translate(width / 4, height / 4)
-                fill("black")
-                text("player " + tempplayernum, -25, 0)
-                pop()
-
-                if (tempplayernum == 0) {
-                    tempplayernum = 2
-                }
-                else if (tempplayernum != 0) {
-                    tempplayernum -= 1
-                }
-
-                tempplayernum += 2
-
-                if (tempplayernum > 2) {
-                    tempplayernum -= 3
-                }
-
-                push()
-                translate(width * (3 / 4), height / 4)
-                for (i = 0; i < playersHands[tempplayernum].length; i++) {
-                    push()
-                    rotateFrom = map(i, 0, playersHands[tempplayernum].length, 3.2, 4.9)
-                    rotate(rotateFrom)
-                    image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
-                    pop()
-                }
-                pop()
-
-                push()
-                translate(width * (3 / 4), height / 4)
-                fill("black")
-                text("player " + tempplayernum, -25, 0)
-                pop()
-
-                if (tempplayernum < 2) {
-                    tempplayernum += 1
-                }
-                else if (tempplayernum == 2) {
-                    tempplayernum = 0
-                }
-            }
-
-            else if (maxplayer == 4) {
-                tempplayernum = playernum + 1
-                if (tempplayernum == 4) {
-                    tempplayernum = 0
-                }
-                push()
-                translate(width / 6, height / 2)
-                for (i = 0; i < playersHands[tempplayernum].length; i++) {
-                    push()
-                    rotateFrom = map(i, 0, playersHands[tempplayernum].length, 1, 2.7)
-                    rotate(rotateFrom)
-                    image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
-                    pop()
-                }
-                pop()
-
-                push()
-                translate(width / 6, height / 2)
-                fill("black")
-                text("player " + tempplayernum, -25, 0)
-                pop()
-
-                if (tempplayernum == 0) {
-                    tempplayernum = 3
-                }
-                else if (tempplayernum != 0) {
-                    tempplayernum -= 1
-                }
-
-                tempplayernum += 2
-                if (tempplayernum > 3) {
-                    tempplayernum -= 4
-                }
-
-                push()
-                translate(width / 2, (height / 8) - 50)
-                for (i = 0; i < playersHands[tempplayernum].length; i++) {
-                    push()
-                    rotateFrom = map(i, 0, playersHands[tempplayernum].length, 2.3, 4)
-                    rotate(rotateFrom)
-                    image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
-                    pop()
-                }
-                pop()
-
-                push()
-                translate(width / 2, (height / 8) - 50)
-                fill("black")
-                text("player " + tempplayernum, -25, 0)
-                pop()
-
-                if (tempplayernum < 2) {
                     tempplayernum += 2
-                }
-                else if (tempplayernum >= 2) {
-                    tempplayernum -= 2
-                }
 
-                tempplayernum += 3
-                if (tempplayernum != 3) {
-                    tempplayernum -= 4
-                }
-                push()
-                translate(width * (3 / 4), height / 2)
-                for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                    if (tempplayernum > 2) {
+                        tempplayernum -= 3
+                    }
+
                     push()
-                    rotateFrom = map(i, 0, playersHands[tempplayernum].length, 3.8, 5.5)
-                    rotate(rotateFrom)
-                    image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                    translate(width * (3 / 4), height / 4)
+                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                        push()
+                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 3.2, 4.9)
+                        rotate(rotateFrom)
+                        image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                        pop()
+                    }
                     pop()
-                }
-                pop()
 
-                push()
-                translate(width * (3 / 4), height / 2)
-                fill("black")
-                text("player " + tempplayernum, -25, 0)
-                pop()
+                    push()
+                    translate(width * (3 / 4), height / 4)
+                    fill("black")
+                    text("player " + tempplayernum, -25, 0)
+                    pop()
 
-                if (tempplayernum != 3) {
-                    tempplayernum += 1
+                    if (tempplayernum < 2) {
+                        tempplayernum += 1
+                    }
+                    else if (tempplayernum == 2) {
+                        tempplayernum = 0
+                    }
                 }
-                else if (tempplayernum == 3) {
-                    tempplayernum -= 3
+
+                else if (maxplayer == 4) {
+                    tempplayernum = playernum + 1
+                    if (tempplayernum == 4) {
+                        tempplayernum = 0
+                    }
+                    push()
+                    translate(width / 6, height / 2)
+                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                        push()
+                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 1, 2.7)
+                        rotate(rotateFrom)
+                        image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                        pop()
+                    }
+                    pop()
+
+                    push()
+                    translate(width / 6, height / 2)
+                    fill("black")
+                    text("player " + tempplayernum, -25, 0)
+                    pop()
+
+                    if (tempplayernum == 0) {
+                        tempplayernum = 3
+                    }
+                    else if (tempplayernum != 0) {
+                        tempplayernum -= 1
+                    }
+
+                    tempplayernum += 2
+                    if (tempplayernum > 3) {
+                        tempplayernum -= 4
+                    }
+
+                    push()
+                    translate(width / 2, (height / 8) - 50)
+                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                        push()
+                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 2.3, 4)
+                        rotate(rotateFrom)
+                        image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                        pop()
+                    }
+                    pop()
+
+                    push()
+                    translate(width / 2, (height / 8) - 50)
+                    fill("black")
+                    text("player " + tempplayernum, -25, 0)
+                    pop()
+
+                    if (tempplayernum < 2) {
+                        tempplayernum += 2
+                    }
+                    else if (tempplayernum >= 2) {
+                        tempplayernum -= 2
+                    }
+
+                    tempplayernum += 3
+                    if (tempplayernum != 3) {
+                        tempplayernum -= 4
+                    }
+                    push()
+                    translate(width * (3 / 4), height / 2)
+                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                        push()
+                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 3.8, 5.5)
+                        rotate(rotateFrom)
+                        image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                        pop()
+                    }
+                    pop()
+
+                    push()
+                    translate(width * (3 / 4), height / 2)
+                    fill("black")
+                    text("player " + tempplayernum, -25, 0)
+                    pop()
+
+                    if (tempplayernum != 3) {
+                        tempplayernum += 1
+                    }
+                    else if (tempplayernum == 3) {
+                        tempplayernum -= 3
+                    }
                 }
             }
-        }
+            break
 
-
-
-
-        else if (EndGame == true) {
+        case ("gameWon"):
             push()
             fill("black")
             text("player " + turn + " won the game", width / 2 - 100, height / 2 - 100, 200, 50)
             pop()
             console.log("player " + turn + " won the game")
-        }
+            break
     }
 }
+
 
 
 
@@ -847,6 +855,15 @@ function DrawPowerCard() {
             }
         }
     }
+}
+
+function createRoom() {
+    socket.emit("createRoom")
+    socket.on("createRoom", room => {
+        room_ID = data.room
+        playernum = data.player_num
+        gameMode = "gameMade"
+    })
 }
 
 function CheckPlayerWin() {

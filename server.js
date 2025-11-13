@@ -21,6 +21,13 @@ io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
   socket.on("createRoom", () => {
+    room = ("game " + counter)
+    counter++
+    player_num = 0
+    socket.emit("createRoom", { room: room, player_num: player_num })
+  })
+
+  socket.on("joinRoom", () => {
     if (playercount <= 2) {
       room = "game " + counter
       socket.emit("roomjoin", room)
