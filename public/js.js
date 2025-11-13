@@ -881,7 +881,7 @@ function CheckPlayerWin() {
 function createRoom() {
     console.log("trying to create a game")
     socket.emit("createRoom")
-    socket.on("createRoom", room => {
+    socket.on("createRoom", (data) => {
         room_ID = data.room
         playernum = data.player_num
         gameMode = "gameMade"
