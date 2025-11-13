@@ -38,7 +38,7 @@ let turnClockWise = true
 let EndGame = false
 let room_ID;
 let gameStarted = false;
-let gameMode = "gameLoader"
+let gameMode = "Menu"
 
 
 function setup() {
@@ -46,7 +46,9 @@ function setup() {
     v2 = createVector((width / 2) - 100 * Math.sin(0.6), (height) - 100 * Math.cos(0.6))
     v1 = createVector(width / 2, height)
     angleMode(RADIANS)
-
+    menuButtons = [
+        new button
+    ]
 }
 
 socket.on("playernum", player_num => {
@@ -115,7 +117,7 @@ function preload() {
 
 function draw() {
     switch (gameMode) {
-        case ("gameLoader"):
+        case ("Menu"):
             push()
             background("white")
             button = createButton("create room")
