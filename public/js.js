@@ -120,6 +120,7 @@ function draw() {
             button = createButton("create room")
             button.position(width / 2, height / 2)
             button.mousePressed(socket.emit("createRoom"))
+            console.log()
             pop()
             break
 
@@ -857,14 +858,7 @@ function DrawPowerCard() {
     }
 }
 
-function createRoom() {
-    socket.emit("createRoom")
-    socket.on("createRoom", room => {
-        room_ID = data.room
-        playernum = data.player_num
-        gameMode = "gameMade"
-    })
-}
+
 
 function CheckPlayerWin() {
     if (playersHands[playernum].length == 0) {
@@ -884,6 +878,14 @@ function CheckPlayerWin() {
     }
 }
 
+function createRoom() {
+    socket.emit("createRoom")
+    socket.on("createRoom", room => {
+        room_ID = data.room
+        playernum = data.player_num
+        gameMode = "gameMade"
+    })
+}
 
 socket.on("playerWon", (data) => {
     EndGame = data.gameStatus
