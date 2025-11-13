@@ -125,7 +125,7 @@ function draw() {
 
         case ("gameMade"):
             push()
-            button = []
+            button.hide()
             background("black")
             fill("white")
             text("game not started", width / 2, height / 2)
