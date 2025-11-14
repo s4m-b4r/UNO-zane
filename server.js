@@ -24,14 +24,22 @@ io.on('connection', (socket) => {
     room = ("game " + counter)
     counter++
     player_num = 0
+    socket.join(room)
     socket.emit("createRoom", { room: room, player_num: player_num })
   })
 
-  socket.on("joinRoom", (data) => {
+  socket.on("roomJoin", (data) => {
     if (data.roomCode <= counter) {
       socketCount = await io.in(roomCode).allSockets()
       console.log("amount of sockets in room " + data.roomCode + " is " + socketCount.size)
       socket.broadcast.to(data.roomCode).emit("playerAttemptingJoin", socketCount.size)
+      socket.on("playerAttemptingJoin", (data1) => {
+        if (data1.gameMode == "gameMade") {
+          player_num = socketCount.size
+          socket.join(data.roomCode)
+          socket.emit("roomJoined", { room: data.roomCode, player_num: player_num })
+        }
+      })
     }
   }
   )

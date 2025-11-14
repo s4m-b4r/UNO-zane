@@ -903,12 +903,15 @@ function joinRoom() {
     roomCode = roomCode.replace(/\s+/g, '')
     console.log("the room code inputted is " + roomCode)
     socket.emit("roomJoin", roomCode)
+    socket.on("roomJoined", (data) => {
+        playernum = data.player_num
+        room_ID = data.room
+        gameMode = "gameMade"
+    })
 }
 
 socket.on("playerAttemptingJoin", (data) => {
-    if (data == maxplayer) {
-        socket.emit("playerAttemptingJoin")
-    }
+    socket.emit("playerAttemptingJoin", gameMode)
 })
 
 socket.on("playerWon", (data) => {
