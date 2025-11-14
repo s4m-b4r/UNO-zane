@@ -56,9 +56,9 @@ function setup() {
 
         push()
         background("white")
-        text("room: ", (width / 2) - 25, (height / 2) - 50)
+        text("room: ", (width / 2) - 50, (height / 2) + 50)
         roomInput = createInput()
-        roomInput.position(width / 2, (height / 2) - 50)
+        roomInput.position(width / 2, (height / 2) + 50)
         roomInput.changed(joinRoom)
         pop()
     }
