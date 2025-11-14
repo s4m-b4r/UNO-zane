@@ -56,9 +56,9 @@ function setup() {
 
         push()
         background("white")
-        text("room: ", (width / 2) - 50, (height / 2) + 50)
+        text("input room ID: ", (width / 2) - 50, (height / 2) + 45)
         roomInput = createInput()
-        roomInput.position(width / 2, (height / 2) + 50)
+        roomInput.position(width / 2, (height / 2) + 40)
         roomInput.changed(joinRoom)
         pop()
     }
@@ -137,7 +137,7 @@ function draw() {
             background("black")
             fill("white")
             text("game not started", width / 2, height / 2)
-            text("room number " + room_ID, width / 2, height / 2 - 50)
+            text("room ID: " + room_ID, width / 2, height / 2 - 50)
             pop()
             break
 
