@@ -912,7 +912,7 @@ function joinRoom() {
 
 socket.on("playerAttemptingJoin", (data) => {
     if (data != maxplayer) {
-        socket.emit("playerAttemptingJoin", gameMode)
+        socket.emit("playerCanJoin", gameMode)
         console.log(gameMode)
     }
 })

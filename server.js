@@ -36,8 +36,9 @@ io.on('connection', (socket) => {
       socketCount = io.sockets.adapter.rooms.get(room)
       console.log("amount of sockets in room " + data + " is " + socketCount.size)
       socket.broadcast.to(room).emit("playerAttemptingJoin", socketCount.size)
-      socket.on("playerAttemptingJoin", (data1) => {
-        console.log("the game state in room " + room + " is " + data1)
+
+      socket.on("playerCanJoin", (data1) => {
+        console.log("the game state in " + room + " is " + data1)
         if (data1 == "gameMade") {
           player_num = socketCount.size
           socket.join(data)
