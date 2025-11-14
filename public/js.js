@@ -911,7 +911,9 @@ function joinRoom() {
 }
 
 socket.on("playerAttemptingJoin", (data) => {
-    socket.emit("playerAttemptingJoin", gameMode)
+    if (data != maxplayer) {
+        socket.emit("playerAttemptingJoin", gameMode)
+    }
 })
 
 socket.on("playerWon", (data) => {
