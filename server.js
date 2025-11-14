@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
   socket.on("roomJoin", (data) => {
     console.log(data)
     console.log(counter)
-    if (data <= counter) {
+    if (data < counter) {
       room = ("game " + data)
       socketCount = io.sockets.adapter.rooms.get(room)
       console.log("amount of sockets in room " + data + " is " + socketCount.size)
