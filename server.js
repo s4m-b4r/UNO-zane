@@ -27,31 +27,11 @@ io.on('connection', (socket) => {
     socket.emit("createRoom", { room: room, player_num: player_num })
   })
 
-  socket.on("joinRoom", () => {
-    if (playercount <= 2) {
-      room = "game " + counter
-      socket.emit("roomjoin", room)
-      socket.join(room)
-      socket.emit("playernum", player_num)
-      console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
-      player_num++
-      playercount++
-      if (playercount == 3) {
-        startgame(room)
-      }
-    }
-    else if (playercount == 3) {
-
-      counter++
-      playercount = 0
-      player_num = 0
-      room = "game " + counter
-      socket.emit("roomjoin", room)
-      socket.join(room)
-      socket.emit("playernum", player_num)
-      console.log("player " + socket.id + " has joined room " + room + " and is player " + player_num)
-      player_num++
-      playercount++
+  socket.on("joinRoom", (data) => {
+    if (data.roomCode <= counter) {
+      socketCount = await io.in(roomCode).allSockets()
+      console.log("amount of sockets in room " + data.roomCode + " is " + socketCount.size)
+      socket.broadcast.to(data.roomCode).emit("playerAttemptingJoin", socketCount.size)
     }
   }
   )

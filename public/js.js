@@ -905,6 +905,12 @@ function joinRoom() {
     socket.emit("roomJoin", roomCode)
 }
 
+socket.on("playerAttemptingJoin", (data) => {
+    if (data == maxplayer) {
+
+    }
+})
+
 socket.on("playerWon", (data) => {
     EndGame = data.gameStatus
     turn = data.playernum
