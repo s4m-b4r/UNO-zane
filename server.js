@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
 
   socket.on("roomJoin", (data) => {
     if (data.roomCode <= counter) {
-      socketCount = await io.in(roomCode).allSockets()
+      socketCount = io.sockets.adapter.rooms.get(data.roomCode)
       console.log("amount of sockets in room " + data.roomCode + " is " + socketCount.size)
       socket.broadcast.to(data.roomCode).emit("playerAttemptingJoin", socketCount.size)
       socket.on("playerAttemptingJoin", (data1) => {
