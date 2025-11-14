@@ -53,6 +53,14 @@ function setup() {
         button.position(width / 2, height / 2)
         button.mousePressed(createRoom)
         pop()
+
+        push()
+        background("white")
+        text("room: ", (width / 2) - 25, (height / 2) - 50)
+        roomInput = createInput()
+        roomInput.position(width / 2, (height / 2) - 50)
+        roomInput.changed(joinRoom)
+        pop()
     }
 }
 
@@ -887,6 +895,10 @@ function createRoom() {
         playernum = data.player_num
         gameMode = "gameMade"
     })
+}
+
+function joinRoom() {
+
 }
 
 socket.on("playerWon", (data) => {
