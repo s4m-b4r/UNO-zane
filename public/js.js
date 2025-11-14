@@ -39,6 +39,7 @@ let EndGame = false
 let room_ID;
 let gameStarted = false;
 let gameMode = "Menu"
+let roomInput;
 
 
 function setup() {
@@ -56,7 +57,7 @@ function setup() {
 
         push()
         background("white")
-        text("input room ID: ", (width / 2) - 100, (height / 2) + 45)
+        text("input room ID: ", (width / 2) - 90, (height / 2) + 45)
         roomInput = createInput()
         roomInput.position(width / 2, (height / 2) + 40)
         roomInput.changed(joinRoom)
@@ -898,7 +899,10 @@ function createRoom() {
 }
 
 function joinRoom() {
-
+    roomCode = roomInput.value()
+    roomCode = roomCode.replace(/\s+/g, '')
+    console.log("the room code inputted is " + roomCode)
+    socket.emit("roomJoin", roomCode)
 }
 
 socket.on("playerWon", (data) => {
