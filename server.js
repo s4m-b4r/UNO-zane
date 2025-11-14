@@ -30,14 +30,15 @@ io.on('connection', (socket) => {
 
   socket.on("roomJoin", (data) => {
     if (data.roomCode <= counter) {
-      socketCount = io.sockets.adapter.rooms.get(data.roomCode)
+      room = ("game " + data.roomCode)
+      socketCount = io.sockets.adapter.rooms.get(room)
       console.log("amount of sockets in room " + data.roomCode + " is " + socketCount.size)
-      socket.broadcast.to(data.roomCode).emit("playerAttemptingJoin", socketCount.size)
+      socket.broadcast.to(room).emit("playerAttemptingJoin", socketCount.size)
       socket.on("playerAttemptingJoin", (data1) => {
         if (data1.gameMode == "gameMade") {
           player_num = socketCount.size
           socket.join(data.roomCode)
-          socket.emit("roomJoined", { room: data.roomCode, player_num: player_num })
+          socket.emit("roomJoined", { room: room, player_num: player_num })
         }
       })
     }
