@@ -20,34 +20,49 @@ player_num = 0
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
-  socket.on("createRoom", () => {
-    room = ("game " + counter)
-    counter++
-    player_num = 0
-    socket.join(room)
-    socket.emit("createRoom", { room: room, player_num: player_num })
+  // socket.on("createRoom", () => {
+  //   room = ("game " + counter)
+  //   counter++
+  //   player_num = 0
+  //   socket.join(room)
+  //   socket.emit("createRoom", { room: room, player_num: player_num })
+  // })
+
+  // socket.on("roomJoin", (data) => {
+  //   console.log(data)
+  //   console.log(counter)
+  //   if (data < counter) {
+  //     room = ("game " + data)
+  //     socketCount = io.sockets.adapter.rooms.get(room)
+  //     console.log("amount of sockets in room " + data + " is " + socketCount.size)
+  //     socket.broadcast.to(room).emit("playerAttemptingJoin", socketCount.size)
+
+  //     socket.on("playerCanJoin", (data1) => {
+  //       console.log("the game state in " + room + " is " + data1)
+  //       if (data1 == "gameMade") {
+  //         player_num = socketCount.size
+  //         socket.join(data)
+  //         socket.emit("roomJoined", { room: room, player_num: player_num })
+  //       }
+  //     })
+  //   }
+  // }
+  // )
+
+  socket.on("createRoom", () =>{
+    room = "room " + counter
+    if (player_num <= 3){
+      socket.join(room)
+      socket.emit("createRoom", { room: room, player_num: player_num })
+      player_num ++
+      if(player_num == 4){
+        counter ++
+        player_num = 0
+        startgame(room)
+      }
+    } 
+
   })
-
-  socket.on("roomJoin", (data) => {
-    console.log(data)
-    console.log(counter)
-    if (data < counter) {
-      room = ("game " + data)
-      socketCount = io.sockets.adapter.rooms.get(room)
-      console.log("amount of sockets in room " + data + " is " + socketCount.size)
-      socket.broadcast.to(room).emit("playerAttemptingJoin", socketCount.size)
-
-      socket.on("playerCanJoin", (data1) => {
-        console.log("the game state in " + room + " is " + data1)
-        if (data1 == "gameMade") {
-          player_num = socketCount.size
-          socket.join(data)
-          socket.emit("roomJoined", { room: room, player_num: player_num })
-        }
-      })
-    }
-  }
-  )
 
   socket.on("playerWon", (data) => {
     let Room = data.room
@@ -92,7 +107,7 @@ io.on('connection', (socket) => {
 
 function startgame(room) {
   deck1 = []
-  maxplayer = 3
+  maxplayer = 4
   numberOfCards = 7
   playersHands1 = [[], [], [], []]
   discardPile1 = []
@@ -142,3 +157,12 @@ function shuffle(array) {
 }
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(` Server running on port ${PORT}`));
+
+// function createRoom(roomId, playerlim){
+//     games[roomId] = {
+//       id: roomId,
+//       players: [],
+//       playerlimit: playerlim,
+//       playerHands: [[],[],[],[]]
+//     }
+// }

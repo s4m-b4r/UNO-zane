@@ -32,7 +32,7 @@ let cardNumber;
 let drawCardP = 0;
 let turn = 0;
 let playernum;
-let maxplayer = 3;
+let maxplayer = 4;
 let ChangeColourMode = false
 let turnClockWise = true
 let EndGame = false
@@ -50,18 +50,18 @@ function setup() {
     if (gameMode == "Menu") {
         push()
         background("white")
-        button = createButton("create room")
+        button = createButton("join room")
         button.position(width / 2, height / 2)
         button.mousePressed(createRoom)
         pop()
 
-        push()
-        background("white")
-        text("input room ID: ", (width / 2) - 90, (height / 2) + 45)
-        roomInput = createInput()
-        roomInput.position(width / 2, (height / 2) + 40)
-        roomInput.changed(joinRoom)
-        pop()
+        // push()
+        // background("white")
+        // text("input room ID: ", (width / 2) - 90, (height / 2) + 45)
+        // roomInput = createInput()
+        // roomInput.position(width / 2, (height / 2) + 40)
+        // roomInput.changed(joinRoom)
+        // pop()
     }
 }
 
