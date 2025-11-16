@@ -463,7 +463,7 @@ function draw() {
 
 
 function mouseClicked() {
-    if (gameStarted == true) {
+    if (gameMode == "gameStarted") {
         if (EndGame == false) {
             if (drawCardP == 0) {
                 if (ChangeColourMode == false) {
