@@ -32,11 +32,16 @@ socket.on("roomJoin", (data) => {
   console.log(data)
   console.log(counter)
   if (data < counter) {
+    console.log("room exists")
     if(games[data].gameMode == "gameMade"){
+      console.log("game is available to join")
       games[data].players.push(socket.id)
+      socket.join(data)
       socket.emit("roomJoined", {player_num: games[data].players[games[data].players.length - 1], room: data})
+      console.log("this socket is player " + games[data].players[games[data].players.length - 1])
       if(games[data].players.length == games[data].playerlimit){
         games[data].gameMode = "gameStarted"
+        console.log("game is full, start now")
       }
     }
   }
