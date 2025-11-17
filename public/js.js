@@ -55,13 +55,13 @@ function setup() {
         button.mousePressed(createRoom)
         pop()
 
-        // push()
-        // background("white")
-        // text("input room ID: ", (width / 2) - 90, (height / 2) + 45)
-        // roomInput = createInput()
-        // roomInput.position(width / 2, (height / 2) + 40)
-        // roomInput.changed(joinRoom)
-        // pop()
+        push()
+        background("white")
+        text("input room ID: ", (width / 2) - 90, (height / 2) + 45)
+        roomInput = createInput()
+        roomInput.position(width / 2, (height / 2) + 40)
+        roomInput.changed(joinRoom)
+        pop()
     }
 }
 
