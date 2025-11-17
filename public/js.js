@@ -65,22 +65,6 @@ function setup() {
     }
 }
 
-socket.on("playernum", player_num => {
-    playernum = player_num
-})
-socket.on("deckArranged", deck1 => {
-    deck = deck1
-})
-socket.on("discardPile", discardPile1 => {
-    discardPile = discardPile1
-})
-socket.on("playersHands", playersHands1 => {
-    playersHands = playersHands1
-    sortHand()
-    gameMode = "gameStarted"
-})
-
-
 function sortHand() {
 
     for (j = 0; j < maxplayer; j++) {
