@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
   player_num = 0
   socket.join(counter)
   createRoom(counter, 4, socket.id)
-  socket.emit("roomJoined", {player_num: player_num, room: roomId})
+  socket.emit("roomJoined", {player_num: player_num, room: counter})
 })
 
 socket.on("roomJoin", (data) => {
