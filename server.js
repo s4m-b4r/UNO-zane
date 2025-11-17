@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
 socket.on("roomJoin", (data) => {
   console.log(data)
   console.log(counter)
-  if (data < counter) {
+  if (data <= counter) {
     console.log("room exists")
     if(games[data].gameMode == "gameMade"){
       console.log("game is available to join")
