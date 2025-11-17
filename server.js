@@ -12,7 +12,7 @@ app.use(express.static('public')); // serve your HTML/JS/CSS
 // Store all game rooms
 const games = {}; // { roomName: { players: [], started: false, data: {} } }
 
-counter = 1
+counter = 0
 playercount = 0
 player_num = 0
 // Handle connections
@@ -24,7 +24,7 @@ io.on('connection', (socket) => {
   counter++
   player_num = 0
   socket.join(counter)
-  createRoom(counter, 4)
+  createRoom(counter, 4, socket.id)
   socket.emit("roomJoined", {player_num: player_num, room: roomId})
 })
 
