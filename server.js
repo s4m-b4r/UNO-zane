@@ -20,25 +20,12 @@ player_num = 0
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
-  // socket.on("createRoom", () => {
-  //   room = "room " + counter
-  //   if (player_num <= 3) {
-  //     socket.join(room)
-  //     socket.emit("createRoom", { room: room, player_num: player_num })
-  //     player_num++
-  //     if (player_num == 4) {
-  //       counter++
-  //       player_num = 0
-  //       startgame(room)
-  //     }
-  //   }
-  // })
-
   socket.on("createRoom", () => {
   counter++
   player_num = 0
   socket.join(counter)
   createRoom(counter, 4)
+  socket.emit("roomJoined", {player_num: player_num, room: roomId})
 })
 
 socket.on("roomJoin", (data) => {
@@ -162,7 +149,6 @@ function createRoom(roomId, playerlim, gamehost){
       turn: 0,
       gameMode: "gameMade"
     }
-    socket.emit("roomJoined", {player_num: player_num, room: roomId})
 }
 
 function playCard(){
