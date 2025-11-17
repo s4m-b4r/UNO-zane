@@ -20,47 +20,18 @@ player_num = 0
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
-  // socket.on("createRoom", () => {
-  //   room = ("game " + counter)
-  //   counter++
-  //   player_num = 0
-  //   socket.join(room)
-  //   socket.emit("createRoom", { room: room, player_num: player_num })
-  // })
-
-  // socket.on("roomJoin", (data) => {
-  //   console.log(data)
-  //   console.log(counter)
-  //   if (data < counter) {
-  //     room = ("game " + data)
-  //     socketCount = io.sockets.adapter.rooms.get(room)
-  //     console.log("amount of sockets in room " + data + " is " + socketCount.size)
-  //     socket.broadcast.to(room).emit("playerAttemptingJoin", socketCount.size)
-
-  //     socket.on("playerCanJoin", (data1) => {
-  //       console.log("the game state in " + room + " is " + data1)
-  //       if (data1 == "gameMade") {
-  //         player_num = socketCount.size
-  //         socket.join(data)
-  //         socket.emit("roomJoined", { room: room, player_num: player_num })
-  //       }
-  //     })
-  //   }
-  // }
-  // )
-
-  socket.on("createRoom", () =>{
+  socket.on("createRoom", () => {
     room = "room " + counter
-    if (player_num <= 3){
+    if (player_num <= 3) {
       socket.join(room)
       socket.emit("createRoom", { room: room, player_num: player_num })
-      player_num ++
-      if(player_num == 4){
-        counter ++
+      player_num++
+      if (player_num == 4) {
+        counter++
         player_num = 0
         startgame(room)
       }
-    } 
+    }
 
   })
 
@@ -166,3 +137,32 @@ server.listen(PORT, () => console.log(` Server running on port ${PORT}`));
 //       playerHands: [[],[],[],[]]
 //     }
 // }
+
+// socket.on("createRoom", () => {
+//   room = ("game " + counter)
+//   counter++
+//   player_num = 0
+//   socket.join(room)
+//   socket.emit("createRoom", { room: room, player_num: player_num })
+// })
+
+// socket.on("roomJoin", (data) => {
+//   console.log(data)
+//   console.log(counter)
+//   if (data < counter) {
+//     room = ("game " + data)
+//     socketCount = io.sockets.adapter.rooms.get(room)
+//     console.log("amount of sockets in room " + data + " is " + socketCount.size)
+//     socket.broadcast.to(room).emit("playerAttemptingJoin", socketCount.size)
+
+//     socket.on("playerCanJoin", (data1) => {
+//       console.log("the game state in " + room + " is " + data1)
+//       if (data1 == "gameMade") {
+//         player_num = socketCount.size
+//         socket.join(data)
+//         socket.emit("roomJoined", { room: room, player_num: player_num })
+//       }
+//     })
+//   }
+// }
+// )
