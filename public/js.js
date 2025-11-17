@@ -898,7 +898,6 @@ function joinRoom() {
     roomCode = roomInput.value()
     roomCode = roomCode.replace(/\s+/g, '')
     console.log("the room code inputted is " + roomCode)
-    Input.hide()
     socket.emit("roomJoin", roomCode)
 }
 
