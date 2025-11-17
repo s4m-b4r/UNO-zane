@@ -32,7 +32,6 @@ io.on('connection', (socket) => {
         startgame(room)
       }
     }
-
   })
 
   socket.on("playerWon", (data) => {
