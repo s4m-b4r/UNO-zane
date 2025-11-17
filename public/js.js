@@ -50,7 +50,7 @@ function setup() {
     if (gameMode == "Menu") {
         push()
         background("white")
-        button = createButton("join room")
+        button = createButton("create room")
         button.position(width / 2, height / 2)
         button.mousePressed(createRoom)
         pop()
@@ -891,31 +891,22 @@ function createRoom() {
     button.hide()
     console.log("trying to create a game")
     socket.emit("createRoom")
-    socket.on("createRoom", (data) => {
-        room_ID = data.room
-        playernum = data.player_num
-        gameMode = "gameMade"
-    })
+    
 }
 
 function joinRoom() {
     roomCode = roomInput.value()
     roomCode = roomCode.replace(/\s+/g, '')
     console.log("the room code inputted is " + roomCode)
+    Input.hide()
     socket.emit("roomJoin", roomCode)
-    socket.on("roomJoined", (data) => {
+}
+
+socket.on("roomJoined", (data) => {
         playernum = data.player_num
         room_ID = data.room
         gameMode = "gameMade"
     })
-}
-
-socket.on("playerAttemptingJoin", (data) => {
-    if (data != maxplayer) {
-        socket.emit("playerCanJoin", gameMode)
-        console.log(gameMode)
-    }
-})
 
 socket.on("playerWon", (data) => {
     EndGame = data.gameStatus

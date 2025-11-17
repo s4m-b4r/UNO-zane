@@ -47,6 +47,7 @@ socket.on("roomJoin", (data) => {
   if (data < counter) {
     if(games[data].gameMode == "gameMade"){
       games[data].players.push(socket.id)
+      socket.emit("roomJoined", {player_num: games[data].players[games[data].players.length - 1], room: data})
       if(games[data].players.length == games[data].playerlimit){
         games[data].gameMode = "gameStarted"
       }
@@ -161,6 +162,7 @@ function createRoom(roomId, playerlim, gamehost){
       turn: 0,
       gameMode: "gameMade"
     }
+    socket.emit("roomJoined", {player_num: player_num, room: roomId})
 }
 
 function playCard(){
