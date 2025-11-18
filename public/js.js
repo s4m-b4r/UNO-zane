@@ -895,7 +895,7 @@ socket.on("roomJoined", (data) => {
 socket.on("startGame", (data) => {
     gameMode = "gameStarted"
     playersHands[playernum] = data.playersHands1
-    for (i = 0; i < data.otherplayers.length - 1; i++) {
+    for (i = 0; i <= data.otherplayers.length - 1; i++) {
         playersHands[data.otherplayers[i]] = 7
     }
     discardPile.push(data.discardPile1[0])
