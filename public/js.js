@@ -123,6 +123,7 @@ function draw() {
             fill("white")
             text("game not started", width / 2, height / 2)
             text("room ID: " + room_ID, width / 2, height / 2 - 50)
+            text("player number: " + playernum, width / 2, height / 2 - 100)
             pop()
             break
 
