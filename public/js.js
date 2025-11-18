@@ -244,7 +244,6 @@ function draw() {
                 image(uno, 0, 0, cwidth, cheight, beginsheetx + discardPile[discardPile.length - 1][1] * (cwidth + cxoffset), beginsheety + discardPile[discardPile.length - 1][0] * (cheight + cyoffset), cwidth, cheight)
                 pop()
 
-
                 push()
                 fill("black")
                 text("player " + playernum, width / 2, height - 50)
@@ -899,7 +898,7 @@ socket.on("startGame", (data) => {
     for (i = 0; i < data.otherplayers.length - 1; i++) {
         playersHands[data.otherplayers[i]] = 7
     }
-    discardPile.push(data.discardPile1)
+    discardPile.push(data.discardPile1[0])
     console.log("the starting discard card is " + discardPile)
 })
 
