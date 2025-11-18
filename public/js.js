@@ -900,6 +900,7 @@ socket.on("startGame", (data) => {
         playersHands[data.otherplayers[i]] = 7
     }
     discardPile.push(data.discardPile1)
+    console.log("the starting discard card is " + discardPile)
 })
 
 socket.on("playerWon", (data) => {

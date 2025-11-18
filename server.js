@@ -176,6 +176,7 @@ function gameStart(roomId) {
         l = l - 4
       }
       io.to(games[roomId].players[i]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j, k, l], discardPile1: games[roomId].discardPile })
+      console.log("the starting discard card is " + discardPile1)
     }
 
     else if (games[roomId].players.length == 3) {
