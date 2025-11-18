@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
         if (games[data].players.length == games[data].playerlimit) {
           games[data].gameMode = "gameStarted"
           console.log("game is full, start now")
+          gameStart(data)
         }
       }
     }
@@ -89,7 +90,7 @@ io.on('connection', (socket) => {
   });
 });
 
-function startgame(room, maxplayer) {
+function setGame(room, maxplayer) {
   deck1 = []
   numberOfCards = 7
   playersHands1 = [[], [], [], []]
@@ -143,7 +144,7 @@ function shuffle(array) {
 }
 
 function createRoom(roomId, playerlim, gamehost) {
-  const startgamevar = startgame(roomId, playerlim)
+  const startgamevar = setGame(roomId, playerlim)
   games[roomId] = {
     id: roomId,
     players: [gamehost],
@@ -153,6 +154,50 @@ function createRoom(roomId, playerlim, gamehost) {
     discardPile: startgamevar.discardPile,
     turn: 0,
     gameMode: "gameMade"
+  }
+}
+
+function gameStart(roomId) {
+  for (i = 0; i <= games[roomId].players.length - 1; i++) {
+    if (games[roomId].players.length == 4) {
+      j = i + 1
+      k = i + 2
+      l = i + 3
+      if (j > 3) {
+        j = j - 4
+        k = k - 4
+        l = l - 4
+      }
+      else if (k > 3) {
+        k = k - 4
+        l = l - 4
+      }
+      else if (l > 3) {
+        l = l - 4
+      }
+      io.to(games[roomId].players[games[roomId].players.length - 1]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j, k, l], discardPile1: games[roomId].discardPile })
+    }
+
+    else if (games[roomId].players.length == 3) {
+      j = i + 1
+      k = i + 2
+      if (j > 2) {
+        j = j - 3
+        k = k - 3
+      }
+      else if (k > 2) {
+        k = k - 3
+      }
+      io.to(games[roomId].players[games[roomId].players.length - 1]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j, k], discardPile1: games[roomId].discardPile })
+    }
+
+    else if (games[roomId].players.length == 2) {
+      j = i + 1
+      if (j > 1) {
+        j = j - 2
+      }
+      io.to(games[roomId].players[games[roomId].players.length - 1]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j], discardPile1: games[roomId].discardPile })
+    }
   }
 }
 

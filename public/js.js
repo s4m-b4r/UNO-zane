@@ -37,7 +37,6 @@ let ChangeColourMode = false
 let turnClockWise = true
 let EndGame = false
 let room_ID;
-let gameStarted = false;
 let gameMode = "Menu"
 let roomInput;
 
@@ -123,7 +122,7 @@ function draw() {
             fill("white")
             text("game not started", width / 2, height / 2)
             text("room ID: " + room_ID, width / 2, height / 2 - 50)
-            text("player number: " + playernum, width / 2, height / 2 - 100)
+            text("player number: " + playernum, width / 2, height / 2 + 50)
             pop()
             break
 
@@ -891,6 +890,15 @@ socket.on("roomJoined", (data) => {
     room_ID = data.room
     gameMode = "gameMade"
     roomInput.hide()
+})
+
+socket.on("startGame", (data) => {
+    gameMode = "gameStarted"
+    playersHands[playernum] = data.playersHands1
+    for (i = 0; i < data.otherplayers.length - 1; i++) {
+        playersHands[data.otherplayers[i]] = 7
+    }
+    discardPile.push(data.discardPile1)
 })
 
 socket.on("playerWon", (data) => {
