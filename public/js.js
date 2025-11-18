@@ -875,7 +875,7 @@ function createRoom() {
     button.hide()
     console.log("trying to create a game")
     socket.emit("createRoom")
-    
+
 }
 
 function joinRoom() {
@@ -886,10 +886,10 @@ function joinRoom() {
 }
 
 socket.on("roomJoined", (data) => {
-        playernum = data.player_num
-        room_ID = data.room
-        gameMode = "gameMade"
-    })
+    playernum = data.player_num
+    room_ID = data.room
+    gameMode = "gameMade"
+})
 
 socket.on("playerWon", (data) => {
     EndGame = data.gameStatus

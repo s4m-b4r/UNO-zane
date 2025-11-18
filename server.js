@@ -21,31 +21,31 @@ io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
   socket.on("createRoom", () => {
-  counter++
-  player_num = 0
-  socket.join(counter)
-  createRoom(counter, 4, socket.id)
-  socket.emit("roomJoined", {player_num: player_num, room: counter})
-})
+    counter++
+    player_num = 0
+    socket.join(counter)
+    createRoom(counter, 4, socket.id)
+    socket.emit("roomJoined", { player_num: player_num, room: counter })
+  })
 
-socket.on("roomJoin", (data) => {
-  console.log(data)
-  console.log(counter)
-  if (data <= counter) {
-    console.log("room exists")
-    if(games[data].gameMode == "gameMade"){
-      console.log("game is available to join")
-      games[data].players.push(socket.id)
-      socket.join(data)
-      socket.emit("roomJoined", {player_num: games[data].players[games[data].players.length - 1], room: data})
-      console.log("this socket is player " + games[data].players[games[data].players.length - 1])
-      if(games[data].players.length == games[data].playerlimit){
-        games[data].gameMode = "gameStarted"
-        console.log("game is full, start now")
+  socket.on("roomJoin", (data) => {
+    console.log(data)
+    console.log(counter)
+    if (data <= counter) {
+      console.log("room exists")
+      if (games[data].gameMode == "gameMade") {
+        console.log("game is available to join")
+        games[data].players.push(socket.id)
+        socket.join(data)
+        socket.emit("roomJoined", { player_num: games[data].players.length - 1, room: data })
+        console.log("this socket is player " + games[data].players[games[data].players.length - 1])
+        if (games[data].players.length == games[data].playerlimit) {
+          games[data].gameMode = "gameStarted"
+          console.log("game is full, start now")
+        }
       }
     }
-  }
-})
+  })
 
 
   socket.on("playerWon", (data) => {
@@ -126,7 +126,7 @@ function startgame(room, maxplayer) {
     countCard += 1
   }
 
-  return{
+  return {
     deck: deck1,
     playerHands: playersHands1,
     discardPile: discardPile1
@@ -142,21 +142,21 @@ function shuffle(array) {
   return array;
 }
 
-function createRoom(roomId, playerlim, gamehost){
-  const startgamevar = startgame(roomId, playerlim)  
+function createRoom(roomId, playerlim, gamehost) {
+  const startgamevar = startgame(roomId, playerlim)
   games[roomId] = {
-      id: roomId,
-      players: [gamehost],
-      playerlimit: playerlim,
-      deck: startgamevar.deck,
-      playerHands: startgamevar.playerHands,
-      discardPile: startgamevar.discardPile,
-      turn: 0,
-      gameMode: "gameMade"
-    }
+    id: roomId,
+    players: [gamehost],
+    playerlimit: playerlim,
+    deck: startgamevar.deck,
+    playerHands: startgamevar.playerHands,
+    discardPile: startgamevar.discardPile,
+    turn: 0,
+    gameMode: "gameMade"
+  }
 }
 
-function playCard(){
+function playCard() {
 
 }
 
