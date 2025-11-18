@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on("draw card", (data) => {
-    let Room = data.room
+    drawCard(data)
     socket.broadcast.to(Room).emit("draw card", data)
   })
 
@@ -204,6 +204,10 @@ function gameStart(roomId) {
 
 function playCard() {
 
+}
+
+function drawCard(data) {
+  games[roomId].playerHands[data.playernum].push(games[roomId].deck.pop())
 }
 
 const PORT = process.env.PORT || 3000;
