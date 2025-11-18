@@ -873,7 +873,7 @@ function CheckPlayerWin() {
 
 function createRoom() {
     button.hide()
-    console.log("trying to create a game")
+    roomInput.hide()
     socket.emit("createRoom")
 
 }
@@ -889,6 +889,7 @@ socket.on("roomJoined", (data) => {
     playernum = data.player_num
     room_ID = data.room
     gameMode = "gameMade"
+    roomInput.hide()
 })
 
 socket.on("playerWon", (data) => {
