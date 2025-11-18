@@ -260,9 +260,9 @@ function draw() {
                     }
                     push()
                     translate(width / 2, (height / 8) - 50)
-                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                    for (i = 0; i < playersHands[tempplayernum]; i++) {
                         push()
-                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 2.3, 4)
+                        rotateFrom = map(i, 0, playersHands[tempplayernum], 2.3, 4)
                         rotate(rotateFrom)
                         image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                         pop()
@@ -291,9 +291,9 @@ function draw() {
 
                     push()
                     translate(width / 4, height / 4)
-                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                    for (i = 0; i < playersHands[tempplayernum]; i++) {
                         push()
-                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 1.5, 3.2)
+                        rotateFrom = map(i, 0, playersHands[tempplayernum], 1.5, 3.2)
                         rotate(rotateFrom)
                         image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                         pop()
@@ -321,9 +321,9 @@ function draw() {
 
                     push()
                     translate(width * (3 / 4), height / 4)
-                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                    for (i = 0; i < playersHands[tempplayernum]; i++) {
                         push()
-                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 3.2, 4.9)
+                        rotateFrom = map(i, 0, playersHands[tempplayernum], 3.2, 4.9)
                         rotate(rotateFrom)
                         image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                         pop()
@@ -351,9 +351,9 @@ function draw() {
                     }
                     push()
                     translate(width / 6, height / 2)
-                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                    for (i = 0; i < playersHands[tempplayernum]; i++) {
                         push()
-                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 1, 2.7)
+                        rotateFrom = map(i, 0, playersHands[tempplayernum], 1, 2.7)
                         rotate(rotateFrom)
                         image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                         pop()
@@ -380,9 +380,9 @@ function draw() {
 
                     push()
                     translate(width / 2, (height / 8) - 50)
-                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                    for (i = 0; i < playersHands[tempplayernum]; i++) {
                         push()
-                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 2.3, 4)
+                        rotateFrom = map(i, 0, playersHands[tempplayernum], 2.3, 4)
                         rotate(rotateFrom)
                         image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                         pop()
@@ -408,9 +408,9 @@ function draw() {
                     }
                     push()
                     translate(width * (3 / 4), height / 2)
-                    for (i = 0; i < playersHands[tempplayernum].length; i++) {
+                    for (i = 0; i < playersHands[tempplayernum]; i++) {
                         push()
-                        rotateFrom = map(i, 0, playersHands[tempplayernum].length, 3.8, 5.5)
+                        rotateFrom = map(i, 0, playersHands[tempplayernum], 3.8, 5.5)
                         rotate(rotateFrom)
                         image(uno, 0, -100, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
                         pop()
@@ -890,6 +890,7 @@ socket.on("roomJoined", (data) => {
     room_ID = data.room
     gameMode = "gameMade"
     roomInput.hide()
+    button.hide()
 })
 
 socket.on("startGame", (data) => {
