@@ -870,6 +870,10 @@ function CheckPlayerWin() {
     }
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
 function createRoom() {
     button.hide()
     roomInput.hide()
