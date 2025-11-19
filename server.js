@@ -10,7 +10,7 @@ const io = new Server(server);
 app.use(express.static('public')); // serve your HTML/JS/CSS
 
 // Store all game rooms
-const games = {}; // { roomName: { players: [], started: false, data: {} } }
+const games = {};
 
 counter = 0
 playercount = 0
@@ -55,8 +55,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on("playCard", (data) => {
-    let Room = data.room
-    socket.broadcast.to(Room).emit("playCard", data)
+    playCard(data.room, data.discardedCard, data.player)
   })
 
   socket.on("turn change", (data) => {
@@ -202,12 +201,38 @@ function gameStart(roomId) {
   }
 }
 
-function playCard() {
+function playCard(roomId, playedCard, player_num) {
+  if (games[roomId].turn == player_num) {
+    checkCard = -1
+    games[roomId].playerHands[player_num].array.forEach((element, index) => {
+      if (element[0] == playedCard[0] && element[1] == playedCard[1]) {
+        checkCard = index
+      }
+    });
+    if (checkCard != -1) {
+      games[roomId].discardPile.push(playedCard)
 
+    }
+  }
 }
 
 function drawCard(data) {
-  games[roomId].playerHands[data.playernum].push(games[roomId].deck.pop())
+  if (deck.length > 0) {
+    games[roomId].playerHands[data.playernum].push(games[roomId].deck.pop())
+  }
+
+  else {
+    if (discardPile.length > 2) {
+      tempCard = games[roomId].discardPile.pop()
+      shuffle(games[roomId].discardPile)
+      games[roomId].deck = games[roomId].discardPile
+      games[roomId].discardPile = [tempCard]
+    }
+    else {
+      games[roomId].gameMode = "gameBroke"
+    }
+  }
+
 }
 
 const PORT = process.env.PORT || 3000;

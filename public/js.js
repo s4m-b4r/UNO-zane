@@ -658,22 +658,19 @@ function playCard() {
     if (drawCardP == 0) {
         if (cardNumber != -2) {
             if (playersHands[playernum][cardNumber][0] == 4) {
-                discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
-                socket.emit("playCard", { discardedCard: discardPile[discardPile.length - 1], room: room_ID, player: playernum })
+                socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum })
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
 
             else if (playersHands[playernum][cardNumber][0] == discardPile[discardPile.length - 1][0] || (discardPile[discardPile.length - 1][0] == 4 && (discardPile[discardPile.length - 1][1] - 1 == playersHands[turn][cardNumber][0] || discardPile[discardPile.length - 1][1] - 6 == playersHands[turn][cardNumber][0]))) {
-                discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
-                socket.emit("playCard", { discardedCard: discardPile[discardPile.length - 1], room: room_ID, player: playernum })
+                socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum })
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
 
             else if (playersHands[playernum][cardNumber][1] == discardPile[discardPile.length - 1][1]) {
-                discardPile.push(playersHands[playernum].splice(cardNumber, 1)[0])
-                socket.emit("playCard", { discardedCard: discardPile[discardPile.length - 1], room: room_ID, player: playernum })
+                socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum })
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
@@ -850,7 +847,7 @@ function DrawPowerCard() {
     }
 }
 
-
+//my comment is this guy is so cool
 
 function CheckPlayerWin() {
     if (playersHands[playernum].length == 0) {
