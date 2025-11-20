@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on("playCard", (data) => {
-    playCard(data.room, data.discardedCard, data.player, data.cardIndex)
+    playCard(data.room, data.discardedCard, data.player, data.cardIndex, socket.id)
   })
 
   socket.on("turn change", (data) => {
@@ -125,6 +125,7 @@ function setGame(room, maxplayer) {
     }
     countCard += 1
   }
+  sortHand(room, maxplayer)
 
   return {
     deck: deck1,
@@ -201,11 +202,10 @@ function gameStart(roomId) {
   }
 }
 
-function playCard(roomId, playedCard, player_num, cardIndex) {
+function playCard(roomId, playedCard, player_num, cardIndex, socket) {
   if (games[roomId].turn == player_num) {
     if (playedCard == games[roomId].playerHands[player_num][cardIndex]) {
       discardPile.push(playerHands.splice(cardIndex, 1)[player_num])
-
     }
   };
 
@@ -225,6 +225,48 @@ function drawCard(data) {
     }
     else {
       games[roomId].gameMode = "gameBroke"
+    }
+  }
+}
+
+
+function sortHand(room, maxplayer) {
+  for (j = 0; j < maxplayer; j++) {
+    for (i = 0; i < playersHands[j].length; i++) {
+      if (playersHands[j][i][0] == 4) {
+        playersHands[j][i][0] = -1
+      }
+      else if (playersHands[j][i][1] == 9) {
+        playersHands[j][i][1] = -1
+      }
+    }
+  }
+
+  for (i = 0; i < maxplayer; i++) {
+    for (let p of playersHands) {
+      p.sort((a, b) => {
+        if (a[0] < b[0]) {
+          return -1
+        } else if (a[0] > b[0]) {
+          return 1
+        } else if (a[1] < b[1]) {
+          return -1
+        } else if (a[1] > b[1]) {
+          return 1
+        } else return 0
+
+      })
+    }
+  }
+
+  for (j = 0; j < maxplayer; j++) {
+    for (i = 0; i < playersHands[j].length; i++) {
+      if (playersHands[j][i][0] == -1) {
+        playersHands[j][i][0] = 4
+      }
+      else if (playersHands[j][i][1] == -1) {
+        playersHands[j][i][1] = 9
+      }
     }
   }
 }
