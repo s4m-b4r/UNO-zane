@@ -211,7 +211,6 @@ function playCard(roomId, playedCard, player_num, cardIndex) {
 
 }
 
-
 function drawCard(data) {
   if (deck.length > 0) {
     games[roomId].playerHands[data.playernum].push(games[roomId].deck.pop())
@@ -228,7 +227,6 @@ function drawCard(data) {
       games[roomId].gameMode = "gameBroke"
     }
   }
-
 }
 
 const PORT = process.env.PORT || 3000;

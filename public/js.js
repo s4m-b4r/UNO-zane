@@ -65,7 +65,6 @@ function setup() {
 }
 
 function sortHand() {
-
     for (j = 0; j < maxplayer; j++) {
         for (i = 0; i < playersHands[j].length; i++) {
             if (playersHands[j][i][0] == 4) {
@@ -104,7 +103,6 @@ function sortHand() {
             }
         }
     }
-
 }
 
 
