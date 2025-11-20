@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on("playCard", (data) => {
-    playCard(data.room, data.discardedCard, data.player)
+    playCard(data.room, data.discardedCard, data.player, data.cardIndex)
   })
 
   socket.on("turn change", (data) => {
@@ -201,20 +201,16 @@ function gameStart(roomId) {
   }
 }
 
-function playCard(roomId, playedCard, player_num) {
+function playCard(roomId, playedCard, player_num, cardIndex) {
   if (games[roomId].turn == player_num) {
-    checkCard = -1
-    games[roomId].playerHands[player_num].array.forEach((element, index) => {
-      if (element[0] == playedCard[0] && element[1] == playedCard[1]) {
-        checkCard = index
-      }
-    });
-    if (checkCard != -1) {
-      games[roomId].discardPile.push(playedCard)
+    if (playedCard == games[roomId].playerHands[player_num][cardIndex]) {
+      discardPile.push(playerHands.splice(cardIndex, 1)[player_num])
 
     }
-  }
+  };
+
 }
+
 
 function drawCard(data) {
   if (deck.length > 0) {

@@ -658,7 +658,7 @@ function playCard() {
     if (drawCardP == 0) {
         if (cardNumber != -2) {
             if (playersHands[playernum][cardNumber][0] == 4) {
-                socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum })
+                socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
                 CheckPlayerWin()
                 cardEffect(discardPile[discardPile.length - 1][1])
             }
