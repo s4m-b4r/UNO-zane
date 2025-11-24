@@ -782,7 +782,6 @@ function ChangeColour() {
 
 function drawCard() {
     if (mouseX > (width / 2 - (cwidth + 10 + cwidth / 2)) && mouseX < (width / 2 - (cwidth + 10 - cwidth / 2)) && mouseY > (height / 2 - cheight / 2) && mouseY < (height / 2 + cheight / 2)) {
-        playersHands[playernum].push(deck.pop())
         socket.emit("draw card", { player: playernum, room: room_ID })
     }
 }
