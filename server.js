@@ -219,7 +219,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 function drawCard(data) {
   if (games[Number(data.room)].deck.length > 0) {
     games[Number(data.room)].playerHands[data.player].push(games[Number(data.room)].deck.pop())
-    games[Number(data.room)].playerHands = sortHand(Number(data.room), games[Number(data.room)].maxplayer, games[Number(data.room)].playerHands)
+    games[Number(data.room)].playerHands = sortHand(Number(data.room), games[Number(data.room)].playerlimit, games[Number(data.room)].playerHands)
     games[Number(data.room)].turn ++
     return games[Number(data.room)].playerHands[data.player]
   }
