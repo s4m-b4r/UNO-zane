@@ -132,7 +132,6 @@ function setGame(room, maxplayer) {
     playerHands: playersHands1,
     discardPile: discardPile1
   }
-
 }
 
 function shuffle(array) {

@@ -873,7 +873,6 @@ function createRoom() {
     button.hide()
     roomInput.hide()
     socket.emit("createRoom")
-
 }
 
 function joinRoom() {
@@ -897,7 +896,7 @@ socket.on("startGame", (data) => {
     for (i = 0; i <= data.otherplayers.length - 1; i++) {
         playersHands[data.otherplayers[i]] = 7
     }
-    discardPile.push(data.discardPile1[0])
+    discardPile.push(data.discardPile1)
 })
 
 socket.on("playerWon", (data) => {
