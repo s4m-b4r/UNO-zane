@@ -922,13 +922,13 @@ socket.on("turn order", (data) => {
 })
 
 socket.on("draw card", (data) => {
-    if (playernum == data.player_num) {
-        playersHands[playernum]
-        sortHand()
+    if(data.player_num != playernum){
+        playersHands[data.player_num] = data.cardNumPlayer
     }
-    else {
-        playersHands[data.player_num]++
+    else if(data.player_num == playernum){
+        playersHands[data.playernum] = data.playerhand
     }
+    turn = data.turn
 })
 
 socket.on("colour change", (data) => {

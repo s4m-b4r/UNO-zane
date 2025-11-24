@@ -69,8 +69,9 @@ io.on('connection', (socket) => {
   })
 
   socket.on("draw card", (data) => {
-    drawCard(data)
-    socket.broadcast.to(Room).emit("draw card", data)
+    newplayerhand = drawCard(data)
+    socket.emit("draw card", {playerhand: newplayerhand, turn: games[data.room].turn})
+    socket.broadcast.to(data.room).emit("draw card", {turn: games[data.room].turn, player_num:data.player, cardNumPlayer: newplayerhand.length})
   })
 
   socket.on("colour change", (data) => {
@@ -215,6 +216,9 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 function drawCard(data) {
   if (deck.length > 0) {
     games[roomId].playerHands[data.playernum].push(games[roomId].deck.pop())
+    sortHand(data.room, games[data.room], games[roomId].playerHands)
+    games[roomId].turn ++
+    return games[roomId].playerHands[data.playernum]
   }
 
   else {
