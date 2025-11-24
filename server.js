@@ -158,6 +158,7 @@ function createRoom(roomId, playerlim, gamehost) {
 }
 
 function gameStart(roomId) {
+  console.log("the players in this room are " + games[roomId].players)
   for (let i = 0; i <= games[roomId].players.length - 1; i++) {
     console.log("sending information to player " + games[roomId].players[i])
     if (games[roomId].players.length == 4) {
