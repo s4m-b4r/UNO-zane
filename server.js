@@ -125,7 +125,7 @@ function setGame(room, maxplayer) {
     }
     countCard += 1
   }
-  sortHand(room, maxplayer, playersHands1)
+  playersHands1 = sortHand(room, maxplayer, playersHands1)
 
   return {
     deck: deck1,
@@ -269,6 +269,7 @@ function sortHand(room, maxplayer, playerHands) {
       }
     }
   }
+  return playerHands
 }
 
 const PORT = process.env.PORT || 3000;
