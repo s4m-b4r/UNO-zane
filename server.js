@@ -95,8 +95,8 @@ function setGame(room, maxplayer) {
   playersHands1 = [[], [], [], []]
   discardPile1 = []
 
-  for (i = 0; i <= 3; i++) {
-    for (j = 0; j <= 12; j++) {
+  for (let i = 0; i <= 3; i++) {
+    for (let j = 0; j <= 12; j++) {
 
       card = [i, j]
       deck1.push(card)
@@ -105,14 +105,14 @@ function setGame(room, maxplayer) {
 
     }
   }
-  for (i = 0; i <= 3; i++) {
+  for (let i = 0; i <= 3; i++) {
     deck1.push([4, 0])
     deck1.push([4, 5])
   }
   shuffle(deck1)
 
-  for (i = 0; i < maxplayer; i++) {
-    for (j = 0; j < numberOfCards; j++) {
+  for (let i = 0; i < maxplayer; i++) {
+    for (let j = 0; j < numberOfCards; j++) {
       playersHands1[i].push(deck1.pop())
     }
   }
@@ -158,7 +158,8 @@ function createRoom(roomId, playerlim, gamehost) {
 }
 
 function gameStart(roomId) {
-  for (i = 0; i <= games[roomId].players.length - 1; i++) {
+  for (let i = 0; i <= games[roomId].players.length - 1; i++) {
+    console.log("sending information to player " + games[roomId].players[i])
     if (games[roomId].players.length == 4) {
       j = i + 1
       k = i + 2
@@ -231,8 +232,8 @@ function drawCard(data) {
 
 
 function sortHand(room, maxplayer, playersHands) {
-  for (j = 0; j < maxplayer; j++) {
-    for (i = 0; i < playersHands[j].length; i++) {
+  for (let j = 0; j < maxplayer; j++) {
+    for (let i = 0; i < playersHands[j].length; i++) {
       if (playersHands[j][i][0] == 4) {
         playersHands[j][i][0] = -1
       }
@@ -242,7 +243,7 @@ function sortHand(room, maxplayer, playersHands) {
     }
   }
 
-  for (i = 0; i < maxplayer; i++) {
+  for (let i = 0; i < maxplayer; i++) {
     for (let p of playersHands) {
       p.sort((a, b) => {
         if (a[0] < b[0]) {
@@ -259,8 +260,8 @@ function sortHand(room, maxplayer, playersHands) {
     }
   }
 
-  for (j = 0; j < maxplayer; j++) {
-    for (i = 0; i < playersHands[j].length; i++) {
+  for (let j = 0; j < maxplayer; j++) {
+    for (let i = 0; i < playersHands[j].length; i++) {
       if (playersHands[j][i][0] == -1) {
         playersHands[j][i][0] = 4
       }
