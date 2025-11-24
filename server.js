@@ -22,10 +22,11 @@ io.on('connection', (socket) => {
 
   socket.on("createRoom", () => {
     counter++
+    let roomCount = string(counter)
     player_num = 0
-    socket.join(counter)
+    socket.join(roomCount)
     createRoom(counter, 4, socket.id)
-    socket.emit("roomJoined", { player_num: player_num, room: counter })
+    socket.emit("roomJoined", { player_num: player_num, room: roomCount })
   })
 
   socket.on("roomJoin", (data) => {
@@ -36,8 +37,9 @@ io.on('connection', (socket) => {
       if (games[data].gameMode == "gameMade") {
         console.log("game is available to join")
         games[data].players.push(socket.id)
-        socket.join(counter)
-        socket.emit("roomJoined", { player_num: games[data].players.length - 1, room: counter })
+        let roomCount = string(data)
+        socket.join(roomCount)
+        socket.emit("roomJoined", { player_num: games[data].players.length - 1, room: roomCount })
         console.log("this socket is player " + games[data].players[games[data].players.length - 1])
         if (games[data].players.length == games[data].playerlimit) {
           games[data].gameMode = "gameStarted"
@@ -215,11 +217,11 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 }
 
 function drawCard(data) {
-  if (games[data.room].deck.length > 0) {
-    games[data.room].playerHands[data.player].push(games[data.room].deck.pop())
-    games[data.room].playerHands = sortHand(data.room, games[data.room].maxplayer, games[data.room].playerHands)
-    games[data.room].turn ++
-    return games[data.room].playerHands[data.player]
+  if (games[number(data.room)].deck.length > 0) {
+    games[number(data.room)].playerHands[data.player].push(games[number(data.room)].deck.pop())
+    games[number(data.room)].playerHands = sortHand(number(data.room), games[number(data.room)].maxplayer, games[number(data.room)].playerHands)
+    games[number(data.room)].turn ++
+    return games[number(data.room)].playerHands[data.player]
   }
 
   else {
