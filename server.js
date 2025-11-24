@@ -125,7 +125,7 @@ function setGame(room, maxplayer) {
     }
     countCard += 1
   }
-  sortHand(room, maxplayer, playerHands)
+  sortHand(room, maxplayer, playersHands1)
 
   return {
     deck: deck1,
