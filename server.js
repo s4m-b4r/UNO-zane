@@ -230,7 +230,7 @@ function drawCard(data) {
 }
 
 
-function sortHand(room, maxplayer, playerHands) {
+function sortHand(room, maxplayer, playersHands) {
   for (j = 0; j < maxplayer; j++) {
     for (i = 0; i < playersHands[j].length; i++) {
       if (playersHands[j][i][0] == 4) {
@@ -269,7 +269,7 @@ function sortHand(room, maxplayer, playerHands) {
       }
     }
   }
-  return playerHands
+  return playersHands
 }
 
 const PORT = process.env.PORT || 3000;
