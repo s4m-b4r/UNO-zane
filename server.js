@@ -72,8 +72,7 @@ io.on('connection', (socket) => {
     console.log("the player trying to draw is: " + data.player)
     console.log("this draw card event is being broadcasted to ")
     newplayerhand = drawCard(data)
-    socket.emit("draw card", {playerhand: newplayerhand, turn: games[data.room].turn, player_num: data.player})
-    socket.broadcast.to(data.room).emit("draw card", {turn: games[data.room].turn, player_num:data.player, cardNumPlayer: newplayerhand.length})
+    io.to(data.room).emit("draw card", {turn: games[data.room].turn, player_num:data.player, cardNumPlayer: newplayerhand.length, playerhand: newplayerhand})
   })
 
   socket.on("colour change", (data) => {
