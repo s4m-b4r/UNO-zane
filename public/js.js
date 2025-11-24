@@ -784,13 +784,6 @@ function drawCard() {
     if (mouseX > (width / 2 - (cwidth + 10 + cwidth / 2)) && mouseX < (width / 2 - (cwidth + 10 - cwidth / 2)) && mouseY > (height / 2 - cheight / 2) && mouseY < (height / 2 + cheight / 2)) {
         playersHands[playernum].push(deck.pop())
         socket.emit("draw card", { player: playernum, room: room_ID })
-        if (turnClockWise == true) {
-            turn += 1
-        }
-        else if (turnClockWise == false) {
-            turn -= 1
-        }
-        socket.emit("turn change", { Turn: turn, room: room_ID })
     }
 }
 
@@ -926,7 +919,7 @@ socket.on("draw card", (data) => {
         playersHands[data.player_num] = data.cardNumPlayer
     }
     else if(data.player_num == playernum){
-        playersHands[data.playernum] = data.playerhand
+        playersHands[data.player_num] = data.playerhand
     }
     turn = data.turn
 })

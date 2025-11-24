@@ -71,7 +71,7 @@ io.on('connection', (socket) => {
   socket.on("draw card", (data) => {
     console.log("the player trying to draw is: " + data.player)
     newplayerhand = drawCard(data)
-    socket.emit("draw card", {playerhand: newplayerhand, turn: games[data.room].turn})
+    socket.emit("draw card", {playerhand: newplayerhand, turn: games[data.room].turn, player_num: data.player})
     socket.broadcast.to(data.room).emit("draw card", {turn: games[data.room].turn, player_num:data.player, cardNumPlayer: newplayerhand.length})
   })
 
