@@ -125,7 +125,7 @@ function setGame(room, maxplayer) {
     }
     countCard += 1
   }
-  sortHand(room, maxplayer)
+  sortHand(room, maxplayer, playerHands)
 
   return {
     deck: deck1,
@@ -230,7 +230,7 @@ function drawCard(data) {
 }
 
 
-function sortHand(room, maxplayer) {
+function sortHand(room, maxplayer, playerHands) {
   for (j = 0; j < maxplayer; j++) {
     for (i = 0; i < playersHands[j].length; i++) {
       if (playersHands[j][i][0] == 4) {
