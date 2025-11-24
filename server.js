@@ -217,11 +217,11 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 }
 
 function drawCard(data) {
-  if (games[number(data.room)].deck.length > 0) {
-    games[number(data.room)].playerHands[data.player].push(games[number(data.room)].deck.pop())
-    games[number(data.room)].playerHands = sortHand(number(data.room), games[number(data.room)].maxplayer, games[number(data.room)].playerHands)
-    games[number(data.room)].turn ++
-    return games[number(data.room)].playerHands[data.player]
+  if (games[Number(data.room)].deck.length > 0) {
+    games[Number(data.room)].playerHands[data.player].push(games[Number(data.room)].deck.pop())
+    games[Number(data.room)].playerHands = sortHand(Number(data.room), games[Number(data.room)].maxplayer, games[Number(data.room)].playerHands)
+    games[Number(data.room)].turn ++
+    return games[Number(data.room)].playerHands[data.player]
   }
 
   else {
