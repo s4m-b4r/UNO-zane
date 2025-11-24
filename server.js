@@ -70,6 +70,7 @@ io.on('connection', (socket) => {
 
   socket.on("draw card", (data) => {
     console.log("the player trying to draw is: " + data.player)
+    console.log("this draw card event is being broadcasted to ")
     newplayerhand = drawCard(data)
     socket.emit("draw card", {playerhand: newplayerhand, turn: games[data.room].turn, player_num: data.player})
     socket.broadcast.to(data.room).emit("draw card", {turn: games[data.room].turn, player_num:data.player, cardNumPlayer: newplayerhand.length})
@@ -217,7 +218,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 function drawCard(data) {
   if (games[data.room].deck.length > 0) {
     games[data.room].playerHands[data.player].push(games[data.room].deck.pop())
-    sortHand(data.room, games[data.room].maxplayer, games[data.room].playerHands)
+    games[data.room].playerHands = sortHand(data.room, games[data.room].maxplayer, games[data.room].playerHands)
     games[data.room].turn ++
     return games[data.room].playerHands[data.player]
   }
