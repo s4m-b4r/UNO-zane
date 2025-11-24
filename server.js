@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
 
   socket.on("createRoom", () => {
     counter++
-    let roomCount = string(counter)
+    let roomCount = String(counter)
     player_num = 0
     socket.join(roomCount)
     createRoom(counter, 4, socket.id)
@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
       if (games[data].gameMode == "gameMade") {
         console.log("game is available to join")
         games[data].players.push(socket.id)
-        let roomCount = string(data)
+        let roomCount = String(data)
         socket.join(roomCount)
         socket.emit("roomJoined", { player_num: games[data].players.length - 1, room: roomCount })
         console.log("this socket is player " + games[data].players[games[data].players.length - 1])

@@ -870,6 +870,7 @@ function createRoom() {
 function joinRoom() {
     roomCode = roomInput.value()
     roomCode = roomCode.replace(/\s+/g, '')
+    roomCode = Number(roomCode)
     console.log("the room code inputted is " + roomCode)
     socket.emit("roomJoin", roomCode)
 }
