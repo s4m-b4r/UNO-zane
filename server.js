@@ -219,7 +219,7 @@ function drawCard(data) {
 
   else {
     if (discardPile.length > 2) {
-      tempCard = games[roomId].discardPile.pop()
+      let tempCard = games[roomId].discardPile.pop()
       shuffle(games[roomId].discardPile)
       games[roomId].deck = games[roomId].discardPile
       games[roomId].discardPile = [tempCard]
