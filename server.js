@@ -217,26 +217,11 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 }
 
 function drawCard(data) {
-  if (games[Number(data.room)].deck.length > 0) {
     games[Number(data.room)].playerHands[data.player].push(games[Number(data.room)].deck.pop())
     games[Number(data.room)].playerHands = sortHand(Number(data.room), games[Number(data.room)].playerlimit, games[Number(data.room)].playerHands)
     games[Number(data.room)].turn ++
     return games[Number(data.room)].playerHands[data.player]
-  }
-
-  else {
-    if (discardPile.length > 2) {
-      let tempCard = games[roomId].discardPile.pop()
-      shuffle(games[roomId].discardPile)
-      games[roomId].deck = games[roomId].discardPile
-      games[roomId].discardPile = [tempCard]
-    }
-    else {
-      games[roomId].gameMode = "gameBroke"
-    }
-  }
 }
-
 
 function sortHand(room, maxplayer, playersHands) {
   for (let j = 0; j < maxplayer; j++) {
