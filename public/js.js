@@ -915,11 +915,11 @@ socket.on("turn order", (data) => {
 })
 
 socket.on("draw card", (data) => {
-    if(data.player_num != playernum){
-        playersHands[data.player_num] = data.cardNumPlayer
-    }
-    else if(data.player_num == playernum){
+    if(data.player_num == playernum){
         playersHands[data.player_num] = data.playerhand
+    }
+    else{
+      playersHands[data.player_num] = data.cardNumPlayer  
     }
     turn = data.turn
 })
