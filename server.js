@@ -214,11 +214,11 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 }
 
 function drawCard(data) {
-  if (deck.length > 0) {
-    games[roomId].playerHands[data.playernum].push(games[roomId].deck.pop())
-    sortHand(data.room, games[data.room], games[roomId].playerHands)
-    games[roomId].turn ++
-    return games[roomId].playerHands[data.playernum]
+  if (games[data.room].deck.length > 0) {
+    games[data.room].playerHands[data.playernum].push(games[data.room].deck.pop())
+    sortHand(data.room, games[data.room], games[data.room].playerHands)
+    games[data.room].turn ++
+    return games[data.room].playerHands[data.playernum]
   }
 
   else {
