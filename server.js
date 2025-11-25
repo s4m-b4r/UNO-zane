@@ -212,7 +212,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
     if (playedCard == games[roomId].playerHands[player_num][cardIndex]) {
       games[roomId].discardPile.push(playerHands.splice(cardIndex, 1)[player_num])
       games[roomId].turn++
-      socket.emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId.turn], playerLength: games[roomId].playerHands[player_num].length })
+      io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId.turn], playerLength: games[roomId].playerHands[player_num].length })
     }
   };
 

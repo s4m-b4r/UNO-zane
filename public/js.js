@@ -861,6 +861,7 @@ socket.on("playCard", (data) => {
     else {
         playersHands[data.player_num] = data.cardNumPlayer
     }
+    discardPile = data.discardPile1
     turn = data.turn
 })
 
