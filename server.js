@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on("playCard", (data) => {
-    playCard(data.room, data.discardedCard, data.player, data.cardIndex, socket.id)
+    playCard(Number(data.room), data.discardedCard, data.player, data.cardIndex, socket.id)
   })
 
   socket.on("turn change", (data) => {
@@ -210,7 +210,9 @@ function gameStart(roomId) {
 function playCard(roomId, playedCard, player_num, cardIndex, socket) {
   if (games[roomId].turn == player_num) {
     if (playedCard == games[roomId].playerHands[player_num][cardIndex]) {
-      discardPile.push(playerHands.splice(cardIndex, 1)[player_num])
+      games[roomId].discardPile.push(playerHands.splice(cardIndex, 1)[player_num])
+      games[roomId].turn++
+      socket.emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId.turn], playerLength: games[roomId].playerHands[player_num].length })
     }
   };
 

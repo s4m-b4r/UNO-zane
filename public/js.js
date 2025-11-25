@@ -855,13 +855,13 @@ socket.on("playerWon", (data) => {
 })
 
 socket.on("playCard", (data) => {
-    discardPile.push(data.discardedCard)
-    for (i = 0; i < playersHands[data.player].length; i++) {
-        if (playersHands[data.player][i][0] == data.discardedCard[0] && playersHands[data.player][i][1] == data.discardedCard[1]) {
-            playersHands[data.player].splice(i, 1)
-            break
-        }
+    if (data.player_num == playernum) {
+        playersHands[data.player_num] = data.playerhand
     }
+    else {
+        playersHands[data.player_num] = data.cardNumPlayer
+    }
+    turn = data.turn
 })
 
 socket.on("turn change", (data) => {
