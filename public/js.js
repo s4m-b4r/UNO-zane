@@ -616,19 +616,16 @@ function playCard() {
             if (playersHands[playernum][cardNumber][0] == 4) {
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
                 CheckPlayerWin()
-                cardEffect(discardPile[discardPile.length - 1][1])
             }
 
             else if (playersHands[playernum][cardNumber][0] == discardPile[discardPile.length - 1][0] || (discardPile[discardPile.length - 1][0] == 4 && (discardPile[discardPile.length - 1][1] - 1 == playersHands[turn][cardNumber][0] || discardPile[discardPile.length - 1][1] - 6 == playersHands[turn][cardNumber][0]))) {
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
                 CheckPlayerWin()
-                cardEffect(discardPile[discardPile.length - 1][1])
             }
 
             else if (playersHands[playernum][cardNumber][1] == discardPile[discardPile.length - 1][1]) {
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
                 CheckPlayerWin()
-                cardEffect(discardPile[discardPile.length - 1][1])
             }
         }
     }
@@ -652,68 +649,6 @@ function playCard() {
 
 }
 
-
-function cardEffect(effect) {
-    if (effect == 0 && discardPile[discardPile.length - 1][0] == 4) {
-        ChangeColour()
-    }
-
-    else if (effect == 5 && discardPile[discardPile.length - 1][0] == 4) {
-        ChangeColour()
-    }
-
-    else if (effect == 10) {
-        drawCardP += 2
-    }
-
-    else if (effect == 11) {
-        if (turnClockWise == true) {
-            turnClockWise = false
-            socket.emit("turn order", { turnOrder: turnClockWise, room: room_ID })
-        }
-        else {
-            turnClockWise = true
-            socket.emit("turn order", { turnOrder: turnClockWise, room: room_ID })
-        }
-    }
-
-    else if (effect == 12) {
-        if (turnClockWise == true) {
-            turn += 1
-        }
-        else if (turnClockWise == false) {
-            turn -= 1
-        }
-        socket.emit("turn change", { Turn: turn, room: room_ID })
-    }
-
-    if (turnClockWise == true && ChangeColourMode == false) {
-        if (effect != 11) {
-            turn += 1
-        }
-        else if (effect == 11 && maxplayer != 2) {
-            turn -= 1
-        }
-        socket.emit("turn change", { Turn: turn, room: room_ID })
-
-        if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
-            socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
-        }
-    }
-    else if (turnClockWise == false && ChangeColourMode == false) {
-        if (effect != 11) {
-            turn -= 1
-        }
-        else if (effect == 11 && maxplayer != 2) {
-            turn -= 1
-        }
-        socket.emit("turn change", { Turn: turn, room: room_ID })
-
-        if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
-            socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
-        }
-    }
-}
 
 function ChangeColour() {
 
