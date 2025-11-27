@@ -324,6 +324,7 @@ function cardEffect(effect, room, playernum) {
     if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
     }
   }
+
 }
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(` Server running on port ${PORT}`));
