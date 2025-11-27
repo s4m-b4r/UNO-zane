@@ -71,8 +71,6 @@ io.on('connection', (socket) => {
   })
 
   socket.on("draw card", (data) => {
-    console.log("the player trying to draw is: " + data.player)
-    console.log("this draw card event is being broadcasted to ")
     newplayerhand = drawCard(data)
     io.to(data.room).emit("draw card", { turn: games[data.room].turn, player_num: data.player, cardNumPlayer: newplayerhand.length, playerhand: newplayerhand })
   })
@@ -156,6 +154,8 @@ function createRoom(roomId, playerlim, gamehost) {
     playerHands: startgamevar.playerHands,
     discardPile: startgamevar.discardPile,
     turn: 0,
+    turnClockWise: true,
+    drawCardP: 0,
     gameMode: "gameMade"
   }
 }
@@ -163,7 +163,6 @@ function createRoom(roomId, playerlim, gamehost) {
 function gameStart(roomId) {
   console.log("the players in this room are " + games[roomId].players)
   for (let i = 0; i <= games[roomId].players.length - 1; i++) {
-    console.log("sending information to player " + games[roomId].players[i])
     if (games[roomId].players.length == 4) {
       j = i + 1
       k = i + 2
@@ -181,7 +180,6 @@ function gameStart(roomId) {
         l = l - 4
       }
       io.to(games[roomId].players[i]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j, k, l], discardPile1: games[roomId].discardPile })
-      console.log("the starting discard card is " + discardPile1)
     }
 
     else if (games[roomId].players.length == 3) {
@@ -211,7 +209,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
   if (games[roomId].turn == player_num) {
     if (playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) {
       games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
-      cardEffect(games[roomId].discardPile[games[roomId].discardPile.length -1][1])
+      cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
       turnManager(roomId)
       io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId.turn], playerLength: games[roomId].playerHands[player_num].length })
     }
@@ -268,70 +266,64 @@ function sortHand(room, maxplayer, playersHands) {
   return playersHands
 }
 
-function turnManager(room){
-
+function turnManager(room) {
+  if (games[room].turnClockWise == true) {
+    games[room].turn++
+  }
+  else if (games[room].turnClockWise == false) {
+    games[room].turn--
+  }
+  io.to(String(room)).emit("turn change", { Turn: games[room].turn })
 }
 
-function cardEffect(effect) {
-    if (effect == 0 && discardPile[discardPile.length - 1][0] == 4) {
-        ChangeColour()
+function cardEffect(effect, room, playernum) {
+  if (effect == 0 && games[room].discardPile[discardPile.length - 1][0] == 4) {
+    io.to(games[room].players[playernum]).emit("change Colour")
+  }
+
+  else if (effect == 5 && games[room].discardPile[discardPile.length - 1][0] == 4) {
+    io.to(games[room].players[playernum]).emit("change Colour")
+  }
+
+  else if (effect == 10) {
+    games[roomId].drawCardP += 2
+  }
+
+  else if (effect == 11) {
+    if (turnClockWise == true) {
+      turnClockWise = false
+    }
+    else {
+      turnClockWise = true
+    }
+  }
+
+  else if (effect == 12) {
+    turnManager(room)
+  }
+
+  if (turnClockWise == true && ChangeColourMode == false) {
+    if (effect != 11) {
+      games[room].turn += 1
+    }
+    else if (effect == 11 && maxplayer != 2) {
+      games[room].turn -= 1
     }
 
-    else if (effect == 5 && discardPile[discardPile.length - 1][0] == 4) {
-        ChangeColour()
+    if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
+    }
+  }
+  else if (turnClockWise == false && ChangeColourMode == false) {
+    if (effect != 11) {
+      games[room].turn -= 1
+    }
+    else if (effect == 11 && maxplayer != 2) {
+      games[room].turn -= 1
     }
 
-    else if (effect == 10) {
-        drawCardP += 2
+    if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
     }
-
-    else if (effect == 11) {
-        if (turnClockWise == true) {
-            turnClockWise = false
-            socket.emit("turn order", { turnOrder: turnClockWise, room: room_ID })
-        }
-        else {
-            turnClockWise = true
-            socket.emit("turn order", { turnOrder: turnClockWise, room: room_ID })
-        }
-    }
-
-    else if (effect == 12) {
-        if (turnClockWise == true) {
-            turn += 1
-        }
-        else if (turnClockWise == false) {
-            turn -= 1
-        }
-        socket.emit("turn change", { Turn: turn, room: room_ID })
-    }
-
-    if (turnClockWise == true && ChangeColourMode == false) {
-        if (effect != 11) {
-            turn += 1
-        }
-        else if (effect == 11 && maxplayer != 2) {
-            turn -= 1
-        }
-        socket.emit("turn change", { Turn: turn, room: room_ID })
-
-        if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
-            socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
-        }
-    }
-    else if (turnClockWise == false && ChangeColourMode == false) {
-        if (effect != 11) {
-            turn -= 1
-        }
-        else if (effect == 11 && maxplayer != 2) {
-            turn -= 1
-        }
-        socket.emit("turn change", { Turn: turn, room: room_ID })
-
-        if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
-            socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
-        }
-    }
+  }
 }
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(` Server running on port ${PORT}`));
