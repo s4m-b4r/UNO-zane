@@ -156,6 +156,7 @@ function createRoom(roomId, playerlim, gamehost) {
     turn: 0,
     turnClockWise: true,
     drawCardP: 0,
+    ChangeColourMode: false,
     gameMode: "gameMade"
   }
 }
@@ -302,7 +303,7 @@ function cardEffect(effect, room, playernum) {
     turnManager(room)
   }
 
-  if (turnClockWise == true && ChangeColourMode == false) {
+  if (games[room].turnClockWise == true && games[room].ChangeColourMode == false) {
     if (effect != 11) {
       games[room].turn += 1
     }
@@ -313,7 +314,7 @@ function cardEffect(effect, room, playernum) {
     if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
     }
   }
-  else if (turnClockWise == false && ChangeColourMode == false) {
+  else if (games[room].turnClockWise == false && games[room].ChangeColourMode == false) {
     if (effect != 11) {
       games[room].turn -= 1
     }
