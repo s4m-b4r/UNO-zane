@@ -791,10 +791,10 @@ socket.on("playerWon", (data) => {
 
 socket.on("playCard", (data) => {
     if (data.player_num == playernum) {
-        playersHands[data.player_num] = data.playerhand
+        playersHands[data.player_num] = data.newplayerhand
     }
     else {
-        playersHands[data.player_num] = data.cardNumPlayer
+        playersHands[data.player_num] = data.playerLength
     }
     discardPile = data.discardPile1
     turn = data.turn
