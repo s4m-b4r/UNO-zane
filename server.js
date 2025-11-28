@@ -208,7 +208,9 @@ function gameStart(roomId) {
 
 function playCard(roomId, playedCard, player_num, cardIndex, socket) {
   if (games[roomId].turn == player_num) {
+    console.log("it is the correct player's turn")
     if (playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) {
+      console.log("found the correct card to be discarded from player's hand and added to the discard pile")
       games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
       cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
       turnManager(roomId)
