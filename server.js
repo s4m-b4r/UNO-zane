@@ -329,5 +329,15 @@ function cardEffect(effect, room, playernum) {
   }
 
 }
+
+function PlayerManager(room) {
+  if (games[room].turn < 0) {
+    games[room].turn += games[room].playerlimit
+  }
+  else if (games[room].turn > games[room].playerlimit - 1) {
+    games[room].turn -= games[room].playerlimit
+  }
+}
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(` Server running on port ${PORT}`));

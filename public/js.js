@@ -685,11 +685,9 @@ function drawCard() {
 function PlayerManager() {
     if (turn < 0) {
         turn += maxplayer
-        socket.emit("turn change", { Turn: turn, room: room_ID })
     }
     else if (turn > maxplayer - 1) {
         turn -= maxplayer
-        socket.emit("turn change", { Turn: turn, room: room_ID })
     }
 }
 
