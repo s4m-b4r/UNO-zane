@@ -214,7 +214,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
       games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
       cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
       console.log("the turn is " + games[roomId].turn)
-      io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId.turn], playerLength: games[roomId].playerHands[player_num].length })
+      io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId.turn], playerLength: games[roomId].playerHands[player_num].length, player_num: player_num })
     }
   };
 
