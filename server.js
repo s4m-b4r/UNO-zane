@@ -287,15 +287,15 @@ function cardEffect(effect, room, playernum) {
   }
 
   else if (effect == 10) {
-    games[roomId].drawCardP += 2
+    games[room].drawCardP += 2
   }
 
   else if (effect == 11) {
-    if (turnClockWise == true) {
-      turnClockWise = false
+    if (games[room].turnClockWise == true) {
+      games[room].turnClockWise = false
     }
     else {
-      turnClockWise = true
+      games[room].turnClockWise = true
     }
   }
 
