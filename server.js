@@ -313,7 +313,7 @@ function cardEffect(effect, room, playernum) {
       games[room].turn -= 1
     }
 
-    if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
+    if ((effect == 5 && games[room].discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
     }
   }
   else if (games[room].turnClockWise == false && games[room].ChangeColourMode == false) {
@@ -324,7 +324,7 @@ function cardEffect(effect, room, playernum) {
       games[room].turn -= 1
     }
 
-    if ((effect == 5 && discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
+    if ((effect == 5 && games[room].discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
     }
   }
 
