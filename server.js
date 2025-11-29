@@ -280,11 +280,11 @@ function turnManager(room) {
 }
 
 function cardEffect(effect, room, playernum) {
-  if (effect == 0 && games[room].discardPile[discardPile.length - 1][0] == 4) {
+  if (effect == 0 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
     io.to(games[room].players[playernum]).emit("change Colour")
   }
 
-  else if (effect == 5 && games[room].discardPile[discardPile.length - 1][0] == 4) {
+  else if (effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
     io.to(games[room].players[playernum]).emit("change Colour")
   }
 
@@ -313,7 +313,7 @@ function cardEffect(effect, room, playernum) {
       games[room].turn -= 1
     }
 
-    if ((effect == 5 && games[room].discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
+    if ((effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) || effect == 10) {
     }
   }
   else if (games[room].turnClockWise == false && games[room].ChangeColourMode == false) {
@@ -324,7 +324,7 @@ function cardEffect(effect, room, playernum) {
       games[room].turn -= 1
     }
 
-    if ((effect == 5 && games[room].discardPile[discardPile.length - 1][0] == 4) || effect == 10) {
+    if ((effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) || effect == 10) {
     }
   }
 
