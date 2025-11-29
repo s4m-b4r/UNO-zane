@@ -309,7 +309,7 @@ function cardEffect(effect, room, playernum) {
     if (effect != 11) {
       games[room].turn += 1
     }
-    else if (effect == 11 && maxplayer != 2) {
+    else if (effect == 11 && games[room].playerlimit != 2) {
       games[room].turn -= 1
     }
 
@@ -320,7 +320,7 @@ function cardEffect(effect, room, playernum) {
     if (effect != 11) {
       games[room].turn -= 1
     }
-    else if (effect == 11 && maxplayer != 2) {
+    else if (effect == 11 && games[room].playerlimit != 2) {
       games[room].turn -= 1
     }
 
