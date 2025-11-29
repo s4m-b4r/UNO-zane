@@ -281,11 +281,14 @@ function turnManager(room) {
 
 function cardEffect(effect, room, playernum) {
   if (effect == 0 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
+    games[room].ChangeColourMode = true
     io.to(games[room].players[playernum]).emit("change Colour")
   }
 
   else if (effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
+    games[room].ChangeColourMode = true
     io.to(games[room].players[playernum]).emit("change Colour")
+    games[room].drawCardP += 4
   }
 
   else if (effect == 10) {

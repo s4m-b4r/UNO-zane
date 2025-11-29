@@ -800,10 +800,6 @@ socket.on("turn change", (data) => {
     turn = data.Turn
 })
 
-socket.on("turn order", (data) => {
-    turnClockWise = data.turnOrder
-})
-
 socket.on("draw card", (data) => {
     if (data.player_num == playernum) {
         playersHands[data.player_num] = data.playerhand
@@ -812,10 +808,6 @@ socket.on("draw card", (data) => {
         playersHands[data.player_num] = data.cardNumPlayer
     }
     turn = data.turn
-})
-
-socket.on("colour change", (data) => {
-    discardPile[discardPile.length - 1][1] = data.colourChanged
 })
 
 socket.on("draw power card", (data) => {
