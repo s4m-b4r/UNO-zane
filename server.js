@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
 
   socket.on("draw card", (data) => {
     newplayerhand = drawCard(data)
-    PlayerManager(room)
+    PlayerManager(Number(data.room))
     io.to(data.room).emit("draw card", { turn: games[data.room].turn, player_num: data.player, cardNumPlayer: newplayerhand.length, playerhand: newplayerhand })
   })
 
