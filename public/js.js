@@ -422,7 +422,7 @@ function mouseClicked() {
                     if (discardPile[discardPile.length - 1][1] == 5) {
                         if (red == true && white == false) {
                             discardPile[discardPile.length - 1][1] += 1
-                            socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
+                            socket.emit("colour change", { colourChanged: 1, room: room_ID })
                             ChangeColourMode = false
                             if (turnClockWise == true) {
                                 turn += 1

@@ -77,8 +77,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on("colour change", (data) => {
-    let Room = data.room
-    socket.broadcast.to(Room).emit("colour change", data)
+
   })
 
   socket.on("draw power card", (data) => {
@@ -284,12 +283,12 @@ function turnManager(room) {
 function cardEffect(effect, room, playernum) {
   if (effect == 0 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
     games[room].ChangeColourMode = true
-    io.to(games[room].players[playernum]).emit("change Colour")
+    io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode })
   }
 
   else if (effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
     games[room].ChangeColourMode = true
-    io.to(games[room].players[playernum]).emit("change Colour")
+    io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode })
     games[room].drawCardP += 4
   }
 
