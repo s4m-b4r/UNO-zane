@@ -424,13 +424,6 @@ function mouseClicked() {
                             discardPile[discardPile.length - 1][1] += 1
                             socket.emit("colour change", { colourChanged: 1, room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                             drawCardP += 4
                             socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
@@ -439,12 +432,6 @@ function mouseClicked() {
                             discardPile[discardPile.length - 1][1] += 4
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                             drawCardP += 4
                             socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
@@ -453,12 +440,6 @@ function mouseClicked() {
                             discardPile[discardPile.length - 1][1] += 2
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                             drawCardP += 4
                             socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
@@ -466,13 +447,6 @@ function mouseClicked() {
                         else if (blue == true && white == false) {
                             discardPile[discardPile.length - 1][1] += 3
                             ChangeColourMode = false
-
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                             drawCardP += 4
                             socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
@@ -485,49 +459,24 @@ function mouseClicked() {
                             discardPile[discardPile.length - 1][1] += 1
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                         }
                         else if (yellow == true && white == false) {
                             discardPile[discardPile.length - 1][1] += 4
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                         }
                         else if (green == true && white == false) {
                             discardPile[discardPile.length - 1][1] += 2
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                         }
                         else if (blue == true && white == false) {
                             discardPile[discardPile.length - 1][1] += 3
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                         }
                     }
@@ -548,12 +497,6 @@ function mouseClicked() {
                             discardPile[discardPile.length - 1][1] += 1
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                             drawCardP += 4
                             socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
@@ -562,12 +505,6 @@ function mouseClicked() {
                             discardPile[discardPile.length - 1][1] += 4
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                             drawCardP += 4
                             socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
@@ -576,12 +513,6 @@ function mouseClicked() {
                             discardPile[discardPile.length - 1][1] += 2
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                             drawCardP += 4
                             socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
@@ -591,12 +522,6 @@ function mouseClicked() {
                             socket.emit("colour change", { colourChanged: discardPile[discardPile.length - 1][1], room: room_ID })
                             ChangeColourMode = false
 
-                            if (turnClockWise == true) {
-                                turn += 1
-                            }
-                            else if (turnClockWise == false) {
-                                turn -= 1
-                            }
                             socket.emit("turn change", { Turn: turn, room: room_ID })
                             drawCardP += 4
                             socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
@@ -708,17 +633,7 @@ function DrawPowerCard() {
                     drawCardP = 0
                     socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
 
-                    if (turnClockWise == true) {
-                        turn += 1
-                        socket.emit("turn change", { Turn: turn, room: room_ID })
-                        break
-                    }
-
-                    else if (turnClockWise == false) {
-                        turn -= 1
-                        socket.emit("turn change", { Turn: turn, room: room_ID })
-                        break
-                    }
+                    break
                 }
             }
         }
@@ -730,12 +645,6 @@ function DrawPowerCard() {
 function CheckPlayerWin() {
     if (playersHands[playernum].length == 0) {
         EndGame = true
-        if (turnClockWise == true) {
-            turn -= 1
-        }
-        else if (turnClockWise == false) {
-            turn += 1
-        }
         let playerwinstat = {
             turn1: playernum,
             gameStatus: EndGame,
