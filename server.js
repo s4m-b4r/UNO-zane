@@ -77,7 +77,8 @@ io.on('connection', (socket) => {
   })
 
   socket.on("colour change", (data) => {
-
+    games[Number(data.room)].discardPile[discardPile.length - 1][1] += data.colourChanged
+    socket.emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile })
   })
 
   socket.on("draw power card", (data) => {
@@ -288,7 +289,7 @@ function cardEffect(effect, room, playernum) {
 
   else if (effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
     games[room].ChangeColourMode = true
-    io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode })
+    io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode, turnnum: games[room].turn })
     games[room].drawCardP += 4
   }
 
