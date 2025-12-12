@@ -78,7 +78,8 @@ io.on('connection', (socket) => {
 
   socket.on("colour change", (data) => {
     games[Number(data.room)].discardPile[discardPile.length - 1][1] += data.colourChanged
-    socket.emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile })
+    games[Number(data.room)].ChangeColourMode = false
+    io.to(Number(data.room)).emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile, ChangeColourMode: games[Number(data.room)].ChangeColourMode })
   })
 
   socket.on("draw power card", (data) => {
