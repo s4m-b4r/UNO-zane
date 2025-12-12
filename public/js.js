@@ -686,6 +686,7 @@ socket.on("change Colour", (data) => {
 socket.on("gameUpdate", (data) => {
     discardPile = data.discardPile1
     ChangeColourMode = data.ChangeColourMode
+    turn = data.turn
 })
 
 socket.on("draw power card", (data) => {
