@@ -421,19 +421,15 @@ function mouseClicked() {
 
                     if (discardPile[discardPile.length - 1][1] == 5) {
                         if (red == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 1
                             socket.emit("colour change", { colourChanged: 1, room: room_ID, player_num: playernum })
                         }
                         else if (yellow == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 4
                             socket.emit("colour change", { colourChanged: 4, room: room_ID, player_num: playernum })
                         }
                         else if (green == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 2
                             socket.emit("colour change", { colourChanged: 2, room: room_ID, player_num: playernum })
                         }
                         else if (blue == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 3
                             socket.emit("colour change", { colourChanged: 3, room: room_ID, player_num: playernum })
                         }
                     }
@@ -441,19 +437,15 @@ function mouseClicked() {
 
                     else if (discardPile[discardPile.length - 1][1] == 0) {
                         if (red == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 1
                             socket.emit("colour change", { colourChanged: 1, room: room_ID, player_num: playernum })
                         }
                         else if (yellow == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 4
                             socket.emit("colour change", { colourChanged: 4, room: room_ID, player_num: playernum })
                         }
                         else if (green == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 2
                             socket.emit("colour change", { colourChanged: 2, room: room_ID, player_num: playernum })
                         }
                         else if (blue == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 3
                             socket.emit("colour change", { colourChanged: 3, room: room_ID, player_num: playernum })
                         }
                     }
@@ -471,19 +463,15 @@ function mouseClicked() {
 
                     if (discardPile[discardPile.length - 1][1] == 5) {
                         if (red == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 1
                             socket.emit("colour change", { colourChanged: 1, room: room_ID, player_num: playernum })
                         }
                         else if (yellow == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 4
                             socket.emit("colour change", { colourChanged: 4, room: room_ID, player_num: playernum })
                         }
                         else if (green == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 2
                             socket.emit("colour change", { colourChanged: 2, room: room_ID, player_num: playernum })
                         }
                         else if (blue == true && white == false) {
-                            discardPile[discardPile.length - 1][1] += 3
                             socket.emit("colour change", { colourChanged: 3, room: room_ID, player_num: playernum })
                         }
                     }
