@@ -683,6 +683,11 @@ socket.on("change Colour", (data) => {
     ChangeColour()
 })
 
+socket.on("gameUpdate", (data) => {
+    discardPile = data.discardPile1
+    ChangeColourMode = data.ChangeColourMode
+})
+
 socket.on("draw power card", (data) => {
     drawCardP = data.drawpower
     DrawPowerCard()
