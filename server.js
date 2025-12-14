@@ -77,11 +77,10 @@ io.on('connection', (socket) => {
   })
 
   socket.on("colour change", (data) => {
-    console.log("trying to change the colour")
     games[Number(data.room)].discardPile[games[Number(data.room)].discardPile.length - 1][1] += data.colourChanged
     games[Number(data.room)].ChangeColourMode = false
     turnManager(Number(data.room))
-    io.to(String(data.room)).emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile, ChangeColourMode: games[Number(data.room)].ChangeColourMode, turn: games[Number(data.room)].turn })
+    io.to(Number(data.room)).emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile, ChangeColourMode: games[Number(data.room)].ChangeColourMode, turn: games[Number(data.room)].turn })
   })
 
   socket.on("draw power card", (data) => {
