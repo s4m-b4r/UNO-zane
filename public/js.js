@@ -559,35 +559,6 @@ function PlayerManager() {
     }
 }
 
-function DrawPowerCard() {
-    PlayerManager()
-    console.log(turn)
-    if (turn == playernum && drawCardP != 0) {
-        for (i = 0; i < playersHands[playernum].length; i++) {
-            console.log(playersHands[playernum][i])
-            if (playersHands[playernum][i][1] == 10 || ((playersHands[playernum][i][0] == 4 && playersHands[playernum][i][1] == 5))) {
-                break
-            }
-            else if (playersHands[playernum][i][1] != 10 || !(playersHands[playernum][i][0] == 4 && playersHands[playernum][i][1] == 5)) {
-
-                if (i == playersHands[playernum].length - 1) {
-
-                    for (j = 0; j < drawCardP; j++) {
-                        console.log(deck[deck.length - 1])
-                        playersHands[playernum].push(deck.pop())
-                        socket.emit("draw card", { cardremoved: playersHands[playernum][playersHands[playernum].length - 1], player: playernum, room: room_ID })
-                    }
-                    sortHand()
-                    drawCardP = 0
-                    socket.emit("draw power card", { room: room_ID, drawpower: drawCardP })
-
-                    break
-                }
-            }
-        }
-    }
-}
-
 //my comment is this guy is so cool
 
 function CheckPlayerWin() {
@@ -679,5 +650,4 @@ socket.on("gameUpdate", (data) => {
 
 socket.on("draw power card", (data) => {
     drawCardP = data.drawpower
-    DrawPowerCard()
 })

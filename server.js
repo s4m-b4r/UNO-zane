@@ -337,6 +337,30 @@ function cardEffect(effect, room, playernum) {
   PlayerManager(room)
 }
 
+function DrawPowerCard(room) {
+    PlayerManager()
+    console.log(games[room].turn)
+    if (games[room].drawCardP != 0) {
+        for (i = 0; i < games[room].playersHands[games[room].turn].length; i++) {
+            if (games[room].playersHands[games[room].turn][i][1] == 10 || ((games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5))) {
+                break
+            }
+            else if (games[room].playersHands[games[room].turn][i][1] != 10 || !(games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5)) {
+
+                if (i == games[room].playersHands[games[room].turn].length - 1) {
+
+                    for (j = 0; j < games[room].drawCardP; j++) {
+                        games[room].playersHands[games[room].turn].push(games[room].deck.pop())
+                    }
+                    sortHand(room)
+                    games[room].drawCardP = 0
+                    break
+                }
+            }
+        }
+    }
+}
+
 function PlayerManager(room) {
   if (games[room].turn < 0) {
     games[room].turn += games[room].playerlimit
