@@ -356,7 +356,7 @@ function DrawPowerCard(room) {
   PlayerManager(room)
   console.log(games[room].turn)
   if (games[room].drawCardP != 0) {
-    for (i = 0; i < games[room].playersHands[games[room].turn].length; i++) {
+    for (let i = 0; i < games[room].playersHands[games[room].turn].length; i++) {
       if (games[room].playersHands[games[room].turn][i][1] == 10 || ((games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5))) {
         break
       }
@@ -364,7 +364,7 @@ function DrawPowerCard(room) {
 
         if (i == games[room].playersHands[games[room].turn].length - 1) {
 
-          for (j = 0; j < games[room].drawCardP; j++) {
+          for (let j = 0; j < games[room].drawCardP; j++) {
             games[room].playersHands[games[room].turn].push(games[room].deck.pop())
           }
           sortHand(room)
