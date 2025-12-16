@@ -210,7 +210,7 @@ function gameStart(roomId) {
 }
 
 function playCard(roomId, playedCard, player_num, cardIndex, socket) {
-  if (drawCardP == 0) {
+  if (games[roomId].drawCardP == 0) {
     if (games[roomId].ChangeColourMode == false) {
       if (games[roomId].turn == player_num) {
         if (playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) {
@@ -222,7 +222,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
       }
     }
   }
-  else if (drawCardP != 0) {
+  else if (games[roomId].drawCardP != 0) {
     if (games[roomId].ChangeColourMode == false) {
       if (games[roomId].turn == player_num) {
         if ((playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) && ((playedCard[0] == 4 && playedCard[1] == 5) || (playedCard[1] == 10))) {
