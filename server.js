@@ -85,7 +85,7 @@ io.on('connection', (socket) => {
 
   socket.on("draw power card", (data) => {
     let Room = data.room
-    socket.broadcast.to(Room).emit("draw power card", data)
+
   })
   // Disconnect cleanup
 
@@ -210,17 +210,30 @@ function gameStart(roomId) {
 }
 
 function playCard(roomId, playedCard, player_num, cardIndex, socket) {
-  if (games[roomId].ChangeColourMode == false) {
-    if (games[roomId].turn == player_num) {
-      if (playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) {
-        console.log("found the correct card to be discarded from player's hand and added to the discard pile")
-        games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
-        cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
-        console.log("the turn is " + games[roomId].turn)
-        io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId].turn, playerLength: games[roomId].playerHands[player_num].length, player_num: player_num })
+  if (drawCardP == 0) {
+    if (games[roomId].ChangeColourMode == false) {
+      if (games[roomId].turn == player_num) {
+        if (playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) {
+          games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
+          cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
+          console.log("the turn is " + games[roomId].turn)
+          io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId].turn, playerLength: games[roomId].playerHands[player_num].length, player_num: player_num })
+        }
       }
     }
-  };
+  }
+  else if (drawCardP != 0) {
+    if (games[roomId].ChangeColourMode == false) {
+      if (games[roomId].turn == player_num) {
+        if ((playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) && ((playedCard[0] == 4 && playedCard[1] == 5) || (playedCard[1] == 10))) {
+          games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
+          cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
+          console.log("the turn is " + games[roomId].turn)
+          io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId].turn, playerLength: games[roomId].playerHands[player_num].length, player_num: player_num })
+        }
+      }
+    }
+  }
 }
 
 function drawCard(data) {
@@ -293,10 +306,12 @@ function cardEffect(effect, room, playernum) {
     games[room].ChangeColourMode = true
     io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode, turnnum: games[room].turn })
     games[room].drawCardP += 4
+    DrawPowerCard(room)
   }
 
   else if (effect == 10) {
     games[room].drawCardP += 2
+    DrawPowerCard(room)
   }
 
   else if (effect == 11) {
@@ -338,27 +353,27 @@ function cardEffect(effect, room, playernum) {
 }
 
 function DrawPowerCard(room) {
-    PlayerManager()
-    console.log(games[room].turn)
-    if (games[room].drawCardP != 0) {
-        for (i = 0; i < games[room].playersHands[games[room].turn].length; i++) {
-            if (games[room].playersHands[games[room].turn][i][1] == 10 || ((games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5))) {
-                break
-            }
-            else if (games[room].playersHands[games[room].turn][i][1] != 10 || !(games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5)) {
+  PlayerManager(room)
+  console.log(games[room].turn)
+  if (games[room].drawCardP != 0) {
+    for (i = 0; i < games[room].playersHands[games[room].turn].length; i++) {
+      if (games[room].playersHands[games[room].turn][i][1] == 10 || ((games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5))) {
+        break
+      }
+      else if (games[room].playersHands[games[room].turn][i][1] != 10 || !(games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5)) {
 
-                if (i == games[room].playersHands[games[room].turn].length - 1) {
+        if (i == games[room].playersHands[games[room].turn].length - 1) {
 
-                    for (j = 0; j < games[room].drawCardP; j++) {
-                        games[room].playersHands[games[room].turn].push(games[room].deck.pop())
-                    }
-                    sortHand(room)
-                    games[room].drawCardP = 0
-                    break
-                }
-            }
+          for (j = 0; j < games[room].drawCardP; j++) {
+            games[room].playersHands[games[room].turn].push(games[room].deck.pop())
+          }
+          sortHand(room)
+          games[room].drawCardP = 0
+          break
         }
+      }
     }
+  }
 }
 
 function PlayerManager(room) {
