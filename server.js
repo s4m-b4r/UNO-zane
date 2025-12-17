@@ -367,7 +367,7 @@ function DrawPowerCard(room) {
           for (let j = 0; j < games[room].drawCardP; j++) {
             games[room].playerHands[games[room].turn].push(games[room].deck.pop())
           }
-          sortHand(room)
+          sortHand(room, games[room].playerlimit, games[room].playerHands)
           games[room].drawCardP = 0
           break
         }
