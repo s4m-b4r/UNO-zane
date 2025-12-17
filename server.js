@@ -235,7 +235,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 function drawCard(data) {
   games[data.room].playerHands[data.player].push(games[data.room].deck.pop())
   games[data.room].playerHands = sortHand(data.room, games[data.room].playerlimit, games[data.room].playerHands)
-  games[data.room].turn++
+  turnManager(data.room)
   return games[data.room].playerHands[data.player]
 }
 
@@ -323,29 +323,21 @@ function cardEffect(effect, room, playernum) {
 
   if (games[room].turnClockWise == true && games[room].ChangeColourMode == false) {
     if (effect != 11) {
-      games[room].turn += 1
+      turnManager(room)
     }
     else if (effect == 11 && games[room].playerlimit != 2) {
       games[room].turn -= 1
     }
 
-    if ((effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) || effect == 10) {
-      turnManager(room)
-    }
   }
   else if (games[room].turnClockWise == false && games[room].ChangeColourMode == false) {
     if (effect != 11) {
-      games[room].turn -= 1
+      turnManager(room)
     }
     else if (effect == 11 && games[room].playerlimit != 2) {
       games[room].turn -= 1
     }
-
-    if ((effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) || effect == 10) {
-      turnManager(room)
-    }
   }
-  PlayerManager(room)
   DrawPowerCard(room)
 }
 
