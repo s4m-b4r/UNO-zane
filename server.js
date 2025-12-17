@@ -306,12 +306,10 @@ function cardEffect(effect, room, playernum) {
     games[room].ChangeColourMode = true
     io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode, turnnum: games[room].turn })
     games[room].drawCardP += 4
-    DrawPowerCard(room)
   }
 
   else if (effect == 10) {
     games[room].drawCardP += 2
-    DrawPowerCard(room)
   }
 
   else if (effect == 11) {
@@ -350,11 +348,10 @@ function cardEffect(effect, room, playernum) {
     }
   }
   PlayerManager(room)
+  DrawPowerCard(room)
 }
 
 function DrawPowerCard(room) {
-  PlayerManager(room)
-  games[room].turn ++
   if (games[room].drawCardP != 0) {
     for (let i = 0; i < games[room].playerHands[games[room].turn].length; i++) {
       if ((games[room].playerHands[games[room].turn][i][1] == 10) || ((games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5))) {
