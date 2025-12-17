@@ -327,6 +327,7 @@ function cardEffect(effect, room, playernum) {
     }
     else if (effect == 11 && games[room].playerlimit != 2) {
       games[room].turn -= 1
+      PlayerManager(room)
     }
 
   }
@@ -336,6 +337,7 @@ function cardEffect(effect, room, playernum) {
     }
     else if (effect == 11 && games[room].playerlimit != 2) {
       games[room].turn -= 1
+      PlayerManager(room)
     }
   }
   DrawPowerCard(room)
