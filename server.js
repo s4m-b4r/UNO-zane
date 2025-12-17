@@ -330,6 +330,7 @@ function cardEffect(effect, room, playernum) {
     }
 
     if ((effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) || effect == 10) {
+      turnManager(room)
     }
   }
   else if (games[room].turnClockWise == false && games[room].ChangeColourMode == false) {
@@ -341,6 +342,7 @@ function cardEffect(effect, room, playernum) {
     }
 
     if ((effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) || effect == 10) {
+      turnManager(room)
     }
   }
   PlayerManager(room)
@@ -348,7 +350,6 @@ function cardEffect(effect, room, playernum) {
 }
 
 function DrawPowerCard(room) {
-  turnManager(room)
   if (games[room].drawCardP != 0) {
     for (let i = 0; i < games[room].playerHands[games[room].turn].length; i++) {
       if ((games[room].playerHands[games[room].turn][i][1] == 10) || ((games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5))) {
