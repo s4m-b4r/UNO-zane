@@ -368,7 +368,7 @@ function DrawPowerCard(room) {
       }
     }
   }
-  io.to(String(roomId)).emit("draw power card", { turn: games[data.room].turn, player_num: games[room].turn, cardNumPlayer: games[room].playerHands[games[room].turn].length, playerhand: games[room].playerHands[games[room].turn] })
+  io.to(String(room)).emit("draw power card", { turn: games[data.room].turn, player_num: games[room].turn, cardNumPlayer: games[room].playerHands[games[room].turn].length, playerhand: games[room].playerHands[games[room].turn] })
 }
 
 function PlayerManager(room) {
