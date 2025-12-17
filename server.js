@@ -356,16 +356,16 @@ function DrawPowerCard(room) {
   PlayerManager(room)
   console.log(games[room].turn)
   if (games[room].drawCardP != 0) {
-    for (let i = 0; i < games[room].playersHands[games[room].turn].length; i++) {
-      if (games[room].playersHands[games[room].turn][i][1] == 10 || ((games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5))) {
+    for (let i = 0; i < games[room].playerHands[games[room].turn].length; i++) {
+      if (games[room].playerHands[games[room].turn][i][1] == 10 || ((games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5))) {
         break
       }
-      else if (games[room].playersHands[games[room].turn][i][1] != 10 || !(games[room].playersHands[games[room].turn][i][0] == 4 && games[room].playersHands[games[room].turn][i][1] == 5)) {
+      else if (games[room].playerHands[games[room].turn][i][1] != 10 || !(games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5)) {
 
-        if (i == games[room].playersHands[games[room].turn].length - 1) {
+        if (i == games[room].playerHands[games[room].turn].length - 1) {
 
           for (let j = 0; j < games[room].drawCardP; j++) {
-            games[room].playersHands[games[room].turn].push(games[room].deck.pop())
+            games[room].playerHands[games[room].turn].push(games[room].deck.pop())
           }
           sortHand(room)
           games[room].drawCardP = 0
