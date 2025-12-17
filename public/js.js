@@ -649,5 +649,11 @@ socket.on("gameUpdate", (data) => {
 })
 
 socket.on("draw power card", (data) => {
-    drawCardP = data.drawpower
+    if (data.player_num == playernum) {
+        playersHands[data.player_num] = data.playerhand
+    }
+    else {
+        playersHands[data.player_num] = data.cardNumPlayer
+    }
+    turn = data.turn
 })

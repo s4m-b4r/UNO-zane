@@ -80,14 +80,9 @@ io.on('connection', (socket) => {
     games[Number(data.room)].discardPile[games[Number(data.room)].discardPile.length - 1][1] += data.colourChanged
     games[Number(data.room)].ChangeColourMode = false
     turnManager(Number(data.room))
-    DrawPowerCard(room)
     io.to(String(data.room)).emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile, ChangeColourMode: games[Number(data.room)].ChangeColourMode, turn: games[Number(data.room)].turn })
   })
 
-  socket.on("draw power card", (data) => {
-    let Room = data.room
-
-  })
   // Disconnect cleanup
 
   socket.on('disconnect', () => {
@@ -367,11 +362,13 @@ function DrawPowerCard(room) {
           }
           sortHand(room, games[room].playerlimit, games[room].playerHands)
           games[room].drawCardP = 0
+          turnManager(room)
           break
         }
       }
     }
   }
+  io.to(String(roomId)).emit("draw power card", { turn: games[data.room].turn, player_num: games[room].turn, cardNumPlayer: games[room].playerHands[games[room].turn].length, playerhand: games[room].playerHands[games[room].turn] })
 }
 
 function PlayerManager(room) {
