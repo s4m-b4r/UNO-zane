@@ -80,10 +80,10 @@ io.on('connection', (socket) => {
     games[Number(data.room)].discardPile[games[Number(data.room)].discardPile.length - 1][1] += data.colourChanged
     games[Number(data.room)].ChangeColourMode = false
     turnManager(Number(data.room))
+    io.to(String(data.room)).emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile, ChangeColourMode: games[Number(data.room)].ChangeColourMode, turn: games[Number(data.room)].turn })
     if(games[Number(data.room)].discardPile[games[Number(data.room)].discardPile.length - 1][1] >= 5){
       DrawPowerCard(data.room)
     }
-    io.to(String(data.room)).emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile, ChangeColourMode: games[Number(data.room)].ChangeColourMode, turn: games[Number(data.room)].turn })
   })
 
   // Disconnect cleanup
