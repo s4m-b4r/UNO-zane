@@ -355,7 +355,7 @@ function DrawPowerCard(room) {
   if (games[room].drawCardP != 0) {
     for (let i = 0; i < games[room].playerHands[games[room].turn].length; i++) {
       if ((games[room].playerHands[games[room].turn][i][1] == 10) || ((games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5))) {
-        "player will not be drawing"
+        console.log("player will not be drawing")
         break
       }
       else if (games[room].playerHands[games[room].turn][i][1] != 10 || !(games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5)) {
@@ -377,7 +377,6 @@ function DrawPowerCard(room) {
       }
     }
   }
-
 }
 
 function PlayerManager(room) {
