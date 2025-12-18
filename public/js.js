@@ -46,12 +46,12 @@ function setup() {
     v2 = createVector((width / 2) - 100 * Math.sin(0.6), (height) - 100 * Math.cos(0.6))
     v1 = createVector(width / 2, height)
     angleMode(RADIANS)
-    if (gameMode == "Menu") {
+    if (gameMode == "Menu") {   //brings the initial game screen
         push()
         background("white")
-        button = createButton("create room")
+        button = createButton("create room")    //the button for creating a room
         button.position(width / 2, height / 2)
-        button.mousePressed(createRoom)
+        button.mousePressed(createRoom)         //if the player is creating a room, then run the create room function
         pop()
 
         push()
