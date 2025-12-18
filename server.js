@@ -303,8 +303,8 @@ function cardEffect(effect, room, playernum) {
 
   else if (effect == 5 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
     games[room].ChangeColourMode = true
-    io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode, turnnum: games[room].turn })
     games[room].drawCardP += 4
+    io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode, turnnum: games[room].turn })
   }
 
   else if (effect == 10) {
@@ -348,6 +348,7 @@ DrawPowerCard(room)
 
 function DrawPowerCard(room) {
   console.log("checking if player " + games[room].turn + " needs to draw")
+  console.log("the next player needs to draw " + games[room].drawCardP)
   if (games[room].drawCardP != 0) {
     for (let i = 0; i < games[room].playerHands[games[room].turn].length; i++) {
       if ((games[room].playerHands[games[room].turn][i][1] == 10) || ((games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5))) {
