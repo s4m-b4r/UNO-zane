@@ -223,8 +223,11 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
   }
   else if (games[roomId].drawCardP != 0) {
     if (games[roomId].ChangeColourMode == false) {
+      console.log("it is the right player's turn, they are playing when it isnt someone's turn to change colour")
       if (games[roomId].turn == player_num) {
+        console.log("it is the right player's turn, they are playing in the drawpowercard state")
         if ((playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) && ((playedCard[0] == 4 && playedCard[1] == 5) || (playedCard[1] == 10))) {
+          console.log("player is playing the draw card in the draw card state")
           games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
           cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
           console.log("the turn is " + games[roomId].turn)
