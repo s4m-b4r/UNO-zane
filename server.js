@@ -80,6 +80,9 @@ io.on('connection', (socket) => {
     games[Number(data.room)].discardPile[games[Number(data.room)].discardPile.length - 1][1] += data.colourChanged
     games[Number(data.room)].ChangeColourMode = false
     turnManager(Number(data.room))
+    if(games[Number(data.room)].discardPile[games[Number(data.room)].discardPile.length - 1][1] >= 5){
+      DrawPowerCard(data.room)
+    }
     io.to(String(data.room)).emit("gameUpdate", { discardPile1: games[Number(data.room)].discardPile, ChangeColourMode: games[Number(data.room)].ChangeColourMode, turn: games[Number(data.room)].turn })
   })
 
@@ -329,7 +332,7 @@ function cardEffect(effect, room, playernum) {
       games[room].turn -= 1
       PlayerManager(room)
     }
-
+DrawPowerCard(room)
   }
   else if (games[room].turnClockWise == false && games[room].ChangeColourMode == false) {
     if (effect != 11) {
@@ -339,8 +342,8 @@ function cardEffect(effect, room, playernum) {
       games[room].turn -= 1
       PlayerManager(room)
     }
+    DrawPowerCard(room)
   }
-  DrawPowerCard(room)
 }
 
 function DrawPowerCard(room) {
