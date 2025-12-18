@@ -359,6 +359,8 @@ function DrawPowerCard(room) {
 
         if (i == games[room].playerHands[games[room].turn].length - 1) {
           console.log("player " + games[room].turn + " will draw the card amount of " + games[room].drawCardP)
+          console.log("the player's hand is " + games[room].playerHands[games[room].turn])
+          console.log("the deck is " + games[room].deck)
           for (let j = 0; j < games[room].drawCardP; j++) {
             games[room].playerHands[games[room].turn].push(games[room].deck.pop())
           }
