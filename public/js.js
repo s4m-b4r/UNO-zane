@@ -649,6 +649,7 @@ socket.on("gameUpdate", (data) => {
 })
 
 socket.on("draw power card", (data) => {
+    console.log("receiving information regarding the draw power card")
     if (data.player_num == playernum) {
         playersHands[data.player_num] = data.playerhand
     }

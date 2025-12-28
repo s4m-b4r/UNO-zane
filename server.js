@@ -371,7 +371,7 @@ function DrawPowerCard(room) {
           games[room].drawCardP = 0
           console.log("the player hand after drawing is now " + games[room].playerHands[games[room].turn])
           turnManager(room)
-          io.to(String(room)).emit("draw power card", { turn: games[room].turn, player_num: games[room].turn, cardNumPlayer: games[room].playerHands[games[room].turn].length, playerhand: games[room].playerHands[games[room].turn] })
+          io.to(String(room)).emit("draw power card", { turn: games[room].turn, player_num: games[room].turn - 1, cardNumPlayer: games[room].playerHands[games[room].turn].length, playerhand: games[room].playerHands[games[room].turn] })
           break
         }
       }
