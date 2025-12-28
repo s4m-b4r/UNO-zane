@@ -370,15 +370,45 @@ function DrawPowerCard(room) {
           sortHand(room, games[room].playerlimit, games[room].playerHands)
           games[room].drawCardP = 0
           console.log("the player hand after drawing is now " + games[room].playerHands[games[room].turn])
-          io.to(String(room)).emit("draw power card", { turn: games[room].turn, player_num: games[room].turn, cardNumPlayer: games[room].playerHands[games[room].turn].length, playerhand: games[room].playerHands[games[room].turn] })
           turnManager(room)
-          io.to(String(room)).emit("turn change", {Turn:games[room].turn})
+          io.to(String(room)).emit("draw power card", { turn: games[room].turn, player_num: games[room].turn, cardNumPlayer: games[room].playerHands[games[room].turn].length, playerhand: games[room].playerHands[games[room].turn] })
           break
         }
       }
     }
   }
 }
+
+// function DrawPowerCard(room) {
+//   console.log("checking if player " + games[room].turn + " needs to draw")
+//   console.log("the next player needs to draw " + games[room].drawCardP)
+//   if (games[room].drawCardP != 0) {
+//     for (let i = 0; i < games[room].playerHands[games[room].turn].length; i++) {
+//       if ((games[room].playerHands[games[room].turn][i][1] == 10) || ((games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5))) {
+//         console.log("player will not be drawing")
+//         break
+//       }
+//       else if (games[room].playerHands[games[room].turn][i][1] != 10 || !(games[room].playerHands[games[room].turn][i][0] == 4 && games[room].playerHands[games[room].turn][i][1] == 5)) {
+
+//         if (i == games[room].playerHands[games[room].turn].length - 1) {
+//           console.log("player " + games[room].turn + " will draw the card amount of " + games[room].drawCardP)
+//           console.log("the player's hand is " + games[room].playerHands[games[room].turn])
+//           console.log("the deck is " + games[room].deck)
+//           for (let j = 0; j < games[room].drawCardP; j++) {
+//             games[room].playerHands[games[room].turn].push(games[room].deck.pop())
+//           }
+//           sortHand(room, games[room].playerlimit, games[room].playerHands)
+//           games[room].drawCardP = 0
+//           console.log("the player hand after drawing is now " + games[room].playerHands[games[room].turn])
+//           io.to(String(room)).emit("draw power card", { turn: games[room].turn, player_num: games[room].turn, cardNumPlayer: games[room].playerHands[games[room].turn].length, playerhand: games[room].playerHands[games[room].turn] })
+//           turnManager(room)
+//           io.to(String(room)).emit("turn change", {Turn:games[room].turn})
+//           break
+//         }
+//       }
+//     }
+//   }
+// }
 
 function PlayerManager(room) {
   if (games[room].turn < 0) {
