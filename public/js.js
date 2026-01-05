@@ -84,10 +84,12 @@ function draw() {
 
         case ("gameStarted"):
             background(70, 173, 206)
+            
             push()
             fill("white")
             ellipse(width/2, height/2, 100, 100)
             pop()
+
             PlayerManager()
             if (EndGame == false) {
                 v3 = createVector(mouseX, mouseY)
