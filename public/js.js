@@ -83,7 +83,7 @@ function draw() {
             break
 
         case ("gameStarted"):
-            background("cyan")
+            background(70, 173, 206)
             push()
             fill("white")
             circle(width/2, height/2, 50)
