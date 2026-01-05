@@ -83,8 +83,11 @@ function draw() {
             break
 
         case ("gameStarted"):
-            background("blue")
+            background("cyan")
+            push()
+            fill("white")
             circle(width/2, height/2, 50)
+            pop()
             PlayerManager()
             if (EndGame == false) {
                 v3 = createVector(mouseX, mouseY)
