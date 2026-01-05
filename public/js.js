@@ -87,7 +87,7 @@ function draw() {
             
             push()
             fill("white")
-            ellipse(width/2 - 25, height/2, 250, 250)
+            ellipse(width/2 - 50, height/2, 250, 250)
             pop()
 
             PlayerManager()
