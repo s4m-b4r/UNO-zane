@@ -86,7 +86,7 @@ function draw() {
             background(70, 173, 206)
             push()
             fill("white")
-            circle(width/2, height/2, 50)
+            ellipse(width/2, height/2, 100, 100)
             pop()
             PlayerManager()
             if (EndGame == false) {
