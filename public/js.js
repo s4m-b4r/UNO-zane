@@ -76,7 +76,7 @@ function draw() {
         background("black")
         push()
         fill("white")
-        rectangle(200,200,300,100)
+        rect(200,200,300,100)
         pop()
         pop()
         break
