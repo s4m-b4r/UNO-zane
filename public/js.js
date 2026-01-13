@@ -71,6 +71,16 @@ function preload() {
 function draw() {
     switch (gameMode) {
 
+        case("makingGame"):
+        push()
+        background("black")
+        push()
+        fill("white")
+        rectangle(200,200,300,100)
+        pop()
+        pop()
+        break
+        
         case ("gameMade"):
             push()
             button.hide()
@@ -408,6 +418,10 @@ function draw() {
 
 
 function mouseClicked() {
+    if(gameMode == "makingGame"){
+
+    }
+    
     if (gameMode == "gameStarted") {
         if (EndGame == false) {
             if (drawCardP == 0) {
@@ -586,7 +600,7 @@ function windowResized() {
 function createRoom() {
     button.hide()
     roomInput.hide()
-    socket.emit("createRoom")
+    gameMode = "makingGame"
 }
 
 function joinRoom() {
