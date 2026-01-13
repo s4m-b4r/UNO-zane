@@ -80,7 +80,7 @@ function draw() {
         pop()
         fill("black")
         textSize(20)
-        text("select number of players",width/2 - 145, height/ 4 + 5)
+        text("select number of players",width/2 - 145, height/ 4 + 20)
         pop()
         break
         
