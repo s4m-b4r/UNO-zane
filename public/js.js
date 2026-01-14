@@ -78,11 +78,11 @@ function draw() {
         background("black")
         push()
         fill("white")
-        rect(width/2 - 175, height/ 4 - 15,450,50)
+        rect(width/2 - 255, height/ 4 - 25,450,50)
         pop()
         fill("black")
         textSize(40)
-        text("select number of players",width/2 - 170, height/ 4 + 20)
+        text("select number of players",width/2 - 250, height/ 4 + 20)
         pop()
         break
         
