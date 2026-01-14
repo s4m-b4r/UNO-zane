@@ -32,7 +32,7 @@ let cardNumber;
 let drawCardP = 0;
 let turn = 0;
 let playernum;
-let maxplayer = 4;
+let maxplayer = 2;
 let ChangeColourMode = false
 let turnClockWise = true
 let EndGame = false
@@ -83,6 +83,10 @@ function draw() {
         fill("black")
         textSize(40)
         text("select number of players",width/2 - 250, height/ 4 + 20)
+        pop()
+        push()
+        textSize(40)
+        rect(maxplayer, width/2 - 245, height/4 - 20, 50,50)
         pop()
         break
         
