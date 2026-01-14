@@ -76,7 +76,7 @@ function draw() {
         background("black")
         push()
         fill("white")
-        rect(width/2 - 150, height/ 4,250,25)
+        rect(width/2 - 150, height/ 4,235,25)
         pop()
         fill("black")
         textSize(20)
