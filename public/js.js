@@ -91,7 +91,7 @@ function draw() {
         push()
         fill("black")
         textSize(40)
-        text(maxplayer, width/2 +215, height/4)
+        text(maxplayer, width/2 +220, height/4 + 10)
         pop()
         break
         
