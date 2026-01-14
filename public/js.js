@@ -89,7 +89,7 @@ function draw() {
         rect(width/2 +205, height/4 - 20, 50,50)
         pop()
         push()
-        fill("black")
+        fill("white")
         textSize(40)
         text(maxplayer, width/2 +210, height/4 - 20)
         pop()
