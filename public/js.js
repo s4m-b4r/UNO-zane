@@ -64,9 +64,11 @@ function setup() {
     }
 }
 
+
 function preload() {
     uno = loadImage('Uno - Standard Deck.png')
 }
+
 
 function draw() {
     switch (gameMode) {
