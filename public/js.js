@@ -73,28 +73,28 @@ function preload() {
 function draw() {
     switch (gameMode) {
 
-        case("makingGame"):
-        push()
-        background("black")
-        push()
-        fill("white")
-        rect(width/2 - 255, height/ 4 - 20,450,50)
-        pop()
-        fill("black")
-        textSize(40)
-        text("select number of players",width/2 - 250, height/ 4 + 20)
-        pop()
-        push()
-        fill("white")
-        rect(width/2 +205, height/4 - 20, 50,50)
-        pop()
-        push()
-        fill("black")
-        textSize(40)
-        text(maxplayer, width/2 +220, height/4 + 20)
-        pop()
-        break
-        
+        case ("makingGame"):
+            push()
+            background("black")
+            push()
+            fill("white")
+            rect(width / 2 - 255, height / 4 - 20, 450, 50)
+            pop()
+            fill("black")
+            textSize(40)
+            text("select number of players", width / 2 - 250, height / 4 + 20)
+            pop()
+            push()
+            fill("white")
+            rect(width / 2 + 205, height / 4 - 20, 50, 50)
+            pop()
+            push()
+            fill("black")
+            textSize(40)
+            text(maxplayer, width / 2 + 220, height / 4 + 20)
+            pop()
+            break
+
         case ("gameMade"):
             push()
             button.hide()
@@ -108,10 +108,10 @@ function draw() {
 
         case ("gameStarted"):
             background(70, 173, 206)
-            
+
             push()
             fill("white")
-            ellipse(width/2 - 50, height/2, 250, 250)
+            ellipse(width / 2 - 50, height / 2, 250, 250)
             pop()
 
             PlayerManager()
@@ -432,12 +432,15 @@ function draw() {
 
 
 function mouseClicked() {
-    if(gameMode == "makingGame"){
-        if((mouseX >= width/2 +205) && (mouseX <=)){
-
+    if (gameMode == "makingGame") {
+        if ((mouseX >= width / 2 + 205) && (mouseX <= width / 2 + 255) && (mouseY >= height / 4 - 20) && (mouseY <= height / 4 + 30)) {
+            maxplayer++
+            if (maxplayer > 4) {
+                maxplayer = 2
+            }
         }
     }
-    
+
     if (gameMode == "gameStarted") {
         if (EndGame == false) {
             if (drawCardP == 0) {
