@@ -652,6 +652,7 @@ socket.on("startGame", (data) => {
         playersHands[data.otherplayers[i]] = 7
     }
     discardPile.push(data.discardPile1[0])
+    maxplayer = data.playerlim
 })
 
 socket.on("playerWon", (data) => {
