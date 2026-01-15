@@ -443,6 +443,9 @@ function mouseClicked() {
                 maxplayer = 2
             }
         }
+        else if(mouseX >= width/2 -250 && mouseX <= width/2 +250 && mouseY >= height -200 && mouseY <= height -150 ){
+            socket.emit("createRoom", maxplayer)
+        }
     }
 
     if (gameMode == "gameStarted") {

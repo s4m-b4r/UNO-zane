@@ -20,12 +20,12 @@ player_num = 0
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
-  socket.on("createRoom", () => {
+  socket.on("createRoom", (data) => {
     counter++
     let roomCount = String(counter)
     player_num = 0
     socket.join(roomCount)
-    createRoom(counter, 4, socket.id)
+    createRoom(counter, data.playernum, socket.id)
     socket.emit("roomJoined", { player_num: player_num, room: roomCount })
   })
 
@@ -182,7 +182,7 @@ function gameStart(roomId) {
       else if (l > 3) {
         l = l - 4
       }
-      io.to(games[roomId].players[i]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j, k, l], discardPile1: games[roomId].discardPile })
+      io.to(games[roomId].players[i]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j, k, l], discardPile1: games[roomId].discardPile, playerlim: games[roomId].playerlimit })
     }
 
     else if (games[roomId].players.length == 3) {
