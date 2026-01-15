@@ -95,7 +95,7 @@ function draw() {
             pop()
             push()
             fill("white")
-            rect(width / 2 - 300, height - 200, 500, 50)
+            rect(width / 2 - 250, height - 200, 500, 50)
             pop()
             break
 
