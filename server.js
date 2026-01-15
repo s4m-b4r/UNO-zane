@@ -195,7 +195,7 @@ function gameStart(roomId) {
       else if (k > 2) {
         k = k - 3
       }
-      io.to(games[roomId].players[i]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j, k], discardPile1: games[roomId].discardPile })
+      io.to(games[roomId].players[i]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j, k], discardPile1: games[roomId].discardPile,playerlim: games[roomId].playerlimit })
     }
 
     else if (games[roomId].players.length == 2) {
@@ -203,7 +203,7 @@ function gameStart(roomId) {
       if (j > 1) {
         j = j - 2
       }
-      io.to(games[roomId].players[i]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j], discardPile1: games[roomId].discardPile })
+      io.to(games[roomId].players[i]).emit("startGame", { playersHands1: games[roomId].playerHands[i], otherplayers: [j], discardPile1: games[roomId].discardPile,playerlim: games[roomId].playerlimit })
     }
   }
 }
