@@ -93,6 +93,10 @@ function draw() {
             textSize(40)
             text(maxplayer, width / 2 + 220, height / 4 + 20)
             pop()
+            push()
+            fill("white")
+            rect(width / 2, height - 200, 200, 50)
+            pop()
             break
 
         case ("gameMade"):
