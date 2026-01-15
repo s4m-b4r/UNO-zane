@@ -433,7 +433,9 @@ function draw() {
 
 function mouseClicked() {
     if(gameMode == "makingGame"){
+        if((mouseX >= width/2 +205) && (mouseX <=)){
 
+        }
     }
     
     if (gameMode == "gameStarted") {
