@@ -100,7 +100,7 @@ function draw() {
             push()
             fill("black")
             textSize(40)
-            text("create game", width / 2 - 160, height - 160)
+            text("create game", width / 2 - 120, height - 160)
             pop()
             break
 
