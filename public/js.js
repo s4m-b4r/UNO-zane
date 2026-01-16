@@ -97,6 +97,11 @@ function draw() {
             fill("white")
             rect(width / 2 - 250, height - 200, 500, 50)
             pop()
+            push()
+            fill("black")
+            textSize(40)
+            text("create game", width / 2 - 245, height - 160)
+            pop()
             break
 
         case ("gameMade"):
@@ -443,7 +448,7 @@ function mouseClicked() {
                 maxplayer = 2
             }
         }
-        else if(mouseX >= width/2 -250 && mouseX <= width/2 +250 && mouseY >= height -200 && mouseY <= height -150 ){
+        else if (mouseX >= width / 2 - 250 && mouseX <= width / 2 + 250 && mouseY >= height - 200 && mouseY <= height - 150) {
             console.log(maxplayer)
             socket.emit("createRoom", maxplayer)
         }
