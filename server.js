@@ -21,6 +21,7 @@ io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
   socket.on("createRoom", (data) => {
+    console.log("max players is "+ data.maxplayer)
     counter++
     let roomCount = String(counter)
     player_num = 0
