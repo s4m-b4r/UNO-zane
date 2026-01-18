@@ -396,6 +396,7 @@ function PlayerManager(room) {
 function checkWin(room){
   if(games[room].playerHands[games[room].turn].length == 0){
     games[room].gameMode = "gameWon"
+    console.log("player "+ games[room].turn + " won the game")
     io.to(String(room)).emit("gameFinished", {mode: games[room].gameMode, playerwon: games[room].turn})
   }
 }
