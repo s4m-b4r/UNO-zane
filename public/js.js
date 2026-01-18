@@ -541,19 +541,16 @@ function playCard() {
             if (playersHands[playernum][cardNumber][0] == 4) {
                 console.log("playing a black card")
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
-                CheckPlayerWin()
             }
 
             else if (playersHands[playernum][cardNumber][0] == discardPile[discardPile.length - 1][0] || (discardPile[discardPile.length - 1][0] == 4 && (discardPile[discardPile.length - 1][1] - 1 == playersHands[turn][cardNumber][0] || discardPile[discardPile.length - 1][1] - 6 == playersHands[turn][cardNumber][0]))) {
                 console.log("playing card from being same colour")
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
-                CheckPlayerWin()
             }
 
             else if (playersHands[playernum][cardNumber][1] == discardPile[discardPile.length - 1][1]) {
                 console.log("playing card from being the same number")
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
-                CheckPlayerWin()
             }
         }
     }
@@ -562,11 +559,9 @@ function playCard() {
         if (cardNumber != -2) {
             if (playersHands[playernum][cardNumber][0] == 4 && playersHands[playernum][cardNumber][1] == 5) {
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
-                CheckPlayerWin()
             }
             else if (playersHands[playernum][cardNumber][1] == 10) {
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
-                CheckPlayerWin()
             }
         }
     }
