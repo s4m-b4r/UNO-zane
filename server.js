@@ -245,6 +245,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
   }
 }
 
+
 function drawCard(data) {
   games[data.room].playerHands[data.player].push(games[data.room].deck.pop())
   games[data.room].playerHands = sortHand(data.room, games[data.room].playerlimit, games[data.room].playerHands)
