@@ -216,9 +216,11 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
         if (playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) {
           games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
           checkWin(roomId)
+          if(games[roomId].gameMode != "gameWon"){
           cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
           console.log("the turn is " + games[roomId].turn)
           io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId].turn, playerLength: games[roomId].playerHands[player_num].length, player_num: player_num })
+          }
         }
       }
     }
@@ -232,9 +234,11 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
           console.log("player is playing the draw card in the draw card state")
           games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
           checkWin(roomId)
+          if(games[roomId].gameMode != "gameWon"){
           cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
           console.log("the turn is " + games[roomId].turn)
           io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId].turn, playerLength: games[roomId].playerHands[player_num].length, player_num: player_num })
+          }
         }
       }
     }
