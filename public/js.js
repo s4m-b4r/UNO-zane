@@ -457,13 +457,13 @@ function mouseClicked() {
         if (EndGame == false) {
             if (drawCardP == 0) {
                 if (ChangeColourMode == false) {
-                    if (turn == playernum) {
+                    if (turn == playernum) {                                //if it is the players turn, they can either play a card or draw a card
                         playCard()
                         drawCard()
                     }
                 }
 
-                else if (ChangeColourMode == true) {
+                else if (ChangeColourMode == true) {                                                                            //if the player is changing the colour, creates arcs where when clicked, will change the colour correspondingly
                     red = collidePointArc(mouseX, mouseY, width / 2, height / 2, 150, 0, Math.PI / 2)
                     yellow = collidePointArc(mouseX, mouseY, width / 2, height / 2, 150, -Math.PI / 2, Math.PI / 2)
                     green = collidePointArc(mouseX, mouseY, width / 2, height / 2, 150, -Math.PI, Math.PI / 2)
@@ -505,7 +505,7 @@ function mouseClicked() {
 
 
             else if (drawCardP != 0) {
-                if (ChangeColourMode == true) {
+                if (ChangeColourMode == true) {                                                                                 //if the player is changing the colour, creates arcs where when clicked, will change the colour correspondingly
                     red = collidePointArc(mouseX, mouseY, width / 2, height / 2, 150, 0, Math.PI / 2)
                     yellow = collidePointArc(mouseX, mouseY, width / 2, height / 2, 150, -Math.PI / 2, Math.PI / 2)
                     green = collidePointArc(mouseX, mouseY, width / 2, height / 2, 150, -Math.PI, Math.PI / 2)
@@ -535,8 +535,8 @@ function mouseClicked() {
 
 
 function playCard() {
-    if (drawCardP == 0) {
-        if (cardNumber != -2) {
+    if (drawCardP == 0) {                                                                                                                               //if there isnt a draw card in play
+        if (cardNumber != -2) {                                                                                                                         //if the player is playing a card that their cursor is hovered over
             if (playersHands[playernum][cardNumber][0] == 4) {
                 console.log("playing a black card")
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
