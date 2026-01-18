@@ -613,18 +613,6 @@ function PlayerManager() {
 
 //my comment is this guy is so cool
 
-function CheckPlayerWin() {
-    if (playersHands[playernum].length == 0) {
-        EndGame = true
-        let playerwinstat = {
-            turn1: playernum,
-            gameStatus: EndGame,
-            room: room_ID
-        }
-        socket.emit("playerWon", playerwinstat)
-    }
-}
-
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
@@ -659,11 +647,6 @@ socket.on("startGame", (data) => {
     }
     discardPile.push(data.discardPile1[0])
     maxplayer = data.playerlim
-})
-
-socket.on("playerWon", (data) => {
-    EndGame = data.gameStatus
-    turn = data.playernum
 })
 
 socket.on("playCard", (data) => {
@@ -710,4 +693,10 @@ socket.on("draw power card", (data) => {
         playersHands[data.player_num] = data.cardNumPlayer
     }
     turn = data.turn
+})
+
+socket.on("gameFinished", (data) =>{
+    console.log("the player who won is player " + data.playerwon)
+    turn = data.playerwon
+    gameMode = data.gameMode
 })

@@ -215,6 +215,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
       if (games[roomId].turn == player_num) {
         if (playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) {
           games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
+          checkWin(roomId)
           cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
           console.log("the turn is " + games[roomId].turn)
           io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId].turn, playerLength: games[roomId].playerHands[player_num].length, player_num: player_num })
@@ -230,6 +231,7 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
         if ((playedCard[0] == games[roomId].playerHands[player_num][cardIndex][0] && playedCard[1] == games[roomId].playerHands[player_num][cardIndex][1]) && ((playedCard[0] == 4 && playedCard[1] == 5) || (playedCard[1] == 10))) {
           console.log("player is playing the draw card in the draw card state")
           games[roomId].discardPile.push(games[roomId].playerHands[player_num].splice(cardIndex, 1)[0])
+          checkWin(roomId)
           cardEffect(games[roomId].discardPile[games[roomId].discardPile.length - 1][1], roomId, player_num)
           console.log("the turn is " + games[roomId].turn)
           io.to(String(roomId)).emit("playCard", { discardPile1: games[roomId].discardPile, newplayerhand: games[roomId].playerHands[player_num], turn: games[roomId].turn, playerLength: games[roomId].playerHands[player_num].length, player_num: player_num })
@@ -389,6 +391,13 @@ function PlayerManager(room) {
     games[room].turn -= games[room].playerlimit
   }
   playerPunished = games[room].turn
+}
+
+function checkWin(room){
+  if(games[room].playerHands[games[room].turn].length == 0){
+    games[room].gameMode = "gameWon"
+    io.to(String(room)).emit("gameFinished", {mode: games[room].gameMode, playerwon: games[room].turn})
+  }
 }
 
 const PORT = process.env.PORT || 3000;
