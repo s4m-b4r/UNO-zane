@@ -429,10 +429,10 @@ function draw() {
 
         case ("gameWon"):
             push()
+            background("white")
             fill("black")
             text("player " + turn + " won the game", width / 2 - 100, height / 2 - 100, 200, 50)
             pop()
-            console.log("player " + turn + " won the game")
             break
     }
 }
