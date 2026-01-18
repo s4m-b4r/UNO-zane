@@ -693,5 +693,5 @@ socket.on("draw power card", (data) => {
 socket.on("gameFinished", (data) =>{
     console.log("the player who won is player " + data.playerwon)
     turn = data.playerwon
-    gameMode = data.gameMode
+    gameMode = data.mode
 })
