@@ -56,24 +56,24 @@ function setup() {
 
         push()
         background("white")
-        text("input room ID: ", (width / 2) - 90, (height / 2) + 45)
-        roomInput = createInput()
+        text("input room ID: ", (width / 2) - 90, (height / 2) + 45)    //showing where to input room code
+        roomInput = createInput()                                       //text bos for inputting room code
         roomInput.position(width / 2, (height / 2) + 40)
-        roomInput.changed(joinRoom)
+        roomInput.changed(joinRoom)                                     //when the user hits enter or clicks off the input box, join them into the room they have inputted the code for
         pop()
     }
 }
 
 
 function preload() {
-    uno = loadImage('Uno - Standard Deck.png')
+    uno = loadImage('Uno - Standard Deck.png')                          //allows using the sprite sheet
 }
 
 
 function draw() {
     switch (gameMode) {
 
-        case ("makingGame"):
+        case ("makingGame"):        //screen for creating a room, user can see the buttons for changing the number of players and creating the room
             push()
             background("black")
             push()
@@ -104,7 +104,7 @@ function draw() {
             pop()
             break
 
-        case ("gameMade"):
+        case ("gameMade"):  //lobby screen with player number and room ID
             push()
             button.hide()
             background("black")
@@ -116,21 +116,20 @@ function draw() {
             break
 
         case ("gameStarted"):
-            background(70, 173, 206)
+            background(70, 173, 206)        //makes background cyan
 
             push()
             fill("white")
-            ellipse(width / 2 - 50, height / 2, 250, 250)
+            ellipse(width / 2 - 50, height / 2, 250, 250)       //makes white circle in the middle as a playing mat
             pop()
 
-            PlayerManager()
             if (EndGame == false) {
-                v3 = createVector(mouseX, mouseY)
+                v3 = createVector(mouseX, mouseY)       //vectors for showing card selected
                 currentpos = v3.sub(v1)
                 startv = v2.sub(v1)
 
 
-                if (mouseY >= (height - (250 + 53))) {
+                if (mouseY >= (height - (250 + 53))) {                                                                              //finding which card the cursor is hovered over if the hand has more than 4 cards
                     if (playersHands[playernum].length >= 4) {
                         if (startv.angleBetween(currentpos) < 1.4 && startv.angleBetween(currentpos) >= 0) {
                             cardNumber = Math.round(startv.angleBetween(currentpos) / (1.4 / playersHands[playernum].length)) - 1
@@ -143,7 +142,7 @@ function draw() {
                         // console.log("the angle to rotate from is" + 1.4 / numberOfCards)
                         // console.log("the angle i am on is" + startv.angleBetween(currentpos))
                     }
-                    else if (playersHands[playernum].length <= 3) {
+                    else if (playersHands[playernum].length <= 3) {                                                                 //if there are less than 3 cards, then find the card the cursor is hovered over
                         if (startv.angleBetween(currentpos) < 0.7 && startv.angleBetween(currentpos) >= 0) {
                             cardNumber = Math.round(startv.angleBetween(currentpos) / (0.7 / playersHands[playernum].length)) - 1
                             if (cardNumber < 0) {
@@ -159,12 +158,12 @@ function draw() {
                 push()
                 imageMode(CENTER)
                 translate(width / 2 - (cwidth + 10), height / 2)
-                image(uno, 0, 0, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)
+                image(uno, 0, 0, cwidth, cheight, backCardx, backCardy, cBackWidth, cBackHeight)        //draws the draw pile
                 pop()
 
                 push()
                 fill("black")
-                text("player " + turn + "'s turn", width / 2 + (cwidth + 10), height / 2)
+                text("player " + turn + "'s turn", width / 2 + (cwidth + 10), height / 2)               //shows the current player's turn
                 pop()
                 if (ChangeColourMode == true) {
                     ChangeColour()
@@ -177,24 +176,24 @@ function draw() {
                 for (i = 0; i < playersHands[playernum].length; i++) {
                     if (playersHands[playernum].length >= 4) {
                         push()
-                        rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)
+                        rotateFrom = map(i, 0, playersHands[playernum].length, -0.6, 0.8)           //finding the angle to rotate each card to make a fanlike pattern with the hands
                         rotate(rotateFrom)
 
 
                         if (i == cardNumber) {
-                            image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                            image(uno, 0, -250, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)    //the card hovered over is raised up
 
                         }
 
                         else if (i == cardNumber - 1) {
                             rotate(-(1.4 / playersHands[playernum].length) * 0.8)
-                            image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                            image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)    //the card next to it is raised slightly for better visibility
 
                         }
 
                         else if (i == cardNumber + 1) {
                             rotate((1.4 / playersHands[playernum].length) * 0.8)
-                            image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                            image(uno, 0, -225, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)    //the card next to it is raised slightly for better visibility
 
                         }
 
@@ -202,12 +201,12 @@ function draw() {
                             if (i > cardNumber + 1 && cardNumber != -2) {
                                 rotate(1.4 / playersHands[playernum].length)
                             }
-                            image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)
+                            image(uno, 0, -175, cwidth, cheight, beginsheetx + playersHands[playernum][i][1] * (cwidth + cxoffset), beginsheety + playersHands[playernum][i][0] * (cheight + cyoffset), cwidth, cheight)    // draws the rest of the hand
 
                         }
                         pop()
                     }
-                    else if (playersHands[playernum].length <= 3) {
+                    else if (playersHands[playernum].length <= 3) {         //same code for drawing cards
                         push()
                         rotateFrom = map(i, 0, playersHands[playernum].length, -0.3, 0.4)
                         rotate(rotateFrom)
@@ -236,18 +235,18 @@ function draw() {
                 push()
                 imageMode(CENTER)
                 translate(width / 2, height / 2)
-                image(uno, 0, 0, cwidth, cheight, beginsheetx + discardPile[discardPile.length - 1][1] * (cwidth + cxoffset), beginsheety + discardPile[discardPile.length - 1][0] * (cheight + cyoffset), cwidth, cheight)
+                image(uno, 0, 0, cwidth, cheight, beginsheetx + discardPile[discardPile.length - 1][1] * (cwidth + cxoffset), beginsheety + discardPile[discardPile.length - 1][0] * (cheight + cyoffset), cwidth, cheight)     //drawing discard pile
                 pop()
 
                 push()
                 fill("black")
-                text("player " + playernum, width / 2, height - 50)
+                text("player " + playernum, width / 2, height - 50)         //shows player name
                 pop()
 
                 push()
                 imageMode(CENTER)
 
-                if (maxplayer == 2) {
+                if (maxplayer == 2) {               //drawing the cards other players have, the amount they have for 2 players
                     tempplayernum = playernum + 1
                     if (tempplayernum == 2) {
                         tempplayernum = 0
@@ -277,7 +276,7 @@ function draw() {
                     }
                 }
 
-                else if (maxplayer == 3) {
+                else if (maxplayer == 3) {                  //same for 3 players
                     tempplayernum = playernum + 1
                     if (tempplayernum == 3) {
                         tempplayernum = 0
@@ -338,7 +337,7 @@ function draw() {
                     }
                 }
 
-                else if (maxplayer == 4) {
+                else if (maxplayer == 4) {                  //same for 4 players
                     tempplayernum = playernum + 1
                     if (tempplayernum == 4) {
                         tempplayernum = 0
@@ -427,7 +426,7 @@ function draw() {
             }
             break
 
-        case ("gameWon"):
+        case ("gameWon"):                       //shows the player with no more cards in their hand which is the player that won
             push()
             background("white")
             fill("black")
@@ -441,14 +440,14 @@ function draw() {
 
 
 function mouseClicked() {
-    if (gameMode == "makingGame") {
-        if ((mouseX >= width / 2 + 205) && (mouseX <= width / 2 + 255) && (mouseY >= height / 4 - 20) && (mouseY <= height / 4 + 30)) {
-            maxplayer++
+    if (gameMode == "makingGame") {                                                                                                             //code for creating room having effects
+        if ((mouseX >= width / 2 + 205) && (mouseX <= width / 2 + 255) && (mouseY >= height / 4 - 20) && (mouseY <= height / 4 + 30)) {         //changes the max players in a room
+            maxplayer++ 
             if (maxplayer > 4) {
                 maxplayer = 2
             }
         }
-        else if (mouseX >= width / 2 - 250 && mouseX <= width / 2 + 250 && mouseY >= height - 200 && mouseY <= height - 150) {
+        else if (mouseX >= width / 2 - 250 && mouseX <= width / 2 + 250 && mouseY >= height - 200 && mouseY <= height - 150) {                  //creates the room
             console.log(maxplayer)
             socket.emit("createRoom", maxplayer)
         }
