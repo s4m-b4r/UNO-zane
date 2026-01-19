@@ -536,7 +536,7 @@ function mouseClicked() {
 
 function playCard() {
     if (drawCardP == 0) {                                                                                                                               //if there isnt a draw card in play
-        if (cardNumber != -2) {                                                                                                                         //if the player is playing a card that their cursor is hovered over
+        if (cardNumber != -2) {                                                                                                                         //if the player is playing a card that their cursor is hovered over, checking if the colour is black, the same colour or the same number
             if (playersHands[playernum][cardNumber][0] == 4) {
                 console.log("playing a black card")
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
@@ -554,7 +554,7 @@ function playCard() {
         }
     }
 
-    else if (drawCardP != 0) {
+    else if (drawCardP != 0) {                                                                                                                              //if the last played card is a draw card, the player can only play a draw card
         if (cardNumber != -2) {
             if (playersHands[playernum][cardNumber][0] == 4 && playersHands[playernum][cardNumber][1] == 5) {
                 socket.emit("playCard", { discardedCard: playersHands[playernum][cardNumber], room: room_ID, player: playernum, cardIndex: cardNumber })
@@ -567,7 +567,7 @@ function playCard() {
 }
 
 
-function ChangeColour() {
+function ChangeColour() {                   //draws the arcs for changing the colour
 
     push()
     fill("red")
@@ -590,13 +590,13 @@ function ChangeColour() {
 
 }
 
-function drawCard() {
+function drawCard() {                                                                                                                                                                               //if the player clicks on the discard pile, will send a message to server requesting a card
     if (mouseX > (width / 2 - (cwidth + 10 + cwidth / 2)) && mouseX < (width / 2 - (cwidth + 10 - cwidth / 2)) && mouseY > (height / 2 - cheight / 2) && mouseY < (height / 2 + cheight / 2)) {
         socket.emit("draw card", { player: playernum, room: room_ID })
     }
 }
 
-function PlayerManager() {
+function PlayerManager() {              //makes sure that if turns are not the same as the player number
     if (turn < 0) {
         turn += maxplayer
     }
@@ -605,19 +605,18 @@ function PlayerManager() {
     }
 }
 
-//my comment is this guy is so cool
 
-function windowResized() {
+function windowResized() {                                      //resizes canvas when window size is altered
     resizeCanvas(windowWidth, windowHeight);
 }
 
-function createRoom() {
+function createRoom() {                                         //hides the buttons when the create button is pressed
     button.hide()
     roomInput.hide()
     gameMode = "makingGame"
 }
 
-function joinRoom() {
+function joinRoom() {                                           //joining room removes input box and joins the player to the room
     roomCode = roomInput.value()
     roomCode = roomCode.replace(/\s+/g, '')
     roomCode = Number(roomCode)
@@ -625,7 +624,7 @@ function joinRoom() {
     socket.emit("roomJoin", roomCode)
 }
 
-socket.on("roomJoined", (data) => {
+socket.on("roomJoined", (data) => {                             //recieves information when joining room
     playernum = data.player_num
     room_ID = data.room
     gameMode = "gameMade"
@@ -633,7 +632,7 @@ socket.on("roomJoined", (data) => {
     button.hide()
 })
 
-socket.on("startGame", (data) => {
+socket.on("startGame", (data) => {                              //recieves information when game starts
     gameMode = "gameStarted"
     playersHands[playernum] = data.playersHands1
     for (i = 0; i <= data.otherplayers.length - 1; i++) {
@@ -643,7 +642,7 @@ socket.on("startGame", (data) => {
     maxplayer = data.playerlim
 })
 
-socket.on("playCard", (data) => {
+socket.on("playCard", (data) => {                               //recieves information when a player plays a card
     if (data.player_num == playernum) {
         playersHands[data.player_num] = data.newplayerhand
     }
@@ -654,11 +653,11 @@ socket.on("playCard", (data) => {
     turn = data.turn
 })
 
-socket.on("turn change", (data) => {
+socket.on("turn change", (data) => {                            //recieves information when turn is changed
     turn = data.Turn
 })
 
-socket.on("draw card", (data) => {
+socket.on("draw card", (data) => {                              //recieves information when a player draws a card
     if (data.player_num == playernum) {
         playersHands[data.player_num] = data.playerhand
     }
@@ -668,17 +667,17 @@ socket.on("draw card", (data) => {
     turn = data.turn
 })
 
-socket.on("change Colour", (data) => {
+socket.on("change Colour", (data) => {                          //recieves information when a player is changing the colour
     ChangeColour()
 })
 
-socket.on("gameUpdate", (data) => {
+socket.on("gameUpdate", (data) => {                             //recieves information when there is a change to the game
     discardPile = data.discardPile1
     ChangeColourMode = data.ChangeColourMode
     turn = data.turn
 })
 
-socket.on("draw power card", (data) => {
+socket.on("draw power card", (data) => {                        //recieves information when there is a draw power card played
     console.log("receiving information regarding the draw power card")
     if (data.player_num == playernum) {
         playersHands[data.player_num] = data.playerhand
@@ -689,7 +688,7 @@ socket.on("draw power card", (data) => {
     turn = data.turn
 })
 
-socket.on("gameFinished", (data) =>{
+socket.on("gameFinished", (data) =>{                            //recieves information when a player has won the game
     console.log("the player who won is player " + data.playerwon)
     turn = data.playerwon
     gameMode = data.mode

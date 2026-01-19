@@ -20,7 +20,7 @@ player_num = 0
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
-  socket.on("createRoom", (data) => {
+  socket.on("createRoom", (data) => {                                                   //creates room when a player sends information for it, increment counter by one and put socket into room
     console.log("max players is "+ data)
     counter++
     let roomCount = String(counter)
@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
     socket.emit("roomJoined", { player_num: player_num, room: roomCount })
   })
 
-  socket.on("roomJoin", (data) => {
+  socket.on("roomJoin", (data) => {                                                     //joins a socket to room if the user inputted the correct ID for the room and starts the game if the room is now full
     console.log(data)
     console.log(counter)
     if (data <= counter) {
@@ -51,33 +51,17 @@ io.on('connection', (socket) => {
     }
   })
 
-
-  socket.on("playerWon", (data) => {
-    let Room = data.room
-    socket.broadcast.to(Room).emit("playerWon", data)
-  })
-
-  socket.on("playCard", (data) => {
+  socket.on("playCard", (data) => {                                                                   //when a player plays a card, runs the function
     playCard(Number(data.room), data.discardedCard, data.player, data.cardIndex, socket.id)
   })
 
-  socket.on("turn change", (data) => {
-    let Room = data.room
-    socket.broadcast.to(Room).emit("turn change", data)
-  })
-
-  socket.on("turn order", (data) => {
-    let Room = data.room
-    socket.broadcast.to(Room).emit("turn order", data)
-  })
-
-  socket.on("draw card", (data) => {
+  socket.on("draw card", (data) => {                                                                  //when a player want to draw a card, run the function
     newplayerhand = drawCard(data)
     PlayerManager(Number(data.room))
     io.to(data.room).emit("draw card", { turn: games[data.room].turn, player_num: data.player, cardNumPlayer: newplayerhand.length, playerhand: newplayerhand })
   })
 
-  socket.on("colour change", (data) => {
+  socket.on("colour change", (data) => {                                                              //when a player wants to change colour, change accordingly and send back to the clients
     games[Number(data.room)].discardPile[games[Number(data.room)].discardPile.length - 1][1] += data.colourChanged
     games[Number(data.room)].ChangeColourMode = false
     turnManager(Number(data.room))
@@ -94,7 +78,7 @@ io.on('connection', (socket) => {
   });
 });
 
-function setGame(room, maxplayer) {
+function setGame(room, maxplayer) {                     //function to made deck, discard pile and player hands
   deck1 = []
   numberOfCards = 7
   playersHands1 = [[], [], [], []]
@@ -139,7 +123,7 @@ function setGame(room, maxplayer) {
   }
 }
 
-function shuffle(array) {
+function shuffle(array) {                                   //shuffle function
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -147,7 +131,7 @@ function shuffle(array) {
   return array;
 }
 
-function createRoom(roomId, playerlim, gamehost) {
+function createRoom(roomId, playerlim, gamehost) {          //function to create a room object
   const startgamevar = setGame(roomId, playerlim)
   games[roomId] = {
     id: roomId,
@@ -164,7 +148,7 @@ function createRoom(roomId, playerlim, gamehost) {
   }
 }
 
-function gameStart(roomId) {
+function gameStart(roomId) {                                                  //function to start game and send information to players
   console.log("the players in this room are " + games[roomId].players)
   for (let i = 0; i <= games[roomId].players.length - 1; i++) {
     if (games[roomId].players.length == 4) {
@@ -209,7 +193,7 @@ function gameStart(roomId) {
   }
 }
 
-function playCard(roomId, playedCard, player_num, cardIndex, socket) {
+function playCard(roomId, playedCard, player_num, cardIndex, socket) {                //function for when a player plays a card, doing validations for it and sending information back to players
   if (games[roomId].drawCardP == 0) {
     if (games[roomId].ChangeColourMode == false) {
       if (games[roomId].turn == player_num) {
@@ -246,14 +230,14 @@ function playCard(roomId, playedCard, player_num, cardIndex, socket) {
 }
 
 
-function drawCard(data) {
+function drawCard(data) {           //function to allow players to draw cards
   games[data.room].playerHands[data.player].push(games[data.room].deck.pop())
   games[data.room].playerHands = sortHand(data.room, games[data.room].playerlimit, games[data.room].playerHands)
   turnManager(data.room)
   return games[data.room].playerHands[data.player]
 }
 
-function sortHand(room, maxplayer, playersHands) {
+function sortHand(room, maxplayer, playersHands) {          //function for sorting player's hands
   for (let j = 0; j < maxplayer; j++) {
     for (let i = 0; i < playersHands[j].length; i++) {
       if (playersHands[j][i][0] == 4) {
@@ -295,7 +279,7 @@ function sortHand(room, maxplayer, playersHands) {
   return playersHands
 }
 
-function turnManager(room) {
+function turnManager(room) {                        //function to make turns change
   if (games[room].turnClockWise == true) {
     games[room].turn++
   }
@@ -306,7 +290,7 @@ function turnManager(room) {
   io.to(String(room)).emit("turn change", { Turn: games[room].turn })
 }
 
-function cardEffect(effect, room, playernum) {
+function cardEffect(effect, room, playernum) {                                                            //does the card powers
   if (effect == 0 && games[room].discardPile[games[room].discardPile.length - 1][0] == 4) {
     games[room].ChangeColourMode = true
     io.to(games[room].players[playernum]).emit("change Colour", { ColourChanger: games[room].ChangeColourMode })
@@ -357,7 +341,7 @@ function cardEffect(effect, room, playernum) {
   }
 }
 
-function DrawPowerCard(room) {
+function DrawPowerCard(room) {                                                        //function for draw power cards
   console.log("checking if player " + games[room].turn + " needs to draw")
   console.log("the next player needs to draw " + games[room].drawCardP)
   if (games[room].drawCardP != 0) {
@@ -388,7 +372,7 @@ function DrawPowerCard(room) {
   }
 }
 
-function PlayerManager(room) {
+function PlayerManager(room) {                            //function to loop turns back to beginning
   if (games[room].turn < 0) {
     games[room].turn += games[room].playerlimit
   }
@@ -398,7 +382,7 @@ function PlayerManager(room) {
   playerPunished = games[room].turn
 }
 
-function checkWin(room){
+function checkWin(room){                                            //function to check if a player has won and send information if they have
   if(games[room].playerHands[games[room].turn].length == 0){
     games[room].gameMode = "gameWon"
     console.log("player "+ games[room].turn + " won the game")
